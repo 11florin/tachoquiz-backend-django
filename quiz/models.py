@@ -10,3 +10,10 @@ class Category(models.Model):
         return self.name
 
 
+class Question(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_names="questions",)
+    text = models.TextField()
+    explanation = models.TextField()
+
+    def __str__(self):
+        return self.text
