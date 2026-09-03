@@ -11,7 +11,7 @@ class Category(models.Model):
 
 
 class Question(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_names="questions",)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="questions",)
     text = models.TextField()
     explanation = models.TextField()
 
@@ -20,7 +20,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answers")
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answers",)
     text = models.CharField(max_length=255)
     is_correct = models.BooleanField(default=False)
 
