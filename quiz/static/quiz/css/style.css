@@ -57,11 +57,11 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
-main {
+/* main {
   flex: 1 0 auto;
   width: 100%;
   padding: 16px 12px;
-}
+} */
 
 /* Header and Navbar */
 header {
@@ -499,10 +499,7 @@ a.action-btn {
   cursor: pointer;
   box-shadow: 0 0 16px rgba(59, 130, 246, 0.3);
 }
-.action-btn:hover {
-  background: var(--color-primary);
-  box-shadow: 0 0 24px rgba(96, 165, 250, 0.4);
-}
+
 /* Status text */
 .status-text {
   font-size: 13px;

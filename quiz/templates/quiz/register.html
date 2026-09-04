@@ -1,14 +1,47 @@
-<h2>Create Account</h2>
+{% load static %}
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
+<!DOCTYPE html>
+<html lang="en">
 
-    <button type="submit">Register</button>
-</form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-{% if form.errors %}
-<div class="errors">
-    {{ form.errors }}
-</div>
-{% endif %}
+    <title>Create Account</title>
+
+    <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}">
+</head>
+
+<body>
+
+    <section class="login-section">
+
+        <div class="screen-header">
+            <h1>Create Account</h1>
+        </div>
+
+        <div class="login-body">
+
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="action-btn">Register</button>
+            </form>
+
+            {% if form.errors %}
+            <div class="errors">
+                {{ form.errors }}
+            </div>
+            {% endif %}
+
+        </div>
+
+    </section>
+
+    <div class="image-container">
+        <img src="{% static 'quiz/images/truck-img2.png' %}" alt="Illustration of a truck">
+    </div>
+
+</body>
+</html>

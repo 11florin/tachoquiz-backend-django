@@ -25,7 +25,7 @@
             Your account has been created successfully. You can now log in and start your quiz.
         </p>
 
-        <form method="GET" action="/">
+        <form method="GET" action="{% url 'home' %}">
             <button type="submit" class="action-btn">Start Quiz</button>
         </form>
 
@@ -34,7 +34,7 @@
     <div class="image-container">
         <img
             src="{% static 'quiz/images/truck-img2.png' %}"
-            alt="truck img"
+            alt="Illustration of a truck"
         >
     </div>
 
