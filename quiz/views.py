@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 
 
@@ -13,8 +13,13 @@ def register(request):
 
         if form.is_valid():
             form.save()
+            return redirect("confirmation")
 
     else:
         form = RegistrationForm()
 
     return render(request, "quiz/register.html", {"form": form})
+
+
+def confirmation(request):
+    return render(request, "quiz/confirmation.html")

@@ -1,9 +1,14 @@
-<h1>Create an account</h1>
+<h2>Create Account</h2>
 
 <form method="POST">
     {% csrf_token %}
-
     {{ form.as_p }}
 
     <button type="submit">Register</button>
 </form>
+
+{% if form.errors %}
+<div class="errors">
+    {{ form.errors }}
+</div>
+{% endif %}
