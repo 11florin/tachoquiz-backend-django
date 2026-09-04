@@ -15,13 +15,17 @@ The project follows a structured development process based on **18 User Stories*
 
 ## 🗂️ Technologies Used
 
-- Python 3.12  
-- Django 5  
-- PostgreSQL (production)  
-- SQLite3 (development)  
-- HTML, CSS, JavaScript (existing frontend)  
-- Django Admin  
-- WSL Ubuntu + VS Code  
+- **Python 3.12**  
+- **Django 6.1**  
+- **psycopg 3.3.5 (binary)** 
+- **python-decouple 3.8** 
+- **SQLite3** (development database)  
+- **PostgreSQL** (production database)  
+- **asgiref**, **sqlparse**, **typing_extensions**
+- **HTML, CSS, JavaScript** (existing frontend integration)  
+- **Django Admin**  
+- **WSL Ubuntu + VS Code**  
+ 
 
 ---
 
