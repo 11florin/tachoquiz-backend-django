@@ -1,15 +1,7 @@
+{% extends "tachoquiz/base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tacho Quiz</title>
-    <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}">
-</head>
-<body>
-    <h1>Tacho Quiz</h1>
-    <p>Django frontend is working.</p>
-</body>
-</html>
+{% block content %}
+<h1>Tacho Quiz</h1>
+<p>Django frontend is working.</p>
+{% endblock %}
