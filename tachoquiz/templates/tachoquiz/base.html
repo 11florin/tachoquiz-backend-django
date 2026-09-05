@@ -6,52 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TachoQuiz</title>
 
-    <!-- CSS -->
     <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}" />
   </head>
 
   <body>
-    <!-- NAVBAR -->
     <header>
       <div class="navbar" id="navbar">
         <a href="{% url 'home' %}" class="nav-logo">
           Tacho <span>Quiz</span>
         </a>
 
-        <button
-          class="hamburger"
-          id="hamburger"
-          aria-expanded="false"
-          aria-controls="nav-menu"
-          aria-label="Open menu"
-        >
+        <button class="hamburger" id="hamburger">
           <span class="bar"></span>
           <span class="bar"></span>
           <span class="bar"></span>
         </button>
 
-        <nav id="nav-menu" aria-label="Main navigation">
+        <nav id="nav-menu">
           <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+
             {% if user.is_authenticated %}
+            <li><a href="{% url 'quiz' %}">Quiz</a></li>
+            <li><a href="{% url 'score' %}">Score</a></li>
+            <li>
+              <span class="username-display">Hello, {{ user.username }}</span>
+            </li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
             {% endif %}
 
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="#">Quiz</a></li>
-            <li><a href="#">Score</a></li>
-            <li><a href="{% url 'login' %}">Login</a></li>
             <li><a href="#">About</a></li>
           </ul>
         </nav>
       </div>
     </header>
 
-    <!-- PAGE CONTENT -->
-    <main>{% block content %} {% endblock %}</main>
+    <main>
+        {% block content %} 
+        {% endblock %}
+    </main>
 
-    <!-- IMAGE FOOTER -->
+
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+      <div class="message {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     <div class="image-container">
       <img
         src="{% static 'quiz/images/truck-img2.png' %}"
@@ -59,7 +65,6 @@
       />
     </div>
 
-    <!-- JS -->
     <script src="{% static 'quiz/js/navbar.js' %}" defer></script>
   </body>
 </html>
