@@ -50,3 +50,13 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("home")
+
+
+@login_required
+def quiz_view(request):
+    return render(request, "quiz/quiz.html")
+
+
+@login_required
+def score_ciew(request):
+    return render(request, "quiz/score.html")
