@@ -218,7 +218,7 @@ header {
   }
 }
 
- @media (min-width: 1024px) {
+@media (min-width: 1024px) {
   .navbar {
     width: 100%;
     max-width: none;
@@ -240,6 +240,7 @@ header {
 
 /* Main Layout */
 main {
+  width: 100%;
   padding: 16px 12px;
 }
 @media (min-width: 480px) {
@@ -252,6 +253,10 @@ main {
     padding: 32px 24px;
     max-width: 750px;
     margin: 0 auto;
+  }
+
+  main:has(.login-section) {
+    max-width: 1200px;
   }
 }
 
@@ -435,7 +440,6 @@ main {
   text-transform: capitalize;
 }
 
-
 /* screen footer */
 .screen-footer {
   padding: 12px;
@@ -537,7 +541,8 @@ a.action-btn {
   min-height: 52px;
   transition:
     background 0.15s,
-    border-color 0.2s, color 0.15s;
+    border-color 0.2s,
+    color 0.15s;
 }
 @media (min-width: 480px) {
   .cat-btn {
@@ -884,11 +889,20 @@ a.action-btn {
 }
 
 /* login */
+.login-section {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
 .login-body {
   padding: 16px 12px;
 }
 @media (min-width: 480px) {
   .login-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px 16px;
   }
 }
@@ -898,6 +912,7 @@ a.action-btn {
 @media (min-width: 480px) {
   .form-group {
     margin-bottom: 16px;
+    width: 50%;
   }
 }
 .link-btn {
@@ -990,6 +1005,27 @@ a.action-btn {
   text-decoration: underline;
 }
 
+/* logout */
+
+.messages {
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+}
+
+.message {
+    padding: 12px 20px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+
 /* about */
 .about-body {
   padding: 4px 0;
@@ -1031,6 +1067,13 @@ a.action-btn {
 .confirm-p {
   margin-top: 15px;
   text-align: center;
+}
+
+.image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px 24px;
 }
 
 .image-container img {

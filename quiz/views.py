@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from .forms import RegistrationForm
 
 
@@ -37,11 +38,16 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
+
+            next_url = request.GET.get("next")
+            if next_url:
+                return redirect(next_url)
+
             return redirect("home")
-        else:
-            return render(request, "quiz/login.html", {
-                "error": "Invalid username or password"
-            })
+
+        return render(request, "quiz/login.html", {
+            "error": "Invalid username or password."
+        })
 
     return render(request, "quiz/login.html")
 
@@ -49,6 +55,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    messages.success(request, "You been logout")
     return redirect("home")
 
 
@@ -58,5 +65,5 @@ def quiz_view(request):
 
 
 @login_required
-def score_ciew(request):
+def score_view(request):
     return render(request, "quiz/score.html")
