@@ -1,43 +1,20 @@
+{% extends "tachoquiz/base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Tacho Quiz</title>
-
-    <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}">
-
-</head>
-
-<body>
-
-    <section class="confirm-section">
-
-        <div class="screen-header">
-            <h1 id="welcome-title">Welcome!</h1>
-        </div>
-
-        <p class="hero-desc confirm-p" id="confirm-text">
-            Your account has been created successfully. You can now log in and start your quiz.
-        </p>
-
-        <form method="GET" action="{% url 'home' %}">
-            <button type="submit" class="action-btn">Start Quiz</button>
-        </form>
-
-    </section>
-
-    <div class="image-container">
-        <img
-            src="{% static 'quiz/images/truck-img2.png' %}"
-            alt="Illustration of a truck"
-        >
+<section class="confirm-section">
+    <div class="screen-header">
+        <h1 id="welcome-title">Welcome!</h1>
     </div>
 
-</body>
+    <p class="hero-desc confirm-p" id="confirm-text">
+        Your account has been created successfully. You can now log in and start your quiz.
+    </p>
 
-</html>
+    <form method="GET" action="{% url 'home' %}">
+        <button type="submit" class="action-btn">Start Quiz</button>
+    </form>
+</section>
+
+{% endblock %}

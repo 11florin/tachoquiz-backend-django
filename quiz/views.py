@@ -1,4 +1,5 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 
@@ -43,3 +44,9 @@ def login_view(request):
             })
 
     return render(request, "quiz/login.html")
+
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("home")

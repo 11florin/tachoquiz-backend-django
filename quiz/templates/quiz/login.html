@@ -1,0 +1,59 @@
+{% extends "tachoquiz/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="login-section">
+
+    <div class="screen-header">
+        <h1>Login</h1>
+    </div>
+
+    {% if error %}
+        <p class="errors">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <div class="login-body">
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                    required
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="********"
+                    autocomplete="current-password"
+                    required
+                />
+            </div>
+
+            <button type="submit" class="action-btn">LOGIN</button>
+
+            <div class="divider"></div>
+
+            <p class="signup-text">
+                Don't have an account?
+                <a href="{% url 'register' %}" class="link-btn">Sign Up</a>
+            </p>
+
+        </div>
+    </form>
+
+</section>
+
+{% endblock %}
