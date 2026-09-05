@@ -898,12 +898,21 @@ a.action-btn {
 .login-body {
   padding: 16px 12px;
 }
+.login-body form {
+  width: 100%;
+}
 @media (min-width: 480px) {
   .login-body {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px 16px;
+  }
+
+  .login-body form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 .form-group {
@@ -938,6 +947,7 @@ a.action-btn {
 }
 .form-group input {
   width: 100%;
+  box-sizing: border-box;
   padding: 11px 13px;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius);
@@ -1024,7 +1034,6 @@ a.action-btn {
     background-color: #d4edda;
     color: #155724;
 }
-
 
 /* about */
 .about-body {

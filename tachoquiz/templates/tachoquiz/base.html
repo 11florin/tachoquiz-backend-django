@@ -32,7 +32,12 @@
             <li>
               <span class="username-display">Hello, {{ user.username }}</span>
             </li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li>
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="nav-logout">Logout</button>
+              </form>
+            </li>
             {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
             <li><a href="{% url 'register' %}">Register</a></li>
@@ -44,11 +49,7 @@
       </div>
     </header>
 
-    <main>
-        {% block content %} 
-        {% endblock %}
-    </main>
-
+    <main>{% block content %} {% endblock %}</main>
 
     {% if messages %}
     <div class="messages">

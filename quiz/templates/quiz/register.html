@@ -1,47 +1,44 @@
-{% load static %}
+{% extends "tachoquiz/base.html" %} {% load static %} {% block content %}
+<section class="login-section">
+  <div class="screen-header">
+    <h1>Create Account</h1>
+  </div>
 
-<!DOCTYPE html>
-<html lang="en">
+  <div class="login-body">
+    <form method="POST">
+      {% csrf_token %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <div class="form-group">
+        <label for="id_username">Username</label>
+        {{ form.username }}
+      </div>
 
-    <title>Create Account</title>
+      <div class="form-group">
+        <label for="id_email">Email</label>
+        {{ form.email }}
+      </div>
 
-    <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}">
-</head>
+      <div class="form-group">
+        <label for="id_password1">Password</label>
+        {{ form.password1 }}
+      </div>
 
-<body>
+      <div class="form-group">
+        <label for="id_password2">Confirm Password</label>
+        {{ form.password2 }}
+      </div>
 
-    <section class="login-section">
+      <button type="submit" class="action-btn form-group">Register</button>
+    </form>
 
-        <div class="screen-header">
-            <h1>Create Account</h1>
-        </div>
+    {% if form.errors %}
+    <div class="error-msg">{{ form.errors }}</div>
+    {% endif %}
 
-        <div class="login-body">
-
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-
-                <button type="submit" class="action-btn">Register</button>
-            </form>
-
-            {% if form.errors %}
-            <div class="errors">
-                {{ form.errors }}
-            </div>
-            {% endif %}
-
-        </div>
-
-    </section>
-
-    <div class="image-container">
-        <img src="{% static 'quiz/images/truck-img2.png' %}" alt="Illustration of a truck">
-    </div>
-
-</body>
-</html>
+    <p class="signup-text">
+      Already have an account?
+      <a href="{% url 'login' %}" class="link-btn">Login</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

@@ -11,8 +11,12 @@
         <p class="error-msg">{{ error }}</p>
     {% endif %}
 
-    <form method="POST" action="{% url 'login' %}">
-        {% csrf_token %}
+    <form method="POST">
+    {% csrf_token %}
+
+    {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+    {% endif %}
         <div class="login-body">
             <div class="form-group">
                 <label for="username">Username</label>
