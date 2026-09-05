@@ -94,6 +94,13 @@ header {
   color: var(--color-primary);
 }
 
+/* username */
+.username-display {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+
 /* Hamburger */
 .hamburger {
   margin-right: 10px;
