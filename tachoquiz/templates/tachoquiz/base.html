@@ -24,14 +24,14 @@
 
         <nav id="nav-menu">
           <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-
             {% if user.is_authenticated %}
-            <li><a href="{% url 'quiz' %}">Quiz</a></li>
-            <li><a href="{% url 'score' %}">Score</a></li>
             <li>
               <span class="username-display">Hello, {{ user.username }}</span>
             </li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'quiz' %}">Quiz</a></li>
+            <li><a href="{% url 'score' %}">Score</a></li>
+            
             <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
