@@ -211,3 +211,93 @@ User registration was implemented using Django’s `UserCreationForm`, extended 
 
 ---
 
+## US06 — User Authentication (Login, Logout & Register Integration)
+
+### Description
+As a user, I want to log in, log out, and register an account so that I can securely access personalised quiz functionality.
+
+### Implementation Summary
+User authentication was implemented using Django’s built-in authentication system.
+All authentication pages were updated to match the existing UI, and several template and styling issues were fixed to ensure consistency across the application.
+
+### What Was Added
+- Login functionality using:
+  - authenticate()
+  - login()
+- Logout functionality using:
+  - logout()
+  - success message via Django’s messaging framework
+- Updated register.html to match the login page layout
+- Dynamic navbar behaviour:
+  - shows username when logged in
+  - shows Login/Register when logged out
+- Consistent input styling for:
+  - username
+  - email
+  - password
+- Error handling for:
+  - invalid login
+  - incorrect password
+  - missing fields
+  - registration errors
+- Template inheritance fixes across all authentication pages
+
+### How It Works
+1. User visits `/login/` or `/register/`
+2. User fills in the form
+3. Django validates the credentials or registration data
+4. If valid:
+   - user is logged in OR account is created
+   - logout displays a success message
+   - user is redirected to the appropriate page
+5. If invalid:
+   - errors are displayed beneath the form
+6. Navbar updates automatically based on authentication state
+
+
+### Files Modified
+- `quiz/views.py`
+- `quiz/forms.py`
+- `quiz/templates/tachoquiz/base.html`
+- `quiz/templates/quiz/login.html`
+- `quiz/templates/quiz/register.html`
+- `quiz/templates/quiz/confirmation.html`
+- `quiz/static/quiz/css/style.css`
+- `quiz/urls.py`
+
+### Testing
+- Valid login → success  
+- Invalid login → error message  
+- Valid registration → account created  
+- Password mismatch → error  
+- Weak password → error  
+- Duplicate username → error  
+- Logout → success message displayed  
+- Navbar updates correctly  
+- Input fields consistent across login and register pages  
+
+### Status
+✔ Completed
+
+---
+
+### Bugs Encountered
+- Template inheritance broken  
+  - duplicated `<html>`, `<head>`, `<body>` tags in child templates  
+  - fixed by ensuring all pages extend `base.html`
+
+- Static files not loading  
+  - missing `STATICFILES_DIRS` caused CSS not to load  
+  - fixed by adding correct static configuration
+
+- Register input fields too small  
+  - Django-generated fields did not receive `.form-group` styling  
+  - fixed by wrapping fields in `.form-group` and adding universal input CSS
+
+- Navbar alignment issues  
+  - username and links appeared in the wrong order  
+  - fixed by reorganising `<li>` elements and improving UX
+
+- Logout message not displayed  
+  - missing message block in templates  
+  - fixed by adding messages section in `base.html`
