@@ -19,7 +19,6 @@ The project follows a structured development process based on **18 User Stories*
 - **Django 6.1**  
 - **psycopg 3.3.5 (binary)** 
 - **python-decouple 3.8** 
-- **SQLite3** (development database)  
 - **PostgreSQL** (production database)  
 - **asgiref**, **sqlparse**, **typing_extensions**
 - **HTML, CSS, JavaScript** (existing frontend integration)  
@@ -31,21 +30,7 @@ The project follows a structured development process based on **18 User Stories*
 
 ## 📦 Project Structure
 
-tachoquiz-backend-django/
-│
-├── tachoquiz/          # Django project configuration
-├── quiz/               # Main application
-│   ├── models.py       # Category, Question, Answer models
-│   ├── views.py        # Home, Register, Confirmation views
-│   ├── forms.py        # RegistrationForm
-│   ├── urls.py         # App routes
-│   ├── templates/quiz/ # HTML templates
-│   └── static/quiz/    # CSS, images
-│
-├── manage.py
-└── requirements.txt
 
-Code
 
 ---
 
@@ -440,7 +425,10 @@ Empty categories are handled appropriately to prevent users from starting a quiz
 
 
 ---
-### Bugs Encountered
+
+## Bugs Encountered
+
+### US05–US06 — Authentication & Templates
 - Template inheritance broken  
   - duplicated `<html>`, `<head>`, `<body>` tags in child templates  
   - fixed by ensuring all pages extend `base.html`
