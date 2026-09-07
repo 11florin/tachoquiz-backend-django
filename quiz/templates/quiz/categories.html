@@ -1,0 +1,23 @@
+{% extends "tachoquiz/base.html" %}
+
+{% block content %}
+
+<h1>Quiz Categories</h1>
+
+{% for category in categories %}
+
+    {% if category.question_count > 0 %}
+        <a href="{% url 'category-quiz' category.slug %}">
+            {{ category.name }}
+        </a>
+    {% else %}
+        <p>
+            {{ category.name }} - No questions available
+        </p>
+    {% endif %}
+
+{% empty %}
+    <p>No quiz categories are available.</p>
+{% endfor %}
+
+{% endblock %}

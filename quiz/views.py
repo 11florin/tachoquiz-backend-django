@@ -1,8 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.db.models import Count
 from .forms import RegistrationForm
+from .models import Category
 
 
 # Create your views here.
@@ -67,3 +69,34 @@ def quiz_view(request):
 @login_required
 def score_view(request):
     return render(request, "quiz/score.html")
+
+
+@login_required
+def categories(request):
+    categories = Category.objects.annotate(
+        question_count=Count("questions")
+    )
+
+    return render(
+        request,
+        "quiz/categories.html",
+        {"categories": categories},
+    )
+
+
+@login_required
+def category_quiz(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+
+    if not category.questions.exists():
+        messages.info(
+            request,
+            "No questions available for this category."
+        )
+        return redirect("categories")
+
+    return render(
+        request,
+        "quiz/quiz.html",
+        {"category": category},
+    )
