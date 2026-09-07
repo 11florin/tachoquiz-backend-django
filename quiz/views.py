@@ -71,19 +71,32 @@ def score_view(request):
     return render(request, "quiz/score.html")
 
 
+@login_required
 def categories(request):
     categories = Category.objects.annotate(
         question_count=Count("questions")
     )
 
-    return render(request, "quiz/categories.html", {
-        "categories": categories
-    },)
+    return render(
+        request,
+        "quiz/categories.html",
+        {"categories": categories},
+    )
 
 
+@login_required
 def category_quiz(request, slug):
     category = get_object_or_404(Category, slug=slug)
 
-    return render(request, "quiz/quiz.html", {
-        "category": category
-    },)
+    if not category.questions.exists():
+        messages.info(
+            request,
+            "No questions available for this category."
+        )
+        return redirect("categories")
+
+    return render(
+        request,
+        "quiz/quiz.html",
+        {"category": category},
+    )

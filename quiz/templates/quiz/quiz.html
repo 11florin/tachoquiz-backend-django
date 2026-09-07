@@ -2,8 +2,10 @@
 
 {% block content %}
 
-<h1>{{ category.name }}</h1>
-
-<p>You selected this quiz category.</p>
+{% if category %}
+    <h1>{{ category.name }}</h1>
+{% else %}
+    <h1>Quiz</h1>
+{% endif %}
 
 {% endblock %}
