@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.db.models import Count
 from .forms import RegistrationForm
 from .models import Category
 
@@ -71,7 +72,9 @@ def score_view(request):
 
 
 def categories(request):
-    categories = Category.objects.all()
+    categories = Category.objects.annotate(
+        question_count=Count("questions")
+    )
 
     return render(request, "quiz/categories.html", {
         "categories": categories
