@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .forms import RegistrationForm
 from .models import Category
@@ -75,4 +75,12 @@ def categories(request):
 
     return render(request, "quiz/categories.html", {
         "categories": categories
+    },)
+
+
+def category_quiz(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+
+    return render(request, "quiz/quiz.html", {
+        "category": category
     },)
