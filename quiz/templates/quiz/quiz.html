@@ -1,11 +1,26 @@
-{% extends "tachoquiz/base.html" %}
-
+{% extends "tachoquiz/base.html" %} 
 {% block content %}
 
-{% if category %}
-    <h1>{{ category.name }}</h1>
-{% else %}
-    <h1>Quiz</h1>
-{% endif %}
+<h1>{{ category.name }}</h1>
+
+<form method="POST">
+  {% csrf_token %}
+
+  <h2>{{ question.text }}</h2>
+
+  {% if error %}
+  <p>{{ error }}</p>
+  {% endif %} {% for answer in question.answers.all %}
+  <label>
+    <input type="radio" name="answer" value="{{ answer.id }}" required />
+    {{ answer.text }}
+  </label>
+  <br />
+  {% endfor %}
+
+  <button type="submit">
+    {% if is_last_question %} Submit Quiz {% else %} Next {% endif %}
+  </button>
+</form>
 
 {% endblock %}
