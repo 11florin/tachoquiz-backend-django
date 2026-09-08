@@ -116,6 +116,7 @@ def category_quiz(request, slug):
 
         request.session["quiz_question_ids"] = question_ids
         request.session["question_index"] = 0
+        request.session["quiz_answers"] = {}
 
     question_ids = request.session.get("quiz_question_ids", [])
     question_index = request.session.get("question_index", 0)
@@ -159,10 +160,23 @@ def category_quiz(request, slug):
                 },
             )
 
+        quiz_answers = request.session.get("quiz_answers", {})
+        quiz_answers[str(question.id)] = str(answer.id)
+        request.session["quiz_answers"] = quiz_answers
+
         question_index += 1
         request.session["question_index"] = question_index
 
         if question_index >= len(question_ids):
+            quiz_answers = request.session.get("quiz_answers", {})
+
+            if len(quiz_answers) != len(question_ids):
+                messages.error(
+                    request,
+                    "Please answer all questions before submitting the quiz."
+                )
+                return redirect("categories")
+
             return redirect("score")
 
         question = get_object_or_404(
@@ -177,5 +191,6 @@ def category_quiz(request, slug):
         {
             "category": category,
             "question": question,
+            "is_last_question": question_index == len(question_ids) - 1,
         },
     )
