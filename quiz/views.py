@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db.models import Count
 from .forms import RegistrationForm
-from .models import Category, Question
+from .models import Category, Question, Answer
 
 
 
@@ -120,10 +120,6 @@ def category_quiz(request, slug):
     question_ids = request.session.get("quiz_question_ids", [])
     question_index = request.session.get("question_index", 0)
 
-    if request.method == "POST":
-        question_index += 1
-        request.session["question_index"] = question_index
-
     if question_index >= len(question_ids):
         return redirect("score")
 
@@ -132,6 +128,48 @@ def category_quiz(request, slug):
         id=question_ids[question_index],
         category=category,
     )
+
+    if request.method == "POST":
+        answer_id = request.POST.get("answer")
+
+        if not answer_id:
+            return render(
+                request,
+                "quiz/quiz.html",
+                {
+                    "category": category,
+                    "question": question,
+                    "error": "Please select an answer.",
+                },
+            )
+
+        answer = Answer.objects.filter(
+            id=answer_id,
+            question=question,
+        ).first()
+
+        if answer is None:
+            return render(
+                request,
+                "quiz/quiz.html",
+                {
+                    "category": category,
+                    "question": question,
+                    "error": "Invalid answer selected.",
+                },
+            )
+
+        question_index += 1
+        request.session["question_index"] = question_index
+
+        if question_index >= len(question_ids):
+            return redirect("score")
+
+        question = get_object_or_404(
+            Question,
+            id=question_ids[question_index],
+            category=category,
+        )
 
     return render(
         request,

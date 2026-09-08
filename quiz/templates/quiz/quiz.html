@@ -9,12 +9,17 @@
 
     <h2>{{ question.text }}</h2>
 
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+
     {% for answer in question.answers.all %}
         <label>
             <input
                 type="radio"
                 name="answer"
                 value="{{ answer.id }}"
+                required
             >
             {{ answer.text }}
         </label>
