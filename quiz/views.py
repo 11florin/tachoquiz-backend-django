@@ -7,12 +7,14 @@ from .forms import RegistrationForm
 from .models import Category, Question
 
 
-# Create your views here.
+
 def home(request):
+    """Render the home page."""
     return render(request, "quiz/home.html")
 
 
 def register(request):
+    """Register a new user and redirect successful registrations."""
     if request.method == "POST":
         form = RegistrationForm(request.POST)
 
@@ -27,11 +29,13 @@ def register(request):
 
 
 def confirmation(request):
+    """Render the registration confirmation page."""
     return render(request, "quiz/confirmation.html")
 
 
 
 def login_view(request):
+    """Authenticate a user and start a login session."""
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -56,6 +60,7 @@ def login_view(request):
 
 
 def logout_view(request):
+    """Log out the current user and redirect to the home page."""
     logout(request)
     messages.success(request, "You've been logged out successfully.")
     return redirect("home")
@@ -63,16 +68,19 @@ def logout_view(request):
 
 @login_required
 def quiz_view(request):
+    """Render the main quiz page for an authenticated user."""
     return render(request, "quiz/quiz.html")
 
 
 @login_required
 def score_view(request):
+    """Render the quiz score page."""
     return render(request, "quiz/score.html")
 
 
 @login_required
 def categories(request):
+    """Display quiz categories and their number of questions."""
     categories = Category.objects.annotate(
         question_count=Count("questions")
     )
@@ -86,6 +94,12 @@ def categories(request):
 
 @login_required
 def category_quiz(request, slug):
+    """
+    Start a category quiz and manage progression through its questions.
+
+    Questions are randomized when the quiz starts and their IDs are
+    stored in the user's session to maintain the quiz order.
+    """
     category = get_object_or_404(Category, slug=slug)
 
     if request.method == "GET":
