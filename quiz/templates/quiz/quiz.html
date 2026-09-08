@@ -2,10 +2,26 @@
 
 {% block content %}
 
-{% if category %}
-    <h1>{{ category.name }}</h1>
-{% else %}
-    <h1>Quiz</h1>
-{% endif %}
+<h1>{{ category.name }}</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <h2>{{ question.text }}</h2>
+
+    {% for answer in question.answers.all %}
+        <label>
+            <input
+                type="radio"
+                name="answer"
+                value="{{ answer.id }}"
+            >
+            {{ answer.text }}
+        </label>
+        <br>
+    {% endfor %}
+
+    <button type="submit">Next</button>
+</form>
 
 {% endblock %}
