@@ -68,8 +68,8 @@ def logout_view(request):
 
 @login_required
 def quiz_view(request):
-    """Render the main quiz page for an authenticated user."""
-    return render(request, "quiz/quiz.html")
+    """Redirect authenticated users to the quiz categories page."""
+    return redirect("categories")
 
 
 @login_required
@@ -102,7 +102,14 @@ def category_quiz(request, slug):
     """
     category = get_object_or_404(Category, slug=slug)
 
-    if request.method == "GET":
+    active_category_id = request.session.get("quiz_category_id")
+    quiz_complete = request.session.get("quiz_complete", False)
+
+    # Start a new quiz if there is no active quiz for this category,
+    # or if the previous quiz has already been completed.
+    if request.method == "GET" and (
+        active_category_id != category.id or quiz_complete
+    ):
         question_ids = list(
             category.questions.order_by("?").values_list("id", flat=True)
         )
@@ -114,12 +121,28 @@ def category_quiz(request, slug):
             )
             return redirect("categories")
 
+        request.session["quiz_category_id"] = category.id
         request.session["quiz_question_ids"] = question_ids
         request.session["question_index"] = 0
         request.session["quiz_answers"] = {}
+        request.session["quiz_complete"] = False
 
     question_ids = request.session.get("quiz_question_ids", [])
     question_index = request.session.get("question_index", 0)
+
+    if not question_ids:
+        messages.error(
+            request,
+            "Quiz session expired. Please start the quiz again."
+        )
+        return redirect("categories")
+
+    if request.session.get("quiz_category_id") != category.id:
+        messages.error(
+            request,
+            "Quiz session expired. Please start the quiz again."
+        )
+        return redirect("categories")
 
     if question_index >= len(question_ids):
         return redirect("score")
@@ -140,6 +163,9 @@ def category_quiz(request, slug):
                 {
                     "category": category,
                     "question": question,
+                    "is_last_question": (
+                        question_index == len(question_ids) - 1
+                    ),
                     "error": "Please select an answer.",
                 },
             )
@@ -156,6 +182,9 @@ def category_quiz(request, slug):
                 {
                     "category": category,
                     "question": question,
+                    "is_last_question": (
+                        question_index == len(question_ids) - 1
+                    ),
                     "error": "Invalid answer selected.",
                 },
             )
@@ -177,13 +206,10 @@ def category_quiz(request, slug):
                 )
                 return redirect("categories")
 
+            request.session["quiz_complete"] = True
             return redirect("score")
 
-        question = get_object_or_404(
-            Question,
-            id=question_ids[question_index],
-            category=category,
-        )
+        return redirect("category-quiz", slug=slug)
 
     return render(
         request,
@@ -191,6 +217,8 @@ def category_quiz(request, slug):
         {
             "category": category,
             "question": question,
-            "is_last_question": question_index == len(question_ids) - 1,
+            "is_last_question": (
+                question_index == len(question_ids) - 1
+            ),
         },
     )
