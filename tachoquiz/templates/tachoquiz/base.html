@@ -83,40 +83,6 @@
   </head>
 
   <body>
-    <!-- <header>
-
-      <div class="navbar" id="navbar">
-        <a href="{% url 'home' %}" class="nav-logo">
-          Tacho <span>Quiz</span>
-        </a>
-
-        <button class="hamburger" id="hamburger">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </button>
-
-        <nav id="nav-menu">
-          <ul>
-            {% if user.is_authenticated %}
-            <li>
-              <span class="username-display">Hello, {{ user.username }}</span>
-            </li>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'quiz' %}">Quiz</a></li>
-            <li><a href="{% url 'score' %}">Score</a></li>
-            
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-            {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'register' %}">Register</a></li>
-            {% endif %}
-
-            <li><a href="#">About</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header> -->
 
     <header>
     <div class="navbar" id="navbar">
@@ -168,10 +134,6 @@
         {% endblock %}
     </main>
 
-
-
-
-
     {% if messages %}
     <div class="messages">
       {% for message in messages %}
@@ -186,7 +148,6 @@
         alt="Illustration of a truck"
       />
     </div>
-
 
     <footer class="footer">
       <div class="copyright">
