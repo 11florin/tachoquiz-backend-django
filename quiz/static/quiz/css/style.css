@@ -46,6 +46,29 @@
   --nav-h: 56px;
 }
 
+/* Main Layout */
+main {
+  flex: 1 0 auto;
+  width: 100%;
+  padding: 16px 12px;
+}
+@media (min-width: 480px) {
+  main {
+    padding: 20px 16px;
+  }
+}
+@media (min-width: 768px) {
+  main {
+    padding: 32px 24px;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  main:has(.login-section) {
+    max-width: 1200px;
+  }
+}
+
 body {
   font-family: var(--font);
   background: var(--color-bg);
@@ -57,11 +80,6 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
-/* main {
-  flex: 1 0 auto;
-  width: 100%;
-  padding: 16px 12px;
-} */
 
 /* Header and Navbar */
 header {
@@ -242,28 +260,6 @@ header {
     margin-left: auto;
     display: flex;
     justify-content: flex-end;
-  }
-}
-
-/* Main Layout */
-main {
-  width: 100%;
-  padding: 16px 12px;
-}
-@media (min-width: 480px) {
-  main {
-    padding: 20px 16px;
-  }
-}
-@media (min-width: 768px) {
-  main {
-    padding: 32px 24px;
-    max-width: 750px;
-    margin: 0 auto;
-  }
-
-  main:has(.login-section) {
-    max-width: 1200px;
   }
 }
 
@@ -714,6 +710,24 @@ a.action-btn {
     border-color 0.15s,
     color 0.15s;
 }
+
+.answer-btn input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.answer-btn:has(input[type="radio"]:checked) {
+  background: var(--color-selected-bg);
+  border-color: var(--color-selected-border);
+  color: var(--color-selected-text);
+  box-shadow: 0 0 0 1px var(--color-selected-border);
+}
+
+.answer-btn:has(input[type="radio"]:checked) .answer-label {
+  color: var(--color-selected-text);
+}
+
 @media (min-width: 480px) {
   .answer-btn {
     gap: 12px;
@@ -764,6 +778,11 @@ a.action-btn {
   display: none;
   animation: fadeIn 0.6s ease;
 }
+
+.explanation-box.show {
+  display: block;
+}
+
 @media (min-width: 480px) {
   .explanation-box {
     margin: 1rem;

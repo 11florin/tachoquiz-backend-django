@@ -1,54 +1,138 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TachoQuiz</title>
 
-    <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}" />
+    <meta
+      name="description"
+      content="Start your Tacho Quiz journey and test your knowledge of driving times, rest periods, and tachograph rules."
+    />
+
+    <meta
+      name="keywords"
+      content="Tacho Quiz, CPC training, driver education, tachograph rules, driving times, rest periods, road safety, professional drivers, Code Institute project, learning app"
+    />
+
+    <title>
+      {% block title %}
+        Tacho Quiz
+      {% endblock %}
+    </title>
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{% static 'quiz/images/icons/android-chrome-192x192.png' %}"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="{% static 'quiz/images/icons/android-chrome-512x512.png' %}"
+    />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'quiz/images/icons/favicon.ico' %}"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'quiz/images/icons/favicon-32x32.png' %}"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'quiz/images/icons/favicon-16x16.png' %}"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      href="{% static 'quiz/images/icons/apple-touch-icon.png' %}"
+    />
+
+    <link
+      rel="manifest"
+      href="{% static 'quiz/images/icons/site.webmanifest' %}"
+    />
+
+    <!-- Font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{% static 'quiz/css/style.css' %}"
+    />
   </head>
 
   <body>
+
     <header>
-      <div class="navbar" id="navbar">
+    <div class="navbar" id="navbar">
+
         <a href="{% url 'home' %}" class="nav-logo">
-          Tacho <span>Quiz</span>
+            Tacho <span>Quiz</span>
         </a>
 
-        <button class="hamburger" id="hamburger">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
+        <button
+            class="hamburger"
+            id="hamburger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav-menu"
+            aria-label="Open menu"
+        >
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </button>
 
         <nav id="nav-menu">
-          <ul>
-            {% if user.is_authenticated %}
-            <li>
-              <span class="username-display">Hello, {{ user.username }}</span>
-            </li>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'quiz' %}">Quiz</a></li>
-            <li><a href="{% url 'score' %}">Score</a></li>
-            
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-            {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'register' %}">Register</a></li>
-            {% endif %}
+            <ul>
+                {% if user.is_authenticated %}
+                    <li>
+                        <span class="username-display">
+                            Hello, {{ user.username }}
+                        </span>
+                    </li>
 
-            <li><a href="#">About</a></li>
-          </ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'categories' %}">Quiz</a></li>
+                    <li><a href="{% url 'score' %}">Score</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+
+                <li><a href="#">About</a></li>
+            </ul>
         </nav>
-      </div>
-    </header>
 
+    </div>
+</header>
     <main>
         {% block content %} 
         {% endblock %}
     </main>
-
 
     {% if messages %}
     <div class="messages">
@@ -65,6 +149,47 @@
       />
     </div>
 
+    <footer class="footer">
+      <div class="copyright">
+        &copy; Florin Albu
+      </div>
+
+      <div class="footer-paragraph">
+        <p>Learn tacho. Build confidence.</p>
+      </div>
+
+      <div class="social-networks">
+        <ul>
+          <li>
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              aria-label="Facebook"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-facebook"></i>
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://www.linkedin.com/in/florin-albu-0750b6238/"
+              target="_blank"
+              aria-label="LinkedIn"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-square-linkedin"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </footer>
     <script src="{% static 'quiz/js/navbar.js' %}" defer></script>
+    <script
+      src="https://kit.fontawesome.com/7306ceb67d.js"
+      crossorigin="anonymous"
+    ></script>
+    {% block extra_js %}
+    {% endblock %}
   </body>
 </html>
