@@ -764,6 +764,11 @@ a.action-btn {
   display: none;
   animation: fadeIn 0.6s ease;
 }
+
+.explanation-box.show {
+  display: block;
+}
+
 @media (min-width: 480px) {
   .explanation-box {
     margin: 1rem;
