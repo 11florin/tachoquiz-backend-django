@@ -714,6 +714,24 @@ a.action-btn {
     border-color 0.15s,
     color 0.15s;
 }
+
+.answer-btn input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.answer-btn:has(input[type="radio"]:checked) {
+  background: var(--color-selected-bg);
+  border-color: var(--color-selected-border);
+  color: var(--color-selected-text);
+  box-shadow: 0 0 0 1px var(--color-selected-border);
+}
+
+.answer-btn:has(input[type="radio"]:checked) .answer-label {
+  color: var(--color-selected-text);
+}
+
 @media (min-width: 480px) {
   .answer-btn {
     gap: 12px;
