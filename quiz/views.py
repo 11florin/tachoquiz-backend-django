@@ -153,7 +153,57 @@ def category_quiz(request, slug):
         category=category,
     )
 
+    quiz_answers = request.session.get("quiz_answers", {})
+    saved_answer_id = quiz_answers.get(str(question.id))
+
+    selected_answer = None
+
+    if saved_answer_id:
+        selected_answer = Answer.objects.filter(
+            id=saved_answer_id,
+            question=question,
+        ).first()
+
+    correct_answer = question.answers.filter(
+        is_correct=True
+    ).first()
+
     if request.method == "POST":
+        action = request.POST.get("action")
+
+        # Move to the next question only after the current
+        # question has already been answered.
+        if action == "next":
+            if selected_answer is None:
+                messages.error(
+                    request,
+                    "Please answer the question before continuing."
+                )
+                return redirect("category-quiz", slug=slug)
+
+            question_index += 1
+            request.session["question_index"] = question_index
+
+            if question_index >= len(question_ids):
+                quiz_answers = request.session.get("quiz_answers", {})
+
+                if len(quiz_answers) != len(question_ids):
+                    messages.error(
+                        request,
+                        "Please answer all questions before submitting the quiz."
+                    )
+                    return redirect("categories")
+
+                request.session["quiz_complete"] = True
+                return redirect("score")
+
+            return redirect("category-quiz", slug=slug)
+
+        # Do not allow an already answered question
+        # to be answered again.
+        if selected_answer is not None:
+            return redirect("category-quiz", slug=slug)
+
         answer_id = request.POST.get("answer")
 
         if not answer_id:
@@ -163,6 +213,8 @@ def category_quiz(request, slug):
                 {
                     "category": category,
                     "question": question,
+                    "question_number": question_index + 1,
+                    "total_questions": len(question_ids),
                     "is_last_question": (
                         question_index == len(question_ids) - 1
                     ),
@@ -182,6 +234,8 @@ def category_quiz(request, slug):
                 {
                     "category": category,
                     "question": question,
+                    "question_number": question_index + 1,
+                    "total_questions": len(question_ids),
                     "is_last_question": (
                         question_index == len(question_ids) - 1
                     ),
@@ -189,25 +243,8 @@ def category_quiz(request, slug):
                 },
             )
 
-        quiz_answers = request.session.get("quiz_answers", {})
         quiz_answers[str(question.id)] = str(answer.id)
         request.session["quiz_answers"] = quiz_answers
-
-        question_index += 1
-        request.session["question_index"] = question_index
-
-        if question_index >= len(question_ids):
-            quiz_answers = request.session.get("quiz_answers", {})
-
-            if len(quiz_answers) != len(question_ids):
-                messages.error(
-                    request,
-                    "Please answer all questions before submitting the quiz."
-                )
-                return redirect("categories")
-
-            request.session["quiz_complete"] = True
-            return redirect("score")
 
         return redirect("category-quiz", slug=slug)
 
@@ -217,8 +254,12 @@ def category_quiz(request, slug):
         {
             "category": category,
             "question": question,
+            "question_number": question_index + 1,
+            "total_questions": len(question_ids),
             "is_last_question": (
                 question_index == len(question_ids) - 1
             ),
+            "selected_answer": selected_answer,
+            "correct_answer": correct_answer,
         },
     )
