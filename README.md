@@ -184,7 +184,7 @@ User registration was implemented using Django’s `UserCreationForm`, extended 
 
 ---
 
-## 🧪 Testing Summary (US01–US05)
+## Testing Summary (US01–US05)
 
 - Development server runs correctly  
 - Models behave as expected  
@@ -423,6 +423,81 @@ Empty categories are handled appropriately to prevent users from starting a quiz
 
 ✔ Completed
 
+---
+
+## US08 — Start and Complete Quiz
+
+### Description
+
+As a user, I want to complete a tachograph quiz so that I can test my knowledge.
+
+### Implementation Summary
+
+Quiz progression was implemented using Django sessions so that users can complete one question at a time while preserving their progress.
+
+Questions are randomized when the quiz starts, answers are validated server-side, and the user can progress through the quiz until the final submission.
+
+### What Was Added
+
+- Category-based quiz flow
+- Randomized question order using:
+  - `order_by("?")`
+- Session-based quiz state using:
+  - `quiz_category_id`
+  - `quiz_question_ids`
+  - `question_index`
+  - `quiz_answers`
+  - `quiz_complete`
+- One-question-per-page quiz layout
+- Four answer options displayed from the database
+- Radio-button answer selection
+- `Next` button for quiz progression
+- `Submit Quiz` button on the final question
+- Server-side answer validation
+- Validation that the selected answer belongs to the current question
+- Validation that all questions have been answered before final submission
+- Post/Redirect/Get flow to prevent duplicate form submissions on refresh
+- Quiz session recovery handling for expired or missing quiz state
+- Redirect from `/quiz/` to the category selection page
+- Docstrings added to quiz views
+
+### How It Works
+
+1. User selects a quiz category.
+2. Django retrieves all questions for that category.
+3. Question IDs are randomized and stored in the user's session.
+4. The first question is displayed with its available answers.
+5. User selects one answer and submits the form.
+6. Django validates the submitted answer.
+7. The selected answer is stored in the session.
+8. The question index is increased.
+9. Django redirects to the same quiz URL using the Post/Redirect/Get pattern.
+10. The next question is displayed without resetting quiz progress.
+11. On the final question, the button changes from `Next` to `Submit Quiz`.
+12. When all questions have been answered, the user is redirected to the score page.
+
+### Testing
+
+- Confirmed questions are loaded from the database
+- Confirmed question order is randomized at quiz start
+- Confirmed only one question is displayed at a time
+- Confirmed users can select one answer per question
+- Confirmed quiz progress is preserved using Django sessions
+- Confirmed refresh does not reset quiz progress
+- Confirmed refresh does not re-submit the previous answer
+- Confirmed the final question displays `Submit Quiz`
+- Confirmed invalid or missing answers are rejected
+- Confirmed completed quizzes redirect to the score page
+- Confirmed users can restart the same category as a new quiz session
+
+### Code Review Fixes
+
+- Fixed `/quiz/` route so it redirects to the category selection page
+- Prevented quiz progress from being reset on every GET request
+- Added handling for expired or missing quiz sessions
+- Implemented Post/Redirect/Get after valid answer submissions
+- Preserved `Submit Quiz` button state during validation errors
+- Added quiz completion state to allow the same category to be restarted correctly
 
 ---
 
@@ -459,3 +534,20 @@ Empty categories are handled appropriately to prevent users from starting a quiz
 
 - **Authentication protection:**  
   Code review identified that the new category views were accessible without authentication. `@login_required` was added to protect both category views.
+
+  ### US08 — Start and Complete Quiz
+
+- **Quiz progress reset on refresh:**  
+  The quiz was initially re-randomized and restarted on every GET request. Session initialization was updated so that an active quiz keeps its existing question order and progress.
+
+- **Form re-submission on refresh:**  
+  After submitting an answer, the next question was originally rendered directly from the POST request. This could cause the previous answer to be submitted again when refreshing the page. The Post/Redirect/Get pattern was implemented to prevent duplicate submissions.
+
+- **Missing quiz session handling:**  
+  If the quiz session was missing or expired, the user could be incorrectly redirected to the score page. Session validation was added to redirect the user back to the categories page with an appropriate message.
+
+- **Incorrect quiz route behaviour:**  
+  The `/quiz/` route rendered the quiz template without the required category and question context. The route was updated to redirect users to the category selection page.
+
+- **Incorrect final button state:**  
+  During validation errors on the final question, `is_last_question` was missing from the template context, causing `Next` to appear instead of `Submit Quiz`. The required context was added to the validation error responses.
