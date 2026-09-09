@@ -1,5 +1,10 @@
 {% extends "tachoquiz/base.html" %} 
+{% load static %}
 {% block content %}
+
+{% block title %}
+Quiz | Tacho Quiz
+{% endblock %}
 
 <main>
   <section class="quiz-section">
@@ -92,5 +97,8 @@
     </form>
   </section>
 </main>
+{% endblock %}
 
+{% block extra_js %}
+<script src="{% static 'quiz/js/quiz.js' %}" defer></script>
 {% endblock %}
