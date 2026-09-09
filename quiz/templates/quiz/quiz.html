@@ -1,67 +1,96 @@
-{% extends "tachoquiz/base.html" %}
-
+{% extends "tachoquiz/base.html" %} 
 {% block content %}
 
-<h1>{{ category.name }}</h1>
+<main>
+  <section class="quiz-section">
+    <div class="screen-header">
+      <h1>{{ category.name }}</h1>
 
-<p>
-  Question {{ question_number }} of {{ total_questions }}
-</p>
-
-<h2>{{ question.text }}</h2>
-
-{% if error %}
-  <p>{{ error }}</p>
-{% endif %}
-
-<form method="POST">
-  {% csrf_token %}
-
-  {% for answer in question.answers.all %}
-    <label>
-      <input
-        type="radio"
-        name="answer"
-        value="{{ answer.id }}"
-        {% if selected_answer %}disabled{% else %}required{% endif %}
-      >
-
-      {{ answer.text }}
-
-      {% if selected_answer %}
-        {% if answer.id == correct_answer.id %}
-          ✓ Correct
-        {% elif answer.id == selected_answer.id %}
-          ✗ Your answer
-        {% endif %}
-      {% endif %}
-    </label>
-
-    <br>
-  {% endfor %}
-
-  {% if selected_answer %}
-
-    <div class="explanation-box show">
-      <p>{{ question.explanation }}</p>
+      <p class="question-counter">
+        Question {{ question_number }} of {{ total_questions }}
+      </p>
     </div>
 
-    <button type="submit" name="action" value="next">
-      {% if is_last_question %}
-        SEE RESULTS
+    <div class="question-box">
+      <p>{{ question.text }}</p>
+    </div>
+
+    {% if error %}
+    <p class="status-text">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="answers-list">
+        {% for answer in question.answers.all %}
+
+        <label
+          class="answer-btn {% if selected_answer %} {% if answer.id == correct_answer.id %} correct {% elif answer.id == selected_answer.id %} wrong {% endif %} {% endif %}"
+        >
+          <input
+            type="radio"
+            name="answer"
+            value="{{ answer.id }}"
+            {% if selected_answer %}
+            disabled
+            {% else %}
+            required
+            {% endif %}
+          />
+
+          <span class="answer-label">
+            {% if forloop.counter == 1 %} 
+            A 
+            {% elif forloop.counter == 2 %} 
+            B 
+            {% elif forloop.counter == 3 %} 
+            C 
+            {% elif forloop.counter == 4 %} 
+            D 
+            {% endif %}
+          </span>
+
+          <span> {{ answer.text }} </span>
+        </label>
+
+        {% endfor %}
+      </div>
+
+      {% if selected_answer %}
+
+      <div class="explanation-box show">
+        <p>{{ question.explanation }}</p>
+      </div>
+
+      <div class="screen-footer">
+        <button type="submit" name="action" value="next" class="action-btn">
+          {% if is_last_question %} 
+          SEE RESULTS 
+          {% else %} 
+          NEXT QUESTION 
+          {% endif %}
+        </button>
+      </div>
+
       {% else %}
-        NEXT QUESTION
+
+      <div class="screen-footer">
+        <button
+          type="submit"
+          name="action"
+          value="answer"
+          class="action-btn"
+          id="check-answer-btn"
+          disabled
+        >
+          CHECK ANSWER
+        </button>
+      </div>
+
       {% endif %}
-    </button>
-
-  {% else %}
-
-    <button type="submit" name="action" value="answer">
-      CHECK ANSWER
-    </button>
-
-  {% endif %}
-
-</form>
+    </form>
+  </section>
+</main>
 
 {% endblock %}
