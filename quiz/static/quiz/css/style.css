@@ -46,6 +46,29 @@
   --nav-h: 56px;
 }
 
+/* Main Layout */
+main {
+  flex: 1 0 auto;
+  width: 100%;
+  padding: 16px 12px;
+}
+@media (min-width: 480px) {
+  main {
+    padding: 20px 16px;
+  }
+}
+@media (min-width: 768px) {
+  main {
+    padding: 32px 24px;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  main:has(.login-section) {
+    max-width: 1200px;
+  }
+}
+
 body {
   font-family: var(--font);
   background: var(--color-bg);
@@ -57,11 +80,6 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
-/* main {
-  flex: 1 0 auto;
-  width: 100%;
-  padding: 16px 12px;
-} */
 
 /* Header and Navbar */
 header {
@@ -245,27 +263,7 @@ header {
   }
 }
 
-/* Main Layout */
-main {
-  width: 100%;
-  padding: 16px 12px;
-}
-@media (min-width: 480px) {
-  main {
-    padding: 20px 16px;
-  }
-}
-@media (min-width: 768px) {
-  main {
-    padding: 32px 24px;
-    max-width: 750px;
-    margin: 0 auto;
-  }
 
-  main:has(.login-section) {
-    max-width: 1200px;
-  }
-}
 
 /* Screen Card */
 .categories-section,
