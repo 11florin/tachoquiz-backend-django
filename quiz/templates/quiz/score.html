@@ -1,0 +1,71 @@
+{% extends "tachoquiz/base.html" %}
+{% load static %}
+
+{% block title %}
+  Score | Tacho Quiz
+{% endblock %}
+
+{% block content %}
+<section class="score-section">
+  <div class="screen-header">
+    <h1>Quiz Completed</h1>
+  </div>
+
+  <div class="score-display">
+    <p class="score-label">Your Score</p>
+
+    <p class="score-value">
+      {{ correct_answers }} / {{ total_questions }}
+    </p>
+
+    <div class="score-bar-wrap">
+      <div
+        class="score-bar-fill"
+        id="score-bar"
+        data-percentage="{{ percentage }}"
+        ></div>
+    </div>
+
+    <p class="score-percent">
+      {{ percentage }}%
+    </p>
+
+    <div class="score-message">
+      {% if percentage >= 80 %}
+        Excellent work!
+      {% elif percentage >= 60 %}
+        Good job!
+      {% else %}
+        Keep practising!
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="score-breakdown">
+    <p>
+      Correct answers:
+      <strong>{{ correct_answers }}</strong>
+    </p>
+
+    <p>
+      Incorrect answers:
+      <strong>{{ incorrect_answers }}</strong>
+    </p>
+
+    <p>
+      Total questions:
+      <strong>{{ total_questions }}</strong>
+    </p>
+  </div>
+
+  <div class="screen-footer">
+    <a href="{% url 'categories' %}" class="action-btn">
+      PLAY AGAIN
+    </a>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'quiz/js/score.js' %}" defer></script>
+{% endblock %}

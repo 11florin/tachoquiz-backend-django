@@ -74,8 +74,43 @@ def quiz_view(request):
 
 @login_required
 def score_view(request):
-    """Render the quiz score page."""
-    return render(request, "quiz/score.html")
+    """Calculate and display the completed quiz score."""
+
+    quiz_answers = request.session.get("quiz_answers", {})
+    question_ids = request.session.get("quiz_question_ids", [])
+    quiz_complete = request.session.get("quiz_complete", False)
+
+    if not quiz_complete or not question_ids:
+        messages.error(
+            request,
+            "No completed quiz was found. Please start a new quiz."
+        )
+        return redirect("categories")
+
+    selected_answer_ids = list(quiz_answers.values())
+
+    correct_answers = Answer.objects.filter(
+        id__in=selected_answer_ids,
+        is_correct=True,
+    ).count()
+
+    total_questions = len(question_ids)
+    incorrect_answers = total_questions - correct_answers
+
+    percentage = (
+        round((correct_answers / total_questions) * 100)
+        if total_questions
+        else 0
+    )
+
+    context = {
+        "correct_answers": correct_answers,
+        "incorrect_answers": incorrect_answers,
+        "total_questions": total_questions,
+        "percentage": percentage,
+    }
+
+    return render(request, "quiz/score.html", context)
 
 
 @login_required
