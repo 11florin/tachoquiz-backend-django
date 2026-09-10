@@ -1,47 +1,68 @@
+{% extends "tachoquiz/base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}
+  Create Account | Tacho Quiz
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block content %}
+<section class="login-section">
+    <div class="screen-header">
+        <h1>Create Account</h1>
+    </div>
 
-    <title>Create Account</title>
-
-    <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}">
-</head>
-
-<body>
-
-    <section class="login-section">
-
-        <div class="screen-header">
-            <h1>Create Account</h1>
-        </div>
+    <form method="POST">
+        {% csrf_token %}
 
         <div class="login-body">
 
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-
-                <button type="submit" class="action-btn">Register</button>
-            </form>
-
-            {% if form.errors %}
-            <div class="errors">
-                {{ form.errors }}
+            <div class="form-group {% if form.username.errors %}has-error{% endif %}">
+                <label for="{{ form.username.id_for_label }}">
+                    Username
+                </label>
+                {{ form.username }}
+                {{ form.username.help_text }}
+                {{ form.username.errors }}
             </div>
-            {% endif %}
+
+            <div class="form-group {% if form.email.errors %}has-error{% endif %}">
+                <label for="{{ form.email.id_for_label }}">
+                    Email
+                </label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="form-group {% if form.password1.errors %}has-error{% endif %}">
+                <label for="{{ form.password1.id_for_label }}">
+                    Password
+                </label>
+                {{ form.password1 }}
+                {{ form.password1.help_text }}
+                {{ form.password1.errors }}
+            </div>
+
+            <div class="form-group {% if form.password2.errors %}has-error{% endif %}">
+                <label for="{{ form.password2.id_for_label }}">
+                    Password confirmation
+                </label>
+                {{ form.password2 }}
+                {{ form.password2.help_text }}
+                {{ form.password2.errors }}
+            </div>
+
+            <button type="submit" class="action-btn form-group">
+                REGISTER
+            </button>
+
+            <p class="signup-text">
+                Already have an account?
+                <a href="{% url 'login' %}" class="link-btn">
+                    Login
+                </a>
+            </p>
 
         </div>
-
-    </section>
-
-    <div class="image-container">
-        <img src="{% static 'quiz/images/truck-img2.png' %}" alt="Illustration of a truck">
-    </div>
-
-</body>
-</html>
+    </form>
+</section>
+{% endblock %}
