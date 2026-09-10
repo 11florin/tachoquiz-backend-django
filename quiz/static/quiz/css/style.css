@@ -1070,6 +1070,27 @@ a.action-btn {
     color: #155724;
 }
 
+/* register */
+.form-group.has-error input {
+  border-color: #dc2626;
+}
+
+.form-group.has-error label {
+  color: #dc2626;
+}
+
+.form-group.has-error .errorlist {
+  color: #dc2626;
+  margin-top: 6px;
+  padding-left: 0;
+  list-style: none;
+  font-size: 14px;
+}
+
+.form-group.has-error input:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
 
 /* about */
 .about-body {
