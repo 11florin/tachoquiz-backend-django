@@ -3,5 +3,13 @@
 
 {% block content %}
 <h1>Tacho Quiz</h1>
-<a href="{% url 'categories' %}" class="action-btn">START QUIZ</a>
+{% if user.is_authenticated %}
+  <a href="{% url 'categories' %}" class="action-btn">
+    START QUIZ
+  </a>
+{% else %}
+  <a href="{% url 'login' %}" class="action-btn">
+    LOGIN TO START QUIZ
+  </a>
+{% endif %}
 {% endblock %}
