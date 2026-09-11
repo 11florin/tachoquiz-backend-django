@@ -136,6 +136,21 @@ def score_view(request):
 
 
 @login_required
+def quiz_history(request):
+    """Display quiz results belonging to the logged-in user."""
+
+    results = QuizResult.objects.filter(
+        user=request.user
+    )
+
+    return render(
+        request,
+        "quiz/quiz_history.html",
+        {"results": results},
+    )
+
+
+@login_required
 def categories(request):
     """Display quiz categories and their number of questions."""
     categories = Category.objects.annotate(
