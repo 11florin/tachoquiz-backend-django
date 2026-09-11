@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db.models import Count
 from .forms import RegistrationForm
-from .models import Category, Question, Answer
+from .models import Category, Question, Answer, QuizResult
 
 
 
@@ -103,6 +103,28 @@ def score_view(request):
         else 0
     )
 
+    quiz_result_saved = request.session.get(
+    "quiz_result_saved",
+    False,
+)
+
+    if not quiz_result_saved:
+        category_id = request.session.get("quiz_category_id")
+
+        category = get_object_or_404(
+            Category,
+            id=category_id,
+        )
+
+        QuizResult.objects.create(
+            user=request.user,
+            category=category,
+            score=correct_answers,
+            total_questions=total_questions,
+        )
+
+        request.session["quiz_result_saved"] = True
+
     context = {
         "correct_answers": correct_answers,
         "incorrect_answers": incorrect_answers,
@@ -161,6 +183,7 @@ def category_quiz(request, slug):
         request.session["question_index"] = 0
         request.session["quiz_answers"] = {}
         request.session["quiz_complete"] = False
+        request.session["quiz_result_saved"] = False
 
     question_ids = request.session.get("quiz_question_ids", [])
     question_index = request.session.get("question_index", 0)
