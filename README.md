@@ -1,553 +1,601 @@
 # TachoQuiz — Django Backend
 
-TachoQuiz is a web application designed to help professional drivers practise tachograph rules, driving times, rest periods, and CPC-related knowledge.  
-This repository contains the Django backend, responsible for authentication, database management, quiz logic, and integration with the existing frontend.
+TachoQuiz is a Django web application designed to help professional drivers practise tachograph rules, driving times, rest periods, and CPC-related knowledge.
+
+This repository contains the Django backend and the integration of the existing frontend with Django. The application uses server-side authentication, database-driven quiz content, session-based quiz progression, score calculation, and persistent quiz result storage.
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 
-The backend is built using **Django**, with **PostgreSQL** prepared for production deployment.  
-The project follows a structured development process based on **18 User Stories**.
+TachoQuiz is being developed as a full-stack portfolio project using Django and PostgreSQL.
 
+The project follows an Agile workflow based on 18 User Stories. Each major feature is developed on a separate Git branch, reviewed through a Pull Request, tested against its Acceptance Criteria, and merged into `main` when complete.
 
----
+### Current Functionality
 
-## 🗂️ Technologies Used
-
-- **Python 3.12**  
-- **Django 6.1**  
-- **psycopg 3.3.5 (binary)** 
-- **python-decouple 3.8** 
-- **PostgreSQL** (production database)  
-- **asgiref**, **sqlparse**, **typing_extensions**
-- **HTML, CSS, JavaScript** (existing frontend integration)  
-- **Django Admin**  
-- **WSL Ubuntu + VS Code**  
- 
-
----
-
-## 📦 Project Structure
-
-
+- User registration
+- Login and logout
+- Password reset
+- Protected quiz functionality for authenticated users
+- Dynamic quiz categories
+- Database-driven questions and answers
+- Randomised quiz question order
+- One-question-at-a-time quiz progression
+- Server-side answer validation
+- Quiz score calculation
+- Animated score display
+- Persistent quiz result storage
+- Django Admin quiz management
 
 ---
 
-# 🧩 Completed User Stories
+## Technologies Used
+
+- **Python 3.12**
+- **Django 6.1**
+- **PostgreSQL**
+- **psycopg 3.3.5**
+- **python-decouple 3.8**
+- **HTML5**
+- **CSS3**
+- **JavaScript**
+- **Django Admin**
+- **Git & GitHub**
+- **Ubuntu / WSL**
+- **VS Code**
+
+### Planned Production Services
+
+- **Cloudinary** — image and media management
+- **DigitalOcean** — production deployment
 
 ---
 
-## 🟦 US01 — Set Up Django Project
+## Project Structure
 
-### Description
+```text
+tachoquiz-backend-django/
+├── manage.py
+├── requirements.txt
+├── README.md
+├── tachoquiz/
+│   ├── settings.py
+│   ├── urls.py
+│   ├── asgi.py
+│   └── wsgi.py
+└── quiz/
+    ├── migrations/
+    ├── static/
+    │   └── quiz/
+    │       ├── css/
+    │       ├── images/
+    │       └── js/
+    ├── templates/
+    │   ├── quiz/
+    │   └── tachoquiz/
+    ├── admin.py
+    ├── apps.py
+    ├── forms.py
+    ├── models.py
+    ├── urls.py
+    └── views.py
+```
+
+The `tachoquiz` directory contains project-level configuration.
+
+The `quiz` application contains the quiz models, views, forms, URLs, templates, static files, and migrations.
+
+---
+
+## Database Design
+
+Quiz content is stored in PostgreSQL and managed through Django models.
+
+### Category
+
+Stores the available quiz topics.
+
+- `name`
+- `slug`
+
+### Question
+
+Stores each quiz question and belongs to a category.
+
+- `category` — ForeignKey to `Category`
+- `text`
+- `explanation`
+
+### Answer
+
+Stores the available answers for a question.
+
+- `question` — ForeignKey to `Question`
+- `text`
+- `is_correct`
+
+### QuizResult
+
+Stores completed quiz attempts.
+
+- `user` — ForeignKey to the authenticated user
+- `category` — ForeignKey to `Category`
+- `score`
+- `total_questions`
+- `completed_at`
+
+The category relationship on saved results uses `SET_NULL` so historical attempts can remain available if a category is later removed.
+
+---
+
+# Completed User Stories
+
+## US01 — Set Up Django Project
+
+### User Story
+
 As a developer, I want to set up the Django project so that I have a working backend foundation for the TachoQuiz application.
 
-### Implementation Summary
-- Django project created (`tachoquiz`)
-- Main application created (`quiz`)
-- Application added to `INSTALLED_APPS`
-- Development server runs successfully
-- Standard Django project structure established
-- `.gitignore` configured
-- Sensitive files excluded from version control
+### Implementation
 
-### Status  
-✔ Completed
+The Django project and `quiz` application were created, registered, and configured. Static files, environment variables, `.gitignore`, and the initial project structure were also established.
+
+### Key Features
+
+- Django project and `quiz` app
+- `QuizConfig` registered in `INSTALLED_APPS`
+- Project and application URL configuration
+- Initial view and template
+- Static file configuration
+- Environment variables using `python-decouple`
+- Sensitive `.env` file excluded from Git
+
+**Status:** Completed
 
 ---
 
-## 🟦 US02 — Configure PostgreSQL Database
+## US02 — Configure PostgreSQL Database
 
-### Description
+### User Story
+
 As a developer, I want the application to use PostgreSQL so that the database is suitable for production deployment.
 
-### Implementation Summary
-- PostgreSQL configuration prepared in `settings.py`
-- Database connection tested
-- Migrations applied successfully
-- Application can create and retrieve records
-- Environment variables prepared for production
+### Implementation
 
-### Status  
-✔ Completed
+PostgreSQL was configured as the Django database using environment variables for database credentials. The connection was tested and Django migrations were applied successfully.
+
+### Key Features
+
+- PostgreSQL database and role
+- Django PostgreSQL configuration
+- `psycopg` database driver
+- Database credentials stored in environment variables
+- Successful migrations and database connection
+
+**Status:** Completed
 
 ---
 
-## 🟦 US03 — Create Quiz Database Models
+## US03 — Create Quiz Database Models
 
-### Description
+### User Story
+
 As an administrator, I want quiz categories, questions, and answers stored in the database so that quiz content can be managed dynamically.
 
-### Implementation Summary
+### Implementation
 
-Three models were created:
+`Category`, `Question`, and `Answer` models were created with appropriate relationships and migrations.
 
-#### Category
-- name  
-- slug  
+### Key Features
 
-#### Question
-- category (ForeignKey)  
-- text  
-- explanation  
+- Category model
+- Question model linked to Category
+- Answer model linked to Question
+- `related_name` relationships
+- Human-readable `__str__()` methods
+- Migrations created and applied
 
-#### Answer
-- question (ForeignKey)  
-- text  
-- is_correct  
-
-### Additional Work
-- Proper relationships established  
-- `related_name` added  
-- `__str__` methods implemented  
-- Migrations created and applied  
-
-### Status  
-✔ Completed
+**Status:** Completed
 
 ---
 
-## 🟦 US04 — Configure Django Admin
+## US04 — Configure Django Admin
 
-### Description
+### User Story
+
 As an administrator, I want to manage quiz content through Django Admin so that I can add and update questions without modifying the source code.
 
-### Implementation Summary
-- Category, Question, and Answer models registered in Django Admin
-- Admin supports:
-  - Creating categories
-  - Creating questions
-  - Creating answers
-  - Marking correct answers
-  - Editing and deleting quiz content
+### Implementation
 
-### Status  
-✔ Completed
+Quiz models were registered with Django Admin, allowing quiz content to be created, edited, and deleted through the administration interface.
+
+### Key Features
+
+- Category management
+- Question management
+- Answer management
+- Correct answer selection
+- Editing and deletion of quiz content
+
+**Status:** Completed
 
 ---
 
-## 🟦 US05 — User Registration
+## US05 — User Registration
 
-### Description
+### User Story
+
 As a visitor, I want to create an account so that I can access personalised functionality.
 
-### Implementation Summary
-User registration was implemented using Django’s `UserCreationForm`, extended to include a required email field.
+### Implementation
 
-### What Was Added
-- `RegistrationForm` with:
-  - username  
-  - email (required)  
-  - password1  
-  - password2  
-- Validation for:
-  - required email  
-  - password mismatch  
-  - weak passwords  
-  - duplicate usernames  
-- `register` view (GET + POST)
-- `confirmation` view
-- Templates:
-  - `register.html`
-  - `confirmation.html`
-- Error messages displayed in the template
-- Styling integrated with existing frontend design
+Registration was implemented using Django's `UserCreationForm`, extended with a required email field and integrated with the TachoQuiz UI.
 
-### How It Works
-1. User visits `/register/`
-2. User fills in the registration form
-3. Django validates the input
-4. If valid:
-   - A new user is created
-   - User is redirected to the confirmation page
-5. If invalid:
-   - Errors are displayed beneath the form
+### Key Features
 
-### Files Modified
-- `quiz/forms.py`
-- `quiz/views.py`
-- `quiz/templates/quiz/register.html`
-- `quiz/templates/quiz/confirmation.html`
-- `quiz/urls.py`
+- Username, email and password registration
+- Required email field
+- Django password validation
+- Duplicate username validation
+- Registration confirmation page
+- Form error feedback
 
 ### Testing
-- Registration with valid data → success  
-- Short password → error  
-- Password mismatch → error  
-- Duplicate username → error  
-- Invalid email → error  
-- Confirmation page displays correctly  
 
-### Status  
-✔ Completed  
+- Valid registration succeeds
+- Weak and mismatched passwords are rejected
+- Duplicate usernames are rejected
+- Invalid email input is rejected
+
+**Status:** Completed
 
 ---
 
-## Testing Summary (US01–US05)
+## US06 — User Authentication
 
-- Development server runs correctly  
-- Models behave as expected  
-- Django Admin fully functional  
-- Registration workflow works end-to-end  
-- Validation errors displayed correctly  
-- Templates load with correct styling  
-- Static files integrated successfully  
+### User Story
 
----
+As a user, I want to log in and log out so that I can securely access personalised quiz functionality.
 
-## US06 — User Authentication (Login, Logout & Register Integration)
+### Implementation
 
-### Description
-As a user, I want to log in, log out, and register an account so that I can securely access personalised quiz functionality.
+Authentication was implemented using Django's built-in authentication system and integrated with the shared site layout.
 
-### Implementation Summary
-User authentication was implemented using Django’s built-in authentication system.
-All authentication pages were updated to match the existing UI, and several template and styling issues were fixed to ensure consistency across the application.
+### Key Features
 
-### What Was Added
-- Login functionality using:
-  - authenticate()
-  - login()
-- Logout functionality using:
-  - logout()
-  - success message via Django’s messaging framework
-- Updated register.html to match the login page layout
-- Dynamic navbar behaviour:
-  - shows username when logged in
-  - shows Login/Register when logged out
-- Consistent input styling for:
-  - username
-  - email
-  - password
-- Error handling for:
-  - invalid login
-  - incorrect password
-  - missing fields
-  - registration errors
-- Template inheritance fixes across all authentication pages
-
-### How It Works
-1. User visits `/login/` or `/register/`
-2. User fills in the form
-3. Django validates the credentials or registration data
-4. If valid:
-   - user is logged in OR account is created
-   - logout displays a success message
-   - user is redirected to the appropriate page
-5. If invalid:
-   - errors are displayed beneath the form
-6. Navbar updates automatically based on authentication state
-
-
-### Files Modified
-- `quiz/views.py`
-- `quiz/forms.py`
-- `quiz/templates/tachoquiz/base.html`
-- `quiz/templates/quiz/login.html`
-- `quiz/templates/quiz/register.html`
-- `quiz/templates/quiz/confirmation.html`
-- `quiz/static/quiz/css/style.css`
-- `quiz/urls.py`
+- Login using `authenticate()` and `login()`
+- Logout using `logout()`
+- Django messages after logout
+- Dynamic navbar based on authentication state
+- Consistent login and registration styling
+- Authentication error handling
 
 ### Testing
-- Valid login → success  
-- Invalid login → error message  
-- Valid registration → account created  
-- Password mismatch → error  
-- Weak password → error  
-- Duplicate username → error  
-- Logout → success message displayed  
-- Navbar updates correctly  
-- Input fields consistent across login and register pages  
 
-### Status
-✔ Completed
+- Valid login succeeds
+- Invalid credentials display an error
+- Logout ends the authenticated session
+- Navbar updates correctly for logged-in and logged-out users
+
+**Status:** Completed
 
 ---
-
 
 ## US07 — Display Quiz Categories
 
-### Description
+### User Story
 
-As a user, I want to see available quiz categories so that I can choose the topic I want to practice.
+As a user, I want to see available quiz categories so that I can choose the topic I want to practise.
 
-### Implementation Summary
+### Implementation
 
-Quiz categories are now retrieved dynamically from the PostgreSQL database instead of being hard-coded in the frontend.
+Categories are retrieved dynamically from PostgreSQL using the Django ORM. Category URLs use slugs, and quiz functionality is protected for authenticated users.
 
-Users can view available categories, select a category, and navigate to the appropriate quiz page using the category slug.
+### Key Features
 
-Category and quiz pages are protected so that only authenticated users can access quiz functionality.
-
-Empty categories are handled appropriately to prevent users from starting a quiz that contains no questions.
-
-### What Was Added
-
-- Dynamic category retrieval using:
-
-  - Category model
-
-  - Django ORM
-
-  - Count() aggregation
-
-- Category listing functionality:
-
-  - displays categories stored in the database
-
-  - displays categories containing questions as selectable links
-
-  - displays "No questions available" for empty categories
-
-  - displays a message when no categories exist
-
-- Category-specific quiz routing using:
-
-  - category slugs
-
-  - dynamic Django URL patterns
-
-  - get_object_or_404()
-
-- Authentication protection using:
-
-  - @login_required on the categories view
-
-  - @login_required on the category quiz view
-
-- Empty category protection:
-
-  - checks whether the selected category contains questions
-
-  - redirects users back to the categories page when no questions exist
-
-  - displays an informational message using Django's messaging framework
-
-- Quiz template handling:
-
-  - displays the selected category name
-
-  - safely handles cases where no category context is provided
-
-- Django Admin improvement:
-
-  - corrected the Category plural name from "Categorys" to "Categories"
-
-  - created and applied the required model options migration
-
-### How It Works
-
-1. Authenticated user selects `START QUIZ`
-
-2. User is directed to `/categories/`
-
-3. Django retrieves categories from the database
-
-4. Each category is annotated with its number of questions
-
-5. If a category contains questions:
-
-   - it is displayed as a selectable link
-
-   - its slug is used to generate the quiz URL
-
-6. When the user selects a category:
-
-   - Django retrieves the category using its slug
-
-   - Django checks that the category contains questions
-
-   - the selected category is passed to the quiz template
-
-7. The category-specific quiz page is opened, for example:
-
-   - `/quiz/driving-times/`
-
-8. If a category contains no questions:
-
-   - it is displayed as unavailable
-
-   - direct URL access is prevented
-
-   - the user is redirected back to the categories page with an informational message
-
-9. Unauthenticated users attempting to access category or quiz pages are redirected to the login page
-
-### Files Modified
-
-- `quiz/views.py`
-
-- `quiz/urls.py`
-
-- `quiz/models.py`
-
-- `quiz/templates/quiz/home.html`
-
-- `quiz/templates/quiz/categories.html`
-
-- `quiz/templates/quiz/quiz.html`
-
-- `quiz/migrations/0002_alter_category_options.py`
+- Dynamic category retrieval
+- Question count using `Count()`
+- Slug-based category URLs
+- Empty category handling
+- `@login_required` protection
+- Django messages for unavailable categories
 
 ### Testing
 
-- Categories retrieved from PostgreSQL → success
+- Categories load from PostgreSQL
+- Correct question counts are displayed
+- Category links open the correct quiz
+- Empty categories cannot start a quiz
+- Unauthenticated access redirects to Login
 
-- Available categories displayed → success
-
-- Category containing questions → selectable
-
-- Category selection → correct quiz URL opened
-
-- Category slug → correct Category retrieved
-
-- Empty category → displayed as unavailable
-
-- Direct access to empty category → redirected to categories
-
-- Empty category → informational message displayed
-
-- Unauthenticated access to `/categories/` → redirected to login
-
-- Unauthenticated access to category quiz URL → redirected to login
-
-- Authenticated access to categories → success
-
-- Category plural displayed as "Categories" in Django Admin → success
-
-- `python manage.py check` → no issues
-
-### Status
-
-✔ Completed
+**Status:** Completed
 
 ---
 
 ## US08 — Start and Complete Quiz
 
-### Description
+### User Story
 
 As a user, I want to complete a tachograph quiz so that I can test my knowledge.
 
-### Implementation Summary
+### Implementation
 
-Quiz progression was implemented using Django sessions so that users can complete one question at a time while preserving their progress.
+Quiz progression uses Django sessions to preserve a randomised question order, selected answers, and the current question while the user completes the quiz one question at a time.
 
-Questions are randomized when the quiz starts, answers are validated server-side, and the user can progress through the quiz until the final submission.
-
-### What Was Added
+### Key Features
 
 - Category-based quiz flow
-- Randomized question order using:
-  - `order_by("?")`
-- Session-based quiz state using:
-  - `quiz_category_id`
-  - `quiz_question_ids`
-  - `question_index`
-  - `quiz_answers`
-  - `quiz_complete`
-- One-question-per-page quiz layout
-- Four answer options displayed from the database
-- Radio-button answer selection
-- `Next` button for quiz progression
-- `Submit Quiz` button on the final question
+- Randomised question order
+- Session-based quiz state
+- One question displayed at a time
 - Server-side answer validation
-- Validation that the selected answer belongs to the current question
-- Validation that all questions have been answered before final submission
-- Post/Redirect/Get flow to prevent duplicate form submissions on refresh
-- Quiz session recovery handling for expired or missing quiz state
-- Redirect from `/quiz/` to the category selection page
-- Docstrings added to quiz views
-
-### How It Works
-
-1. User selects a quiz category.
-2. Django retrieves all questions for that category.
-3. Question IDs are randomized and stored in the user's session.
-4. The first question is displayed with its available answers.
-5. User selects one answer and submits the form.
-6. Django validates the submitted answer.
-7. The selected answer is stored in the session.
-8. The question index is increased.
-9. Django redirects to the same quiz URL using the Post/Redirect/Get pattern.
-10. The next question is displayed without resetting quiz progress.
-11. On the final question, the button changes from `Next` to `Submit Quiz`.
-12. When all questions have been answered, the user is redirected to the score page.
+- `Next` and `Submit Quiz` progression
+- Post/Redirect/Get pattern
+- Missing or expired session handling
 
 ### Testing
 
-- Confirmed questions are loaded from the database
-- Confirmed question order is randomized at quiz start
-- Confirmed only one question is displayed at a time
-- Confirmed users can select one answer per question
-- Confirmed quiz progress is preserved using Django sessions
-- Confirmed refresh does not reset quiz progress
-- Confirmed refresh does not re-submit the previous answer
-- Confirmed the final question displays `Submit Quiz`
-- Confirmed invalid or missing answers are rejected
-- Confirmed completed quizzes redirect to the score page
-- Confirmed users can restart the same category as a new quiz session
+- Questions load from the database
+- Question order is randomised
+- Progress survives page refreshes
+- Invalid or missing answers are rejected
+- Refresh does not resubmit the previous answer
+- Completed quizzes redirect to the score page
 
-### Code Review Fixes
-
-- Fixed `/quiz/` route so it redirects to the category selection page
-- Prevented quiz progress from being reset on every GET request
-- Added handling for expired or missing quiz sessions
-- Implemented Post/Redirect/Get after valid answer submissions
-- Preserved `Submit Quiz` button state during validation errors
-- Added quiz completion state to allow the same category to be restarted correctly
+**Status:** Completed
 
 ---
 
-## Bugs Encountered
+## US09 — Display Quiz Score
 
-### US05–US06 — Authentication & Templates
-- Template inheritance broken  
-  - duplicated `<html>`, `<head>`, `<body>` tags in child templates  
-  - fixed by ensuring all pages extend `base.html`
+### User Story
 
-- Static files not loading  
-  - missing `STATICFILES_DIRS` caused CSS not to load  
-  - fixed by adding correct static configuration
+As a user, I want to see my quiz score after completing a quiz so that I can understand how well I performed.
 
-- Register input fields too small  
-  - Django-generated fields did not receive `.form-group` styling  
-  - fixed by wrapping fields in `.form-group` and adding universal input CSS
+### Implementation
 
-- Navbar alignment issues  
-  - username and links appeared in the wrong order  
-  - fixed by reorganising `<li>` elements and improving UX
+Completed answers are evaluated server-side. Django calculates the correct and incorrect answer totals and score percentage, then displays the result on a dedicated score page.
 
-- Logout message not displayed  
-  - missing message block in templates  
-  - fixed by adding messages section in `base.html`
+### Key Features
 
-  ### US07 — Display Quiz Categories
+- Server-side score calculation
+- Correct and incorrect answer totals
+- Total question count
+- Score percentage
+- Animated score progress bar
+- Score feedback message
+- Protected score page
+- `PLAY AGAIN` functionality
 
-- **Category URL error:**  
-  A `NoReverseMatch` error occurred because the URL name in the template did not match the name defined in `urls.py`. This was fixed by using `category-quiz` consistently.
+### Testing
 
-- **Empty category access:**  
-  Categories without questions could still be accessed by entering their URL directly. A check using `category.questions.exists()` was added to redirect users back to the categories page.
+- Tested `0%`, partial, and `100%` scores
+- Score calculations display correctly
+- Score progress bar displays correctly
+- `PLAY AGAIN` returns to categories
+- Unauthenticated access is protected
+- Missing completed quiz sessions are handled safely
 
-- **Authentication protection:**  
-  Code review identified that the new category views were accessible without authentication. `@login_required` was added to protect both category views.
+**Status:** Completed
 
-  ### US08 — Start and Complete Quiz
+---
 
-- **Quiz progress reset on refresh:**  
-  The quiz was initially re-randomized and restarted on every GET request. Session initialization was updated so that an active quiz keeps its existing question order and progress.
+## Issue #30 — Forgot Password and Password Reset
 
-- **Form re-submission on refresh:**  
-  After submitting an answer, the next question was originally rendered directly from the POST request. This could cause the previous answer to be submitted again when refreshing the page. The Post/Redirect/Get pattern was implemented to prevent duplicate submissions.
+### User Story
 
-- **Missing quiz session handling:**  
-  If the quiz session was missing or expired, the user could be incorrectly redirected to the score page. Session validation was added to redirect the user back to the categories page with an appropriate message.
+As a registered user, I want to reset my password if I forget it so that I can regain access to my TachoQuiz account.
 
-- **Incorrect quiz route behaviour:**  
-  The `/quiz/` route rendered the quiz template without the required category and question context. The route was updated to redirect users to the category selection page.
+### Implementation
 
-- **Incorrect final button state:**  
-  During validation errors on the final question, `is_last_question` was missing from the template context, causing `Next` to appear instead of `Submit Quiz`. The required context was added to the validation error responses.
+Django's built-in password reset system was integrated with the existing authentication flow and TachoQuiz UI.
+
+During development, reset emails are generated using Django's console mailer.
+
+### Key Features
+
+- `Forgot password?` link
+- Password reset request form
+- Secure reset token generation
+- Reset email generation
+- New password form
+- Django password validation
+- Reset completion page
+- Invalid and expired link handling
+- Account enumeration protection
+
+### Testing
+
+- Valid reset links work correctly
+- Weak passwords are rejected
+- Old password stops working after reset
+- New password allows login
+- Reused and invalid links are rejected
+- Unknown email addresses do not reveal whether an account exists
+
+**Status:** Completed
+
+---
+
+## US10 — Save Quiz Results
+
+### User Story
+
+As a registered user, I want my quiz results to be saved so that I can monitor my performance.
+
+### Implementation
+
+Completed quiz attempts are stored persistently in PostgreSQL using the `QuizResult` model.
+
+Each result is associated with the authenticated user and category and stores the score, total number of questions, and completion time.
+
+A session flag prevents duplicate records when the Score page is refreshed.
+
+### Key Features
+
+- `QuizResult` model
+- User and category relationships
+- Score and total question storage
+- Automatic completion date/time
+- Most-recent-first result ordering
+- Duplicate result prevention
+- Result retrieval through the Django ORM
+
+### Testing
+
+- Results are saved in PostgreSQL
+- Correct user and category are stored
+- Score and completion time are stored correctly
+- Refreshing `/score/` does not create duplicates
+- Saved attempts can be retrieved later using Django ORM queries
+
+**Status:** Completed
+
+---
+
+# Testing
+
+Development testing is performed throughout each User Story before merging into `main`.
+
+Common project checks include:
+
+```bash
+python3 manage.py check
+git diff --check
+git status
+```
+
+Feature-specific testing includes:
+
+- Authentication and access-control checks
+- Form validation
+- Database record creation and retrieval
+- Session behaviour
+- Quiz progression
+- Score calculations
+- Invalid and missing data handling
+- Refresh and duplicate-submission behaviour
+- Password reset security checks
+
+Acceptance Criteria are verified before a User Story is marked complete.
+
+---
+
+# Bugs & Development Challenges
+
+The following are some of the most relevant issues encountered during development.
+
+### Template Inheritance
+
+Authentication templates initially contained duplicated document structure. Child templates were updated to extend the shared `base.html` layout.
+
+### Static File Configuration
+
+CSS initially failed to load because the required static file configuration was missing. Django static settings were corrected.
+
+### Category URL Resolution
+
+A `NoReverseMatch` error occurred because a template URL name did not match `urls.py`. The `category-quiz` URL name was applied consistently.
+
+### Quiz Progress Reset
+
+The quiz initially restarted and re-randomised questions on every GET request. Session initialisation was changed so active quiz progress is preserved.
+
+### Form Re-submission on Refresh
+
+Rendering the next question directly after POST could resubmit the previous answer when the browser refreshed. The Post/Redirect/Get pattern was implemented.
+
+### Missing Quiz Session
+
+Missing or expired quiz session data could lead to incorrect navigation. Session validation now redirects users safely to the categories page.
+
+### Score Progress Bar
+
+The score percentage was calculated correctly, but the progress bar initially lacked the required CSS. Styling was added and the dynamic width is applied through JavaScript using a `data-percentage` attribute.
+
+### Authentication Redirect
+
+Protected views required `LOGIN_URL` configuration so unauthenticated users are redirected to the correct Login page.
+
+### Registration Validation Feedback
+
+Django returned registration errors correctly, but invalid fields were not visually clear. Error styling was added to highlight invalid inputs.
+
+### Django 6.1 Email Configuration
+
+The password reset setup initially caused an `ImproperlyConfigured` error when deprecated email configuration was used alongside `MAILERS`. The project was updated to use the Django 6.1 mailer configuration.
+
+
+
+---
+
+# Security
+
+The project currently includes the following security practices:
+
+- Django's built-in authentication system
+- Django password validation
+- CSRF protection on POST forms
+- `@login_required` on protected quiz views
+- Environment variables for sensitive configuration
+- `.env` excluded from version control
+- Server-side answer validation
+- Secure Django password reset tokens
+- Password reset responses that do not reveal whether an account exists
+
+Production-specific security settings will be completed as part of deployment.
+
+---
+
+# Deployment
+
+Production deployment is planned for **DigitalOcean** with **PostgreSQL** as the production database.
+
+**Cloudinary** is planned for image and media management.
+
+Production deployment configuration has not yet been completed and will be documented when the relevant User Stories are implemented.
+
+---
+
+# Future Development
+
+The project is being developed sequentially according to the remaining User Stories.
+
+Planned functionality includes:
+
+- User result history and performance monitoring
+- Additional quiz and user experience improvements
+- Production media configuration with Cloudinary
+- DigitalOcean deployment
+- Production email delivery for password reset
+
+This section will be updated as the remaining User Stories are completed.
+
+---
+
+# Development Workflow
+
+The project follows an Agile-inspired GitHub workflow:
+
+1. Create or select a GitHub Issue for the User Story.
+2. Review its Acceptance Criteria.
+3. Create a dedicated feature branch.
+4. Implement the feature incrementally.
+5. Make small, meaningful Git commits.
+6. Test the Acceptance Criteria.
+7. Run final Django and Git checks.
+8. Push the feature branch.
+9. Open a Pull Request.
+10. Review and merge into `main`.
+11. Delete the completed feature branch.
+
+Detailed implementation history is available through the repository's GitHub Issues, commits, and Pull Requests.
+
+---
+
+# Author
+
+**Florin Albu**
+
+TachoQuiz is being developed as a full-stack web development portfolio project.
