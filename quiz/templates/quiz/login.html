@@ -24,6 +24,12 @@
                 <input type="password" id="password" name="password" required>
             </div>
 
+            <p class="forgot-link">
+                <a href="{% url 'password_reset' %}">
+                    Forgot password?
+                </a>
+            </p>
+
             <button type="submit" class="action-btn form-group">LOGIN</button>
 
             <p class="signup-text">
