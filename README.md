@@ -454,6 +454,46 @@ A session flag prevents duplicate records when the Score page is refreshed.
 
 ---
 
+## US11 — View Quiz History
+
+### User Story
+
+As a registered user, I want to view my previous quiz results so that I can track my progress.
+
+### Implementation
+
+A quiz history page was added to retrieve and display previous quiz attempts stored in PostgreSQL.
+
+Results are filtered using the authenticated user, ensuring that each user can only access their own quiz history.
+
+### Key Features
+
+- Protected quiz history page
+- Previous quiz attempts retrieved from PostgreSQL
+- Category displayed for each attempt
+- Score displayed for each attempt
+- Completion date and time displayed
+- Empty state for users with no previous results
+- `START QUIZ` link from the empty history page
+- History link added to the authenticated navbar
+- Active page state added to navbar navigation
+- User-specific result filtering
+
+### Testing
+
+- Authenticated users can access `/history/`
+- Previous quiz attempts display correctly
+- Category, score, date and time display correctly
+- Users with no results see an appropriate empty state
+- `START QUIZ` redirects to category selection
+- Tested with multiple accounts to confirm users only see their own results
+- Newly completed quizzes appear in the correct user's history
+- Navbar History link and active page state work correctly
+
+**Status:** Completed
+
+---
+
 # Testing
 
 Development testing is performed throughout each User Story before merging into `main`.
@@ -525,6 +565,12 @@ Django returned registration errors correctly, but invalid fields were not visua
 ### Django 6.1 Email Configuration
 
 The password reset setup initially caused an `ImproperlyConfigured` error when deprecated email configuration was used alongside `MAILERS`. The project was updated to use the Django 6.1 mailer configuration.
+
+### Quiz History Navigation State
+
+After adding the History page to the navbar, the current page was not visually highlighted because the existing CSS `:active` pseudo-class only applies while a link is being clicked.
+
+Django's `request.resolver_match.url_name` was used to add an `.active` class to the current navigation link, allowing the active page to remain visually highlighted.
 
 
 
