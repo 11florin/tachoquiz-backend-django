@@ -105,28 +105,73 @@
         </button>
 
         <nav id="nav-menu">
-            <ul>
-                {% if user.is_authenticated %}
-                    <li>
-                        <span class="username-display">
-                            Hello, {{ user.username }}
-                        </span>
-                    </li>
+        <ul>
+            {% if user.is_authenticated %}
+                <li>
+                    <span class="username-display">
+                        Hello, {{ user.username }}
+                    </span>
+                </li>
 
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'categories' %}">Quiz</a></li>
-                    <li><a href="{% url 'score' %}">Score</a></li>
-                    <li><a href="{% url 'quiz-history' %}">History</a></li>
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
-                {% else %}
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'register' %}">Register</a></li>
-                {% endif %}
+                <li>
+                    <a
+                        href="{% url 'home' %}"
+                        {% if request.resolver_match.url_name == 'home' %}
+                            class="active" aria-current="page"
+                        {% endif %}
+                    >
+                        Home
+                    </a>
+                </li>
 
-                <li><a href="#">About</a></li>
-            </ul>
-        </nav>
+                <li>
+                    <a
+                        href="{% url 'categories' %}"
+                        {% if request.resolver_match.url_name == 'categories' or request.resolver_match.url_name == 'category-quiz' %}
+                            class="active" aria-current="page"
+                        {% endif %}
+                    >
+                        Quiz
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="{% url 'score' %}"
+                        {% if request.resolver_match.url_name == 'score' %}
+                            class="active" aria-current="page"
+                        {% endif %}
+                    >
+                        Score
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="{% url 'quiz-history' %}"
+                        {% if request.resolver_match.url_name == 'quiz-history' %}
+                            class="active" aria-current="page"
+                        {% endif %}
+                    >
+                        History
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'logout' %}">
+                        Logout
+                    </a>
+                </li>
+
+            {% else %}
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
 
     </div>
 </header>

@@ -204,6 +204,12 @@ header {
   background: var(--color-surface-raised);
 }
 
+#nav-menu ul li a.active {
+  color: var(--color-text);
+  font-weight: 500;
+  background: var(--color-surface-raised);
+}
+
 /* navbar Tablet and  > */
 @media (min-width: 768px) {
   :root {
