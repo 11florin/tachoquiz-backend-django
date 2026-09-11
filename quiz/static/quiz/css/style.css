@@ -933,6 +933,53 @@ a.action-btn {
   transition: width 0.8s ease;
 }
 
+/* Quiz History */
+.history-list {
+  padding: 16px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.history-main h2 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  color: var(--color-text);
+}
+
+.history-date {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.history-score {
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+@media (max-width: 480px) {
+  .history-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .history-score {
+    font-size: 16px;
+  }
+}
+
 /* login */
 .login-section {
   width: 100%;
