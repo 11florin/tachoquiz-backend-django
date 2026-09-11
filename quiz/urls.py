@@ -43,5 +43,6 @@ urlpatterns = [
     path("quiz/<slug:slug>/", views.category_quiz, name="category-quiz"),
     path("quiz/", views.quiz_view, name="quiz"),
     path("score/", views.score_view, name="score"),
+    path("history/", views.quiz_history, name="quiz-history"),
     path("categories/", views.categories, name="categories"),
 ]
