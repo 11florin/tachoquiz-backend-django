@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
@@ -29,3 +30,21 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class QuizResult(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="quiz_results",)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="quiz_results",)
+    score = models.PositiveIntegerField()
+    total_questions = models.PositiveIntegerField()
+    completed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-completed_at"]
+
+    def __str__(self):
+        return (
+            f"{self.user.username} - "
+            f"{self.category} - "
+            f"{self.score}/{self.total_questions}"
+        )
