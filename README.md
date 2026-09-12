@@ -522,6 +522,49 @@ Acceptance Criteria are verified before a User Story is marked complete.
 
 ---
 
+## US12 — Integrate Existing Frontend With Django
+
+### Description
+
+As a developer, I want to integrate the existing TachoQuiz frontend with Django so that the original interface works with the new backend.
+
+### Implementation
+
+The existing HTML, CSS and JavaScript frontend was adapted to work with Django templates, database-driven content and server-side quiz functionality.
+
+The original visual design was preserved where appropriate while legacy frontend logic was replaced by Django functionality.
+
+Key changes included:
+
+- Integrated the original hero design into the Django home page
+- Updated the category interface to use categories stored in PostgreSQL
+- Preserved the existing quiz and score interface
+- Integrated authentication and quiz history pages with the shared design
+- Used Django template inheritance through `base.html`
+- Loaded CSS, JavaScript, images and icons using Django static files
+- Retained JavaScript for:
+  - responsive navbar behaviour
+  - quiz answer selection
+  - score progress bar animation
+- Removed legacy frontend CSS that was no longer required
+- Removed redundant static files configuration
+- Replaced obsolete frontend/localStorage behaviour with Django URLs, sessions and database-driven functionality
+
+### Testing
+
+- Confirmed Home, Categories, Quiz, Score and History pages display correctly
+- Confirmed authentication and password reset pages remain functional
+- Confirmed CSS, JavaScript, images and icons load correctly
+- Confirmed Django can locate static assets using `findstatic`
+- Confirmed navbar and mobile hamburger functionality
+- Confirmed quiz answer selection and score progress bar JavaScript
+- Confirmed desktop and mobile layouts
+- Confirmed `python3 manage.py check` reports no issues
+
+---
+
+---
+
 # Bugs & Development Challenges
 
 The following are some of the most relevant issues encountered during development.
@@ -571,6 +614,17 @@ The password reset setup initially caused an `ImproperlyConfigured` error when d
 After adding the History page to the navbar, the current page was not visually highlighted because the existing CSS `:active` pseudo-class only applies while a link is being clicked.
 
 Django's `request.resolver_match.url_name` was used to add an `.active` class to the current navigation link, allowing the active page to remain visually highlighted.
+
+### US12 — Frontend Integration
+
+- **Duplicate static file discovery:**  
+  Static assets were being discovered twice because the app-level `static` directory was also manually included in `STATICFILES_DIRS`. The redundant setting was removed after confirming Django's `AppDirectoriesFinder` correctly discovers the files.
+
+- **Legacy frontend styles:**  
+  Several CSS rules from the original JavaScript/localStorage frontend were no longer used after the Django integration. Unused styles were removed while preserving classes required by the current templates and JavaScript.
+
+- **Registration confirmation navigation:**  
+  The account confirmation page originally linked users back to the Home page using a `Start Quiz` button even though newly registered users were not automatically authenticated. The flow was updated to direct users to Login first.
 
 
 
