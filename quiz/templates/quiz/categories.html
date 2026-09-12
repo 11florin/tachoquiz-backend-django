@@ -1,23 +1,57 @@
 {% extends "tachoquiz/base.html" %}
 
+{% block title %}
+  Categories | Tacho Quiz
+{% endblock %}
+
 {% block content %}
 
-<h1>Quiz Categories</h1>
+<section class="categories-section">
 
-{% for category in categories %}
+    <div class="screen-header">
+        <h1>Quiz Categories</h1>
+    </div>
 
-    {% if category.question_count > 0 %}
-        <a href="{% url 'category-quiz' category.slug %}">
-            {{ category.name }}
-        </a>
-    {% else %}
-        <p>
-            {{ category.name }} - No questions available
+    <div class="categories-grid">
+
+        {% for category in categories %}
+
+            {% if category.question_count > 0 %}
+
+                <a
+                    href="{% url 'category-quiz' category.slug %}"
+                    class="cat-btn"
+                >
+                    {{ category.name }}
+                </a>
+
+            {% else %}
+
+                <div class="cat-btn disabled-category">
+                    {{ category.name }}
+                    <span class="category-unavailable">
+                        No questions available
+                    </span>
+                </div>
+
+            {% endif %}
+
+        {% empty %}
+
+            <p class="status-text">
+                No quiz categories are available.
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="screen-footer">
+        <p class="status-text">
+            Choose a category to start your quiz.
         </p>
-    {% endif %}
+    </div>
 
-{% empty %}
-    <p>No quiz categories are available.</p>
-{% endfor %}
+</section>
 
 {% endblock %}
