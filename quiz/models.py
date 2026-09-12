@@ -16,7 +16,7 @@ class Category(models.Model):
 
 class Question(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="questions",)
-    text = models.TextField()
+    text = models.TextField(verbose_name="Question")
     explanation = models.TextField()
 
     def __str__(self):
