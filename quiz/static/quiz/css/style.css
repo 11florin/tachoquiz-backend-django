@@ -403,52 +403,6 @@ header {
   letter-spacing: 0.04em;
 }
 
-/* Best Score box*/
-.best-score-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin: 0 auto 1.5rem;
-  padding: 1rem 1.5rem;
-  max-width: 480px;
-  background: rgba(250, 204, 21, 0.08);
-  border: 1px solid rgba(250, 204, 21, 0.3);
-  box-shadow: 0 0 12px rgba(0, 140, 255, 0.5);
-  border-radius: 50%;
-  color: var(--color-text);
-}
-.best-score-icon {
-  font-size: 2rem;
-  flex-shrink: 0;
-}
-.best-score-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-.best-score-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-muted);
-}
-.best-score-value {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #facc15;
-}
-.best-score-details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  /* margin-left: auto; */
-  text-align: center;
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  text-transform: capitalize;
-}
-
 /* screen footer */
 .screen-footer {
   padding: 12px;
@@ -571,82 +525,6 @@ a.action-btn {
   color: var(--color-selected-text);
   font-weight: 600;
   box-shadow: 0 0 0 1px var(--color-selected-border);
-}
-/* Category colors */
-/* driving times */
-.cat-btn[data-cat="driving-times"] {
-  background: rgba(96, 165, 250, 0.08);
-  border-color: rgba(96, 165, 250, 0.25);
-  color: #93c5fd;
-}
-.cat-btn[data-cat="driving-times"]:hover,
-.cat-btn[data-cat="driving-times"].selected {
-  background: rgba(96, 165, 250, 0.18);
-  border-color: #60a5fa;
-  color: #bfdbfe;
-}
-
-/* rest-periods */
-.cat-btn[data-cat="rest-periods"] {
-  background: rgba(52, 211, 153, 0.08);
-  border-color: rgba(52, 211, 153, 0.25);
-  color: #6ee7b7;
-}
-.cat-btn[data-cat="rest-periods"]:hover,
-.cat-btn[data-cat="rest-periods"].selected {
-  background: rgba(52, 211, 153, 0.18);
-  border-color: #34d399;
-  color: #a7f3d0;
-}
-
-/* tachograph-rules */
-.cat-btn[data-cat="tachograph-rules"] {
-  background: rgba(251, 191, 36, 0.08);
-  border-color: rgba(251, 191, 36, 0.25);
-  color: #fcd34d;
-}
-.cat-btn[data-cat="tachograph-rules"]:hover,
-.cat-btn[data-cat="tachograph-rules"].selected {
-  background: rgba(251, 191, 36, 0.18);
-  border-color: #fbbf24;
-  color: #fde68a;
-}
-
-/* road-safety */
-.cat-btn[data-cat="road-safety"] {
-  background: rgba(248, 113, 113, 0.08);
-  border-color: rgba(248, 113, 113, 0.25);
-  color: #fca5a5;
-}
-.cat-btn[data-cat="road-safety"]:hover,
-.cat-btn[data-cat="road-safety"].selected {
-  background: rgba(248, 113, 113, 0.18);
-  border-color: #f87171;
-  color: #fecaca;
-}
-
-/* vehicle-checks */
-.cat-btn[data-cat="vehicle-checks"] {
-  background: rgba(167, 139, 250, 0.08);
-  border-color: rgba(167, 139, 250, 0.25);
-  color: #c4b5fd;
-}
-.cat-btn[data-cat="vehicle-checks"]:hover,
-.cat-btn[data-cat="vehicle-checks"].selected {
-  background: rgba(167, 139, 250, 0.18);
-  border-color: #a78bfa;
-  color: #ddd6fe;
-}
-.cat-btn[data-cat="cpc-mixed"] {
-  background: rgba(251, 146, 60, 0.08);
-  border-color: rgba(251, 146, 60, 0.25);
-  color: #fdba74;
-}
-.cat-btn[data-cat="cpc-mixed"]:hover,
-.cat-btn[data-cat="cpc-mixed"].selected {
-  background: rgba(251, 146, 60, 0.18);
-  border-color: #fb923c;
-  color: #fed7aa;
 }
 
 /* selected glow ring */
@@ -1082,16 +960,7 @@ a.action-btn {
     margin-bottom: 16px;
   }
 }
-.divider {
-  height: 1px;
-  background: var(--color-border);
-  margin: 14px 0;
-}
-@media (min-width: 480px) {
-  .divider {
-    margin: 16px 0;
-  }
-}
+
 .signup-text {
   font-size: 14px;
   color: var(--color-primary);
