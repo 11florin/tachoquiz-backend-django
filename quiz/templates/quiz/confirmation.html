@@ -1,6 +1,10 @@
 {% extends "tachoquiz/base.html" %}
 {% load static %}
 
+{% block title %}
+  Account Created | Tacho Quiz
+{% endblock %}
+
 {% block content %}
 
 <section class="confirm-section">
@@ -8,13 +12,14 @@
         <h1 id="welcome-title">Welcome!</h1>
     </div>
 
-    <p class="hero-desc confirm-p" id="confirm-text">
-        Your account has been created successfully. You can now log in and start your quiz.
+    <p class="hero-desc confirm-p">
+        Your account has been created successfully.
+        Log in to start your first quiz.
     </p>
 
-    <form method="GET" action="{% url 'home' %}">
-        <button type="submit" class="action-btn">Start Quiz</button>
-    </form>
+    <a href="{% url 'login' %}" class="action-btn">
+        LOGIN
+    </a>
 </section>
 
 {% endblock %}
