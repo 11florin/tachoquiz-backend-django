@@ -1,15 +1,80 @@
 {% extends "tachoquiz/base.html" %}
-{% load static %}
+
+{% block title %}
+  Home | Tacho Quiz
+{% endblock %}
 
 {% block content %}
-<h1>Tacho Quiz</h1>
-{% if user.is_authenticated %}
-  <a href="{% url 'categories' %}" class="action-btn">
-    START QUIZ
-  </a>
-{% else %}
-  <a href="{% url 'login' %}" class="action-btn">
-    LOGIN TO START QUIZ
-  </a>
-{% endif %}
+
+<section class="hero">
+  <div class="hero-inner">
+
+    <span class="hero-badge">
+      CPC Preparation
+    </span>
+
+    <h1 class="hero-title">
+      Tacho <span>Quiz</span>
+    </h1>
+
+    <p class="hero-desc">
+      Test your knowledge of driving times, rest periods,
+      tachograph rules and road safety.
+      Built for professional drivers.
+    </p>
+
+    <div class="hero-stats">
+
+      <div class="hero-stat">
+        <div class="hero-stat-value">60+</div>
+        <div class="hero-stat-label">
+          Questions
+        </div>
+      </div>
+
+      <div class="hero-stat">
+        <div class="hero-stat-value">6</div>
+        <div class="hero-stat-label">
+          Categories
+        </div>
+      </div>
+
+      <div class="hero-stat">
+        <div class="hero-stat-value">
+          Free
+        </div>
+        <div class="hero-stat-label">
+          Always
+        </div>
+      </div>
+
+    </div>
+
+    <div class="screen-footer">
+
+      {% if user.is_authenticated %}
+
+        <a
+          href="{% url 'categories' %}"
+          class="action-btn"
+        >
+          CHOOSE QUIZ CATEGORY
+        </a>
+
+      {% else %}
+
+        <a
+          href="{% url 'login' %}"
+          class="action-btn"
+        >
+          LOGIN TO START QUIZ
+        </a>
+
+      {% endif %}
+
+    </div>
+
+  </div>
+</section>
+
 {% endblock %}
