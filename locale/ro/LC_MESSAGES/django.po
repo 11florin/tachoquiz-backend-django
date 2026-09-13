@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 15:55+0000\n"
+"POT-Creation-Date: 2026-09-13 16:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,22 +19,35 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
 "2:1));\n"
 
+#: quiz/templates/quiz/categories.html:13
+#| msgid "Categories"
+msgid "Quiz Categories"
+msgstr "Chestionar pe Categorii"
+
+#: quiz/templates/quiz/categories.html:42
+msgid "No questions available"
+msgstr "Nu există întrebări disponibile"
+
+#: quiz/templates/quiz/categories.html:51
+msgid "No quiz categories are available."
+msgstr "Nu există categorii de quiz disponibile."
+
+#: quiz/templates/quiz/categories.html:60
+msgid "Choose a category to start your quiz."
+msgstr "Alege o categorie pentru a începe testul."
+
 #: quiz/templates/quiz/home.html:14
 msgid "CPC Preparation"
 msgstr "Pregătire CPC"
 
 #: quiz/templates/quiz/home.html:22
-#| msgid ""
-#| "\n"
-#| "      Test your knowledge of driving times, rest periods,\n"
-#| "      tachograph rules and road safety.\n"
-#| "      Built for professional drivers.\n"
-#| "      "
 msgid ""
 "Test your knowledge of driving times, rest periods, tachograph rules and "
 "road safety. Built for professional drivers."
-msgstr "Testează-ți cunoștințele despre timpii de conducere, perioadele de repaus, regulile privind tahograful și siguranța rutieră. Creat pentru șoferi profesioniști."
-
+msgstr ""
+"Testează-ți cunoștințele despre timpii de conducere, perioadele de repaus, "
+"regulile privind tahograful și siguranța rutieră. Creat pentru șoferi "
+"profesioniști."
 
 #: quiz/templates/quiz/home.html:32
 msgid "Questions"
