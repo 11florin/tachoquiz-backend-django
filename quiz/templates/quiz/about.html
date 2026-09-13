@@ -1,0 +1,72 @@
+{% extends "tachoquiz/base.html" %} 
+{% load static %} 
+
+{% block title %} 
+About | Tacho Quiz 
+{% endblock %}
+
+{% block content %}
+<section class="about-section">
+  <div class="screen-header">
+    <h1>About this app</h1>
+  </div>
+
+  <div class="about-body">
+    <div class="about-item">
+      <p>
+        Tacho Quiz was created by a professional driver who understands
+        first-hand how challenging the early stages of a driving career can be.
+        When I first entered the industry, I found the learning process
+        overwhelming - especially when it came to understanding driving times,
+        rest periods, tachograph rules, and preparing for the CPC qualification.
+      </p>
+    </div>
+    <div class="divider"></div>
+    <div class="about-item">
+      <p>
+        This application was built with a simple purpose: to make learning
+        easier, clearer, and more accessible for drivers at any stage of their
+        journey. Tacho Quiz helps drivers revise essential knowledge through
+        short, focused questions that can be completed anywhere - during breaks,
+        at home, or while preparing for CPC assessments.
+      </p>
+    </div>
+    <div class="divider"></div>
+    <div class="about-item">
+      <p>
+        The quiz format encourages repetition and confidence-building, allowing
+        users to strengthen their understanding of key regulations without
+        pressure. Whether you are a new driver navigating tachograph rules or an
+        experienced professional refreshing your knowledge, this app supports
+        you in becoming safer, more informed, and better prepared.
+      </p>
+    </div>
+    <div class="divider"></div>
+    <div class="about-item">
+      <p>
+        Tacho Quiz was created by a driver, for drivers - with the goal of
+        making the path toward CPC certification and professional development
+        smoother and more approachable.
+      </p>
+    </div>
+    <div class="divider"></div>
+    <div class="about-item">
+      <p>
+        Disclaimer: This quiz is not an official DVSA test. The questions are
+        independently created for study purposes and are based on publicly
+        available guidance, not on DVSA copyrighted exam materials.
+      </p>
+    </div>
+  </div>
+
+  <div class="about-footer">
+    <div class="divider"></div>
+    <p class="about-credit">
+      - Developed by Florin Albu - 
+    </p>
+    <a href="{% url 'home' %}" class="action-btn action-btn--full">
+    Back to Home
+    </a>
+  </div>
+</section>
+{% endblock %}
