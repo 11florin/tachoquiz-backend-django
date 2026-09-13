@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 16:06+0000\n"
+"POT-Creation-Date: 2026-09-13 16:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,6 @@ msgstr ""
 "2:1));\n"
 
 #: quiz/templates/quiz/categories.html:13
-#| msgid "Categories"
 msgid "Quiz Categories"
 msgstr "Chestionar pe Categorii"
 
@@ -72,6 +71,27 @@ msgstr "ALEGE CATEGORIA"
 #: quiz/templates/quiz/home.html:71
 msgid "LOGIN TO START QUIZ"
 msgstr "AUTENTIFICATE SA INCEPI TESTUL"
+
+#: quiz/templates/quiz/quiz.html:15
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "      Question %(current)s of %(total)s\n"
+#| "      "
+msgid "Question %(current)s of %(total)s"
+msgstr "Întrebarea %(current)s din %(total)s"
+
+#: quiz/templates/quiz/quiz.html:74
+msgid "SEE RESULTS"
+msgstr "VEZI REZULTATELE"
+
+#: quiz/templates/quiz/quiz.html:76
+msgid "NEXT QUESTION"
+msgstr "ÎNTREBAREA URMĂTOARE"
+
+#: quiz/templates/quiz/quiz.html:92
+msgid "CHECK ANSWER"
+msgstr "VERIFICĂ RĂSPUNSUL"
 
 #: tachoquiz/templates/tachoquiz/base.html:112
 #, python-format
