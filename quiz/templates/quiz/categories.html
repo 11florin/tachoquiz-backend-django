@@ -22,7 +22,15 @@
                     href="{% url 'category-quiz' category.slug %}"
                     class="cat-btn"
                 >
-                    {{ category.name }}
+                    {% if category.image %}
+                    <img
+                        src="{{ category.image.url }}"
+                        alt="{{ category.name }}"
+                        class="category-image"
+                    >
+                    {% endif %}
+
+                    <span>{{ category.name }}</span>
                 </a>
 
             {% else %}
