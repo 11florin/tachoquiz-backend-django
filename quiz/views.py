@@ -33,6 +33,11 @@ def confirmation(request):
     return render(request, "quiz/confirmation.html")
 
 
+def about(request):
+    """Render the about page."""
+    return render(request, "quiz/about.html")
+
+
 
 def login_view(request):
     """Authenticate a user and start a login session."""

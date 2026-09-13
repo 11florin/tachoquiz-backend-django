@@ -169,7 +169,16 @@
                 <li><a href="{% url 'register' %}">Register</a></li>
             {% endif %}
 
-            <li><a href="#">About</a></li>
+                <li>
+                <a
+                    href="{% url 'about' %}"
+                    {% if request.resolver_match.url_name == 'about' %}
+                        class="active" aria-current="page"
+                    {% endif %}
+                >
+                    About
+                </a>
+            </li>
         </ul>
     </nav>
 

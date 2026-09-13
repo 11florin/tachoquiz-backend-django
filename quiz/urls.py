@@ -45,4 +45,5 @@ urlpatterns = [
     path("score/", views.score_view, name="score"),
     path("history/", views.quiz_history, name="quiz-history"),
     path("categories/", views.categories, name="categories"),
+    path("about/", views.about, name="about"),
 ]
