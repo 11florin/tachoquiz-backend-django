@@ -1,6 +1,6 @@
 import csv
 
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.utils.text import slugify
 
@@ -23,8 +23,14 @@ class Command(BaseCommand):
         self.stdout.write(
             f"Reading CSV file: {csv_file}"
         )
+        try:
+            file = open(csv_file, newline="", encoding="utf-8")
+        except FileNotFoundError as error:
+            raise CommandError(
+                f"CSV file not found: {csv_file}"
+            ) from error
 
-        with open(csv_file, newline="", encoding="utf-8") as file:
+        with file:
             reader = csv.DictReader(file)
 
             for row_number, row in enumerate(reader, start=2):
