@@ -563,6 +563,56 @@ Key changes included:
 
 ---
 
+## Improve Quiz Content Management
+
+### Description
+
+As an administrator, I want to manage and bulk import quiz content efficiently so that I can add large numbers of questions without manually creating every question and answer separately.
+
+The quiz content management system was improved using Django Admin Inlines and a custom CSV import management command.
+
+This makes it possible to manage individual questions through Django Admin while also providing a faster way to import larger sets of quiz questions.
+
+### Implementation Summary
+
+Django Admin was improved so that answers can be managed directly from the Question admin page.
+
+A custom Django management command was also created to import structured quiz content from CSV files into the database.
+
+The importer validates the CSV data before creating database records and prevents duplicate questions from being created when the same file is imported again.
+
+### What Was Added
+
+- Improved Django Admin configuration for quiz content.
+- Answer management using Django Admin Inlines.
+- Four answer fields available directly from the Question admin page.
+- Question explanations editable alongside the question.
+- Existing `is_correct` field used to identify the correct answer.
+- Structured CSV format for quiz content.
+- Custom Django management command:
+  - `import_questions`
+- CSV validation for:
+  - category
+  - question
+  - explanation
+  - four answers
+  - correct answer
+- Automatic category lookup and creation.
+- Automatic creation of questions and related answers.
+- Automatic correct-answer mapping.
+- Duplicate question protection.
+- Database transactions for safe imports.
+- Error handling for missing CSV files.
+
+### CSV Structure
+
+Quiz content can be stored using the following CSV structure:
+
+```csv
+category,question,explanation,answer_1,answer_2,answer_3,answer_4,correct_answer
+Driving Times,What is the normal daily driving limit?,The normal daily driving limit is 9 hours.,8 hours,9 hours,10 hours,11 hours,2
+Rest Periods,What is the normal daily rest period?,The normal daily rest period is 11 hours.,8 hours,9 hours,10 hours,11 hours,4
+
 ---
 
 # Bugs & Development Challenges
