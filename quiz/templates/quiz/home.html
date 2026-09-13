@@ -1,4 +1,5 @@
 {% extends "tachoquiz/base.html" %}
+{% load static i18n %}
 
 {% block title %}
   Home | Tacho Quiz
@@ -10,7 +11,7 @@
   <div class="hero-inner">
 
     <span class="hero-badge">
-      CPC Preparation
+      {% translate "CPC Preparation" %}
     </span>
 
     <h1 class="hero-title">
@@ -18,9 +19,9 @@
     </h1>
 
     <p class="hero-desc">
-      Test your knowledge of driving times, rest periods,
-      tachograph rules and road safety.
-      Built for professional drivers.
+      {% blocktranslate trimmed %}
+Test your knowledge of driving times, rest periods, tachograph rules and road safety. Built for professional drivers.
+{% endblocktranslate %}
     </p>
 
     <div class="hero-stats">
@@ -28,23 +29,23 @@
       <div class="hero-stat">
         <div class="hero-stat-value">60+</div>
         <div class="hero-stat-label">
-          Questions
+          {% translate "Questions" %}
         </div>
       </div>
 
       <div class="hero-stat">
         <div class="hero-stat-value">6</div>
         <div class="hero-stat-label">
-          Categories
+          {% translate "Categories" %}
         </div>
       </div>
 
       <div class="hero-stat">
         <div class="hero-stat-value">
-          Free
+          {% translate 'Free' %}
         </div>
         <div class="hero-stat-label">
-          Always
+          {% translate "Always" %}
         </div>
       </div>
 
@@ -58,7 +59,7 @@
           href="{% url 'categories' %}"
           class="action-btn"
         >
-          CHOOSE QUIZ CATEGORY
+          {% translate "CHOOSE QUIZ CATEGORY" %}
         </a>
 
       {% else %}
@@ -67,7 +68,7 @@
           href="{% url 'login' %}"
           class="action-btn"
         >
-          LOGIN TO START QUIZ
+          {% translate "LOGIN TO START QUIZ" %}
         </a>
 
       {% endif %}
