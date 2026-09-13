@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 <!doctype html>
 <html lang="en">
 
@@ -109,7 +109,7 @@
             {% if user.is_authenticated %}
                 <li>
                     <span class="username-display">
-                        Hello, {{ user.username }}
+                        {% blocktranslate with username=user.username %}Hello, {{ username }}{% endblocktranslate %}
                     </span>
                 </li>
 
@@ -120,7 +120,7 @@
                             class="active" aria-current="page"
                         {% endif %}
                     >
-                        Home
+                        {% translate "Home" %}
                     </a>
                 </li>
 
@@ -131,7 +131,7 @@
                             class="active" aria-current="page"
                         {% endif %}
                     >
-                        Quiz
+                        {% translate "Quiz" %}
                     </a>
                 </li>
 
@@ -142,7 +142,7 @@
                             class="active" aria-current="page"
                         {% endif %}
                     >
-                        Score
+                        {% translate "Score" %}
                     </a>
                 </li>
 
@@ -153,20 +153,26 @@
                             class="active" aria-current="page"
                         {% endif %}
                     >
-                        History
+                        {% translate "History" %}
                     </a>
                 </li>
 
                 <li>
                     <a href="{% url 'logout' %}">
-                        Logout
+                        {% translate "Logout" %}
                     </a>
                 </li>
 
             {% else %}
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'home' %}">
+                  {% translate "Home" %}
+                </a></li>
+                <li><a href="{% url 'login' %}">
+                  {% translate "Login" %}
+                </a></li>
+                <li><a href="{% url 'register' %}">
+                  {% translate "Register" %}
+                </a></li>
             {% endif %}
 
                 <li>
@@ -176,9 +182,37 @@
                         class="active" aria-current="page"
                     {% endif %}
                 >
-                    About
+                    {% translate "About" %}
                 </a>
             </li>
+            <li class="language-selector">
+              <form action="{% url 'set_language' %}" method="post">
+                  {% csrf_token %}
+                  <input
+                      name="next"
+                      type="hidden"
+                      value="{{ request.path }}"
+                  >
+
+                  <button
+                      type="submit"
+                      name="language"
+                      value="en"
+                      class="language-btn"
+                  >
+                      EN
+                  </button>
+
+                  <button
+                      type="submit"
+                      name="language"
+                      value="ro"
+                      class="language-btn"
+                  >
+                      RO
+                  </button>
+              </form>
+          </li>
         </ul>
     </nav>
 
