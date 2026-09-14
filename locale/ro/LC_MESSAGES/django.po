@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 12:56+0000\n"
+"POT-Creation-Date: 2026-09-14 13:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
 "2:1));\n"
+
+#: quiz/forms.py:15
+msgid "Choose a username. Letters and numbers are recommended."
+msgstr "Alege un nume de utilizator. Sunt recomandate literele și cifrele."
 
 #: quiz/templates/quiz/categories.html:13
 msgid "Quiz Categories"
@@ -77,15 +81,16 @@ msgid "LOGIN TO START QUIZ"
 msgstr "AUTENTIFICATE SA INCEPI TESTUL"
 
 #: quiz/templates/quiz/login.html:5 quiz/templates/quiz/login.html:11
+#: quiz/templates/quiz/register.html:61
 #: tachoquiz/templates/tachoquiz/base.html:171
 msgid "Login"
 msgstr "Autentificare"
 
-#: quiz/templates/quiz/login.html:22
+#: quiz/templates/quiz/login.html:22 quiz/templates/quiz/register.html:21
 msgid "Username"
 msgstr "Nume de utilizator"
 
-#: quiz/templates/quiz/login.html:27
+#: quiz/templates/quiz/login.html:27 quiz/templates/quiz/register.html:38
 msgid "Password"
 msgstr "Parolă"
 
@@ -138,6 +143,26 @@ msgstr "Nu ai finalizat încă niciun quiz."
 #: quiz/templates/quiz/quiz_history.html:55
 msgid "START QUIZ"
 msgstr "ÎNCEPE QUIZ-UL"
+
+#: quiz/templates/quiz/register.html:5 quiz/templates/quiz/register.html:11
+msgid "Create Account"
+msgstr "Creează un cont"
+
+#: quiz/templates/quiz/register.html:30
+msgid "Email"
+msgstr "Email"
+
+#: quiz/templates/quiz/register.html:47
+msgid "Password confirmation"
+msgstr "Confirmarea parolei"
+
+#: quiz/templates/quiz/register.html:55
+msgid "REGISTER"
+msgstr "ÎNREGISTRARE"
+
+#: quiz/templates/quiz/register.html:59
+msgid "Already have an account?"
+msgstr "Ai deja un cont?"
 
 #: quiz/templates/quiz/score.html:5 tachoquiz/templates/tachoquiz/base.html:145
 msgid "Score"
