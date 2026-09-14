@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 12:22+0000\n"
+"POT-Creation-Date: 2026-09-14 12:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,6 +38,10 @@ msgstr "Alege o categorie pentru a începe testul."
 #: quiz/templates/quiz/home.html:14
 msgid "CPC Preparation"
 msgstr "Pregătire CPC"
+
+#: quiz/templates/quiz/home.html:18
+msgid "Tacho <span>Quiz</span>"
+msgstr "<span>Test<span> Tahograf"
 
 #: quiz/templates/quiz/home.html:22
 msgid ""
@@ -72,11 +76,37 @@ msgstr "ALEGE CATEGORIA"
 msgid "LOGIN TO START QUIZ"
 msgstr "AUTENTIFICATE SA INCEPI TESTUL"
 
+#: quiz/templates/quiz/login.html:5 quiz/templates/quiz/login.html:11
+#: tachoquiz/templates/tachoquiz/base.html:171
+msgid "Login"
+msgstr "Autentificare"
+
+#: quiz/templates/quiz/login.html:22
+msgid "Username"
+msgstr "Nume de utilizator"
+
+#: quiz/templates/quiz/login.html:27
+msgid "Password"
+msgstr "Parolă"
+
+#: quiz/templates/quiz/login.html:33
+msgid "Forgot password?"
+msgstr "Am uitat parola"
+
+#: quiz/templates/quiz/login.html:37
+msgid "LOGIN"
+msgstr "AUTENTIFICARE"
+
+#: quiz/templates/quiz/login.html:40
+msgid "Don't have an account?"
+msgstr "Nu ai un cont?"
+
+#: quiz/templates/quiz/login.html:41
+msgid "Sign Up"
+msgstr "Înregistrează-te"
+
 #: quiz/templates/quiz/quiz.html:15
-#| msgid ""
-#| "\n"
-#| "      Question %(current)s of %(total)s\n"
-#| "      "
+#, python-format
 msgid "Question %(current)s of %(total)s"
 msgstr "Întrebarea %(current)s din %(total)s"
 
@@ -94,7 +124,6 @@ msgstr "VERIFICĂ RĂSPUNSUL"
 
 #: quiz/templates/quiz/quiz_history.html:5
 #: quiz/templates/quiz/quiz_history.html:12
-#| msgid "History"
 msgid "Quiz History"
 msgstr "Istoric"
 
@@ -107,7 +136,6 @@ msgid "You have not completed any quizzes yet."
 msgstr "Nu ai finalizat încă niciun quiz."
 
 #: quiz/templates/quiz/quiz_history.html:55
-#| msgid "LOGIN TO START QUIZ"
 msgid "START QUIZ"
 msgstr "ÎNCEPE QUIZ-UL"
 
@@ -172,10 +200,6 @@ msgstr "Istoric"
 #: tachoquiz/templates/tachoquiz/base.html:162
 msgid "Logout"
 msgstr "Deconectare"
-
-#: tachoquiz/templates/tachoquiz/base.html:171
-msgid "Login"
-msgstr "Autentificare"
 
 #: tachoquiz/templates/tachoquiz/base.html:174
 msgid "Register"
