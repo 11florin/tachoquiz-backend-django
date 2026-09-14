@@ -1,18 +1,18 @@
 {% extends "tachoquiz/base.html" %}
-{% load static %}
+{% load static i18n %}
 
 {% block title %}
-  Score | Tacho Quiz
+  {% translate "Score" %} | Tacho Quiz
 {% endblock %}
 
 {% block content %}
 <section class="score-section">
   <div class="screen-header">
-    <h1>Quiz Completed</h1>
+    <h1>{% translate "Quiz Completed" %}</h1>
   </div>
 
   <div class="score-display">
-    <p class="score-label">Your Score</p>
+    <p class="score-label">{% translate "Your Score" %}</p>
 
     <p class="score-value">
       {{ correct_answers }} / {{ total_questions }}
@@ -33,35 +33,35 @@
 
     <div class="score-message">
       {% if percentage >= 80 %}
-        Excellent work!
+        {% translate "Excellent work!" %}
       {% elif percentage >= 60 %}
-        Good job!
+        {% translate "Good job!" %}
       {% else %}
-        Keep practising!
+        {% translate "Keep practising!" %}
       {% endif %}
     </div>
   </div>
 
   <div class="score-breakdown">
     <p>
-      Correct answers:
+      {% translate "Correct answers:" %}
       <strong>{{ correct_answers }}</strong>
     </p>
 
     <p>
-      Incorrect answers:
+      {% translate "Incorrect answers:" %}
       <strong>{{ incorrect_answers }}</strong>
     </p>
 
     <p>
-      Total questions:
+      {% translate "Total questions:" %}
       <strong>{{ total_questions }}</strong>
     </p>
   </div>
 
   <div class="screen-footer">
     <a href="{% url 'categories' %}" class="action-btn">
-      PLAY AGAIN
+      {% translate "PLAY AGAIN" %}
     </a>
   </div>
 </section>
