@@ -46,4 +46,5 @@ urlpatterns = [
     path("history/", views.quiz_history, name="quiz-history"),
     path("categories/", views.categories, name="categories"),
     path("about/", views.about, name="about"),
+    path("set-timezone/", views.set_timezone, name="set-timezone",),
 ]
