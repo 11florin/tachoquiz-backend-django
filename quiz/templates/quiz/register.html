@@ -1,14 +1,14 @@
 {% extends "tachoquiz/base.html" %}
-{% load static %}
+{% load static i18n %}
 
 {% block title %}
-  Create Account | Tacho Quiz
+  {% translate "Create Account" %} | Tacho Quiz
 {% endblock %}
 
 {% block content %}
 <section class="login-section">
     <div class="screen-header">
-        <h1>Create Account</h1>
+        <h1>{% translate "Create Account" %}</h1>
     </div>
 
     <form method="POST">
@@ -18,7 +18,7 @@
 
             <div class="form-group {% if form.username.errors %}has-error{% endif %}">
                 <label for="{{ form.username.id_for_label }}">
-                    Username
+                    {% translate "Username" %}
                 </label>
                 {{ form.username }}
                 {{ form.username.help_text }}
@@ -27,7 +27,7 @@
 
             <div class="form-group {% if form.email.errors %}has-error{% endif %}">
                 <label for="{{ form.email.id_for_label }}">
-                    Email
+                    {% translate "Email" %}
                 </label>
                 {{ form.email }}
                 {{ form.email.errors }}
@@ -35,7 +35,7 @@
 
             <div class="form-group {% if form.password1.errors %}has-error{% endif %}">
                 <label for="{{ form.password1.id_for_label }}">
-                    Password
+                    {% translate "Password" %}
                 </label>
                 {{ form.password1 }}
                 {{ form.password1.help_text }}
@@ -44,7 +44,7 @@
 
             <div class="form-group {% if form.password2.errors %}has-error{% endif %}">
                 <label for="{{ form.password2.id_for_label }}">
-                    Password confirmation
+                    {% translate "Password confirmation" %}
                 </label>
                 {{ form.password2 }}
                 {{ form.password2.help_text }}
@@ -52,13 +52,13 @@
             </div>
 
             <button type="submit" class="action-btn form-group">
-                REGISTER
+                {% translate "REGISTER" %}
             </button>
 
             <p class="signup-text">
-                Already have an account?
+                {% translate "Already have an account?" %}
                 <a href="{% url 'login' %}" class="link-btn">
-                    Login
+                    {% translate "Login" %}
                 </a>
             </p>
 
