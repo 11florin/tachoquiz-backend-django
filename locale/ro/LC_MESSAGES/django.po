@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 16:19+0000\n"
+"POT-Creation-Date: 2026-09-14 12:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,6 +93,48 @@ msgstr "ÎNTREBAREA URMĂTOARE"
 msgid "CHECK ANSWER"
 msgstr "VERIFICĂ RĂSPUNSUL"
 
+#: quiz/templates/quiz/score.html:5 tachoquiz/templates/tachoquiz/base.html:145
+msgid "Score"
+msgstr "Scor"
+
+#: quiz/templates/quiz/score.html:11
+msgid "Quiz Completed"
+msgstr "Test finalizat"
+
+#: quiz/templates/quiz/score.html:15
+#| msgid "Score"
+msgid "Your Score"
+msgstr "Scorul tău"
+
+#: quiz/templates/quiz/score.html:36
+msgid "Excellent work!"
+msgstr "Excelent"
+
+#: quiz/templates/quiz/score.html:38
+msgid "Good job!"
+msgstr "Bravo"
+
+#: quiz/templates/quiz/score.html:40
+msgid "Keep practising!"
+msgstr "Continuă să exersezi!"
+
+#: quiz/templates/quiz/score.html:47
+msgid "Correct answers:"
+msgstr "Răspunsuri corecte:"
+
+#: quiz/templates/quiz/score.html:52
+msgid "Incorrect answers:"
+msgstr "Răspunsuri incorecte:"
+
+#: quiz/templates/quiz/score.html:57
+#| msgid "Questions"
+msgid "Total questions:"
+msgstr "Total întrebări:"
+
+#: quiz/templates/quiz/score.html:64
+msgid "PLAY AGAIN"
+msgstr "JOACĂ DIN NOU"
+
 #: tachoquiz/templates/tachoquiz/base.html:112
 #, python-format
 msgid "Hello, %(username)s"
@@ -106,10 +148,6 @@ msgstr "Acasă"
 #: tachoquiz/templates/tachoquiz/base.html:134
 msgid "Quiz"
 msgstr "Test"
-
-#: tachoquiz/templates/tachoquiz/base.html:145
-msgid "Score"
-msgstr "Scor"
 
 #: tachoquiz/templates/tachoquiz/base.html:156
 msgid "History"
