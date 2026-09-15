@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-15 11:03+0000\n"
+"POT-Creation-Date: 2026-09-15 11:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,7 +112,6 @@ msgstr "Înregistrează-te"
 
 #: quiz/templates/quiz/password_reset.html:5
 #: quiz/templates/quiz/password_reset.html:11
-#| msgid "Password"
 msgid "Reset Password"
 msgstr "Resetează  Parolă"
 
@@ -124,6 +123,28 @@ msgstr "Email"
 #: quiz/templates/quiz/password_reset.html:31
 msgid "SEND RESET LINK"
 msgstr "TRIMITE LINKUL DE RESETARE"
+
+#: quiz/templates/quiz/password_reset_done.html:5
+msgid "Password Reset Sent"
+msgstr "Resetarea parolei a fost trimisă"
+
+#: quiz/templates/quiz/password_reset_done.html:11
+msgid "Check Your Email"
+msgstr "Verifică emailul"
+
+#: quiz/templates/quiz/password_reset_done.html:16
+msgid ""
+"If an account exists with the email address you entered, password reset "
+"instructions have been generated."
+msgstr "Dacă există un cont asociat adresei de email introduse, au fost generate instrucțiuni pentru resetarea parolei."
+
+#: quiz/templates/quiz/password_reset_done.html:23
+msgid "Please check your email for the password reset link."
+msgstr "Verifică emailul pentru linkul de resetare a parolei."
+
+#: quiz/templates/quiz/password_reset_done.html:27
+msgid "BACK TO LOGIN"
+msgstr "ÎNAPOI LA AUTENTIFICARE"
 
 #: quiz/templates/quiz/quiz.html:15
 #, python-format
