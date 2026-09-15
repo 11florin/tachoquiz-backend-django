@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-15 11:11+0000\n"
+"POT-Creation-Date: 2026-09-15 11:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -124,6 +124,35 @@ msgstr "Email"
 msgid "SEND RESET LINK"
 msgstr "TRIMITE LINKUL DE RESETARE"
 
+#: quiz/templates/quiz/password_reset_confirm.html:5
+#: quiz/templates/quiz/password_reset_confirm.html:11
+#| msgid "Reset Password"
+msgid "Set New Password"
+msgstr "Setează o parolă nouă"
+
+#: quiz/templates/quiz/password_reset_confirm.html:23
+#| msgid "Password"
+msgid "New password"
+msgstr "Parolă nouă"
+
+#: quiz/templates/quiz/password_reset_confirm.html:33
+#| msgid "Forgot password?"
+msgid "Confirm new password"
+msgstr "Confirmă parola nouă"
+
+#: quiz/templates/quiz/password_reset_confirm.html:41
+msgid "RESET PASSWORD"
+msgstr "RESETEAZĂ PAROLA"
+
+#: quiz/templates/quiz/password_reset_confirm.html:47
+msgid "This password reset link is invalid or has expired."
+msgstr "Acest link pentru resetarea parolei este invalid sau a expirat."
+
+#: quiz/templates/quiz/password_reset_confirm.html:51
+#| msgid "SEND RESET LINK"
+msgid "REQUEST A NEW RESET LINK"
+msgstr "SOLICITĂ UN NOU LINK DE RESETARE"
+
 #: quiz/templates/quiz/password_reset_done.html:5
 msgid "Password Reset Sent"
 msgstr "Resetarea parolei a fost trimisă"
@@ -136,7 +165,9 @@ msgstr "Verifică emailul"
 msgid ""
 "If an account exists with the email address you entered, password reset "
 "instructions have been generated."
-msgstr "Dacă există un cont asociat adresei de email introduse, au fost generate instrucțiuni pentru resetarea parolei."
+msgstr ""
+"Dacă există un cont asociat adresei de email introduse, au fost generate "
+"instrucțiuni pentru resetarea parolei."
 
 #: quiz/templates/quiz/password_reset_done.html:23
 msgid "Please check your email for the password reset link."
