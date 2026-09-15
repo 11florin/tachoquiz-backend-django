@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 13:15+0000\n"
+"POT-Creation-Date: 2026-09-15 11:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,6 +110,21 @@ msgstr "Nu ai un cont?"
 msgid "Sign Up"
 msgstr "Înregistrează-te"
 
+#: quiz/templates/quiz/password_reset.html:5
+#: quiz/templates/quiz/password_reset.html:11
+#| msgid "Password"
+msgid "Reset Password"
+msgstr "Resetează  Parolă"
+
+#: quiz/templates/quiz/password_reset.html:20
+#: quiz/templates/quiz/register.html:30
+msgid "Email"
+msgstr "Email"
+
+#: quiz/templates/quiz/password_reset.html:31
+msgid "SEND RESET LINK"
+msgstr "TRIMITE LINKUL DE RESETARE"
+
 #: quiz/templates/quiz/quiz.html:15
 #, python-format
 msgid "Question %(current)s of %(total)s"
@@ -147,10 +162,6 @@ msgstr "ÎNCEPE QUIZ-UL"
 #: quiz/templates/quiz/register.html:5 quiz/templates/quiz/register.html:11
 msgid "Create Account"
 msgstr "Creează un cont"
-
-#: quiz/templates/quiz/register.html:30
-msgid "Email"
-msgstr "Email"
 
 #: quiz/templates/quiz/register.html:47
 msgid "Password confirmation"
