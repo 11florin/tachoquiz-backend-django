@@ -1,4 +1,5 @@
 {% extends "tachoquiz/base.html" %}
+{% load i18n %}
 
 {% block title %}
   Categories | Tacho Quiz
@@ -9,7 +10,7 @@
 <section class="categories-section">
 
     <div class="screen-header">
-        <h1>Quiz Categories</h1>
+        <h1><h1>{% translate "Quiz Categories" %}</h1></h1>
     </div>
 
     <div class="categories-grid">
@@ -38,7 +39,7 @@
                 <div class="cat-btn disabled-category">
                     {{ category.name }}
                     <span class="category-unavailable">
-                        No questions available
+                        {% translate "No questions available" %}
                     </span>
                 </div>
 
@@ -47,7 +48,7 @@
         {% empty %}
 
             <p class="status-text">
-                No quiz categories are available.
+                {% translate "No quiz categories are available." %}
             </p>
 
         {% endfor %}
@@ -56,7 +57,7 @@
 
     <div class="screen-footer">
         <p class="status-text">
-            Choose a category to start your quiz.
+            {% translate "Choose a category to start your quiz." %}
         </p>
     </div>
 

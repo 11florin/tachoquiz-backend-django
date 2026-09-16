@@ -612,8 +612,51 @@ Quiz content can be stored using the following CSV structure:
 category,question,explanation,answer_1,answer_2,answer_3,answer_4,correct_answer
 Driving Times,What is the normal daily driving limit?,The normal daily driving limit is 9 hours.,8 hours,9 hours,10 hours,11 hours,2
 Rest Periods,What is the normal daily rest period?,The normal daily rest period is 11 hours.,8 hours,9 hours,10 hours,11 hours,4
+```
+---
+
+## US13 — Add Cloudinary Image Management
+
+### Description
+
+As an administrator, I want application images managed through Cloudinary so that media files are stored and delivered independently from the application server.
+
+### Implementation Summary
+
+Cloudinary was integrated with Django to provide external media storage for uploaded application images.
+
+Category images can now be uploaded through Django Admin, stored in Cloudinary and displayed dynamically through Django templates.
+
+### What Was Added
+
+- Installed:
+  - `cloudinary`
+  - `django-cloudinary-storage`
+  - `Pillow`
+- Added Cloudinary configuration using environment variables
+- Added Cloudinary media storage through Django `STORAGES`
+- Added an optional `image` field to the `Category` model
+- Added database migration for category images
+- Added category image uploads through Django Admin
+- Added category image display in Django templates
+- Added responsive category image styling
+- Removed unused legacy category selection styles
+
+### How It Works
+
+1. An administrator uploads an image through Django Admin.
+2. Django processes the image using `ImageField`.
+3. Django's default media storage uses `MediaCloudinaryStorage`.
+4. The image is uploaded to Cloudinary.
+5. PostgreSQL stores the image reference.
+6. Django templates access the image using:
+
+   ```django
+   {{ category.image.url }}
+   ```
 
 ---
+
 
 # Bugs & Development Challenges
 
@@ -677,6 +720,16 @@ Django's `request.resolver_match.url_name` was used to add an `.active` class to
   The account confirmation page originally linked users back to the Home page using a `Start Quiz` button even though newly registered users were not automatically authenticated. The flow was updated to direct users to Login first.
 
 
+### US13 — Cloudinary Image Management
+
+- **ImageField required Pillow:**  
+  Django raised `fields.E210` when the category image field was added because Pillow was not installed. Pillow was added to the project dependencies.
+
+- **Cloudinary upload permission error:**  
+  An API key with insufficient media permissions caused Cloudinary to reject uploads with a `NotAllowed` error. A suitable API key with upload permissions was configured.
+
+- **Cloudinary storage verification:**  
+  The integration was verified by confirming Django's default storage resolves to `MediaCloudinaryStorage` and that uploaded category images appear in Cloudinary Media Library.
 
 ---
 

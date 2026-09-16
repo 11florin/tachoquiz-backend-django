@@ -1,5 +1,5 @@
 {% extends "tachoquiz/base.html" %} 
-{% load static %} 
+{% load static i18n %}
 
 {% block title %} 
 Quiz | Tacho Quiz 
@@ -12,7 +12,7 @@ Quiz | Tacho Quiz
     <h1>{{ category.name }}</h1>
 
     <p class="question-counter">
-      Question {{ question_number }} of {{ total_questions }}
+      {% blocktranslate with current=question_number total=total_questions %}Question {{ current }} of {{ total }}{% endblocktranslate %}
     </p>
   </div>
 
@@ -71,9 +71,9 @@ Quiz | Tacho Quiz
     <div class="screen-footer">
       <button type="submit" name="action" value="next" class="action-btn">
         {% if is_last_question %} 
-        SEE RESULTS 
+        {% translate "SEE RESULTS" %} 
         {% else %} 
-        NEXT QUESTION 
+        {% translate "NEXT QUESTION" %} 
         {% endif %}
       </button>
     </div>
@@ -89,7 +89,7 @@ Quiz | Tacho Quiz
         id="check-answer-btn"
         disabled
       >
-        CHECK ANSWER
+        {% translate "CHECK ANSWER" %}
       </button>
     </div>
 

@@ -1,14 +1,14 @@
 {% extends "tachoquiz/base.html" %}
-{% load static %}
+{% load static i18n %}
 
 {% block title %}
-  Login | Tacho Quiz
+  {% translate "Login" %} | Tacho Quiz
 {% endblock %}
 
 {% block content %}
 <section class="login-section">
     <div class="screen-header">
-        <h1>Login</h1>
+        <h1>{% translate "Login" %}</h1>
     </div>
 
     {% if error %}
@@ -19,26 +19,26 @@
         {% csrf_token %}
         <div class="login-body">
             <div class="form-group">
-                <label for="username">Username</label>
+                <label for="username">{% translate "Username" %}</label>
                 <input type="text" id="username" name="username" required>
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">{% translate "Password" %}</label>
                 <input type="password" id="password" name="password" required>
             </div>
 
             <p class="forgot-link">
                 <a href="{% url 'password_reset' %}">
-                    Forgot password?
+                    {% translate "Forgot password?" %}
                 </a>
             </p>
 
-            <button type="submit" class="action-btn form-group">LOGIN</button>
+            <button type="submit" class="action-btn form-group">{% translate "LOGIN" %}</button>
 
             <p class="signup-text">
-                Don't have an account?
-                <a href="{% url 'register' %}" class="link-btn">Sign Up</a>
+                {% translate "Don't have an account?" %}
+                <a href="{% url 'register' %}" class="link-btn">{% translate "Sign Up" %}</a>
             </p>
         </div>
     </form>

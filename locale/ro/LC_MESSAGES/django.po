@@ -1,0 +1,445 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-16 11:57+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
+"2:1));\n"
+
+#: quiz/forms.py:15
+msgid "Choose a username. Letters and numbers are recommended."
+msgstr "Alege un nume de utilizator. Sunt recomandate literele și cifrele."
+
+#: quiz/templates/quiz/about.html:5 tachoquiz/templates/tachoquiz/base.html:185
+msgid "About"
+msgstr "Despre"
+
+#: quiz/templates/quiz/about.html:11
+msgid "About this app"
+msgstr "Despre această aplicație"
+
+#: quiz/templates/quiz/about.html:17
+msgid ""
+"Tacho Quiz was created by a professional driver who understands first-hand "
+"how challenging the early stages of a professional driving career can be. "
+"When I first entered the industry, I found the learning process overwhelming "
+"- especially when it came to understanding driving times, rest periods, "
+"tachograph rules, and preparing for the CPC qualification."
+msgstr ""
+"Tacho Quiz a fost creat de un șofer profesionist care înțelege din proprie "
+"experiență cât de dificile pot fi primele etape ale unei cariere în domeniul "
+"transporturilor. Când am intrat pentru prima dată în această industrie, "
+"procesul de învățare mi s-a părut copleșitor - în special în ceea ce "
+"privește înțelegerea timpilor de conducere, perioadelor de repaus, regulilor "
+"privind tahografulși pregătirea pentru calificarea CPC."
+
+#: quiz/templates/quiz/about.html:29
+msgid ""
+"This application was built with a simple purpose: to make learning easier, "
+"clearer, and more accessible for drivers at any stage of their journey. "
+"Tacho Quiz helps drivers revise essential knowledge through short, focused "
+"questions that can be completed anywhere - during breaks, at home, or while "
+"preparing for CPC assessments."
+msgstr ""
+"Această aplicație a fost creată cu un scop simplu: să facă procesul de "
+"învățare mai ușor, mai clar și mai accesibil pentru șoferi, indiferent de "
+"etapa în care se află în cariera lor. Tacho Quiz îi ajută pe șoferi să "
+"recapituleze cunoștințele esențiale prin întrebări scurte și bine "
+"structurate, care pot fi parcurse oriunde - în timpul pauzelor, acasă sau în "
+"timpul pregătirii pentru evaluările CPC."
+
+#: quiz/templates/quiz/about.html:41
+msgid ""
+"The quiz format encourages repetition and confidence-building, allowing "
+"users to strengthen their understanding of key regulations without pressure. "
+"Whether you are a new driver navigating tachograph rules or an experienced "
+"professional refreshing your knowledge, this app supports you in becoming "
+"safer, more informed, and better prepared."
+msgstr ""
+"Formatul de test încurajează repetarea și dezvoltarea încrederii în "
+"propriile cunoștințe, permițând utilizatorilor să își consolideze "
+"înțelegerea reglementărilor importante fără presiune. Indiferent dacă ești "
+"un șofer începător care învață regulile privind tahograful sau un șofer "
+"profesionist cu experiență care dorește să își reîmprospăteze cunoștințele, "
+"această aplicație te ajută să fii mai bine informat, mai bine pregătit și să "
+"conduci în condiții de mai mare siguranță."
+
+#: quiz/templates/quiz/about.html:53
+msgid ""
+"Tacho Quiz was created by a driver, for drivers - with the goal of making "
+"the path toward CPC certification and professional development smoother and "
+"more approachable."
+msgstr ""
+"Tacho Quiz a fost creat de un șofer, pentru șoferi - cu scopul de a face "
+"pregătirea pentru certificarea CPC și dezvoltarea profesională mai simple și "
+"mai accesibile."
+
+#: quiz/templates/quiz/about.html:63
+msgid ""
+"<strong>Disclaimer:</strong> Tacho Quiz is an independent educational "
+"application intended to support professional drivers in the United Kingdom. "
+"It is not affiliated with, endorsed by, or approved by the DVSA or any other "
+"UK government authority. The questions and explanations are independently "
+"created for learning and revision purposes and are not official DVSA or CPC "
+"examination questions. While reasonable efforts are made to keep the "
+"information accurate and up to date, regulations and official guidance may "
+"change. Users should always check the latest official UK legislation and "
+"guidance before relying on the information for professional or legal "
+"compliance."
+msgstr ""
+"<strong>Declinarea responsabilității:</strong> Tacho Quiz este o aplicație "
+"educațională independentă, destinată sprijinirii șoferilor profesioniști din "
+"Regatul Unit.Aplicația nu este afiliată, susținută sau aprobată de DVSA sau "
+"de orice altă autoritate guvernamentală din Regatul Unit.Întrebările și "
+"explicațiile sunt create independent în scop educațional și de recapitulare "
+"și nu reprezintă întrebări oficiale din examenele DVSA sau CPC.Deși se depun "
+"eforturi rezonabile pentru ca informațiile să fie corecte și actualizate, "
+"reglementările și ghidurile oficiale se pot modifica. Utilizatorii trebuie "
+"să verifice întotdeauna cea mai recentă legislație și ghidurile oficiale din "
+"Regatul Unit înainte de a se baza pe aceste informații în scop profesional "
+"sau pentru respectarea obligațiilor legale."
+
+#: quiz/templates/quiz/about.html:87
+msgid "Back to Home"
+msgstr "Înapoi la pagina principală"
+
+#: quiz/templates/quiz/categories.html:13
+msgid "Quiz Categories"
+msgstr "Chestionar pe Categorii"
+
+#: quiz/templates/quiz/categories.html:42
+msgid "No questions available"
+msgstr "Nu există întrebări disponibile"
+
+#: quiz/templates/quiz/categories.html:51
+msgid "No quiz categories are available."
+msgstr "Nu există categorii de quiz disponibile."
+
+#: quiz/templates/quiz/categories.html:60
+msgid "Choose a category to start your quiz."
+msgstr "Alege o categorie pentru a începe testul."
+
+#: quiz/templates/quiz/confirmation.html:5
+msgid "Account Created"
+msgstr "Cont creat"
+
+#: quiz/templates/quiz/confirmation.html:12
+msgid "Welcome!"
+msgstr "Bine ai venit!"
+
+#: quiz/templates/quiz/confirmation.html:16
+msgid ""
+"Your account has been created successfully. Log in to start your first quiz."
+msgstr ""
+"Contul tău a fost creat cu succes. Autentifică-te pentru a începe primul "
+"test."
+
+#: quiz/templates/quiz/confirmation.html:23 quiz/templates/quiz/login.html:37
+#: quiz/templates/quiz/password_reset_complete.html:20
+msgid "LOGIN"
+msgstr "AUTENTIFICARE"
+
+#: quiz/templates/quiz/home.html:14
+msgid "CPC Preparation"
+msgstr "Pregătire CPC"
+
+#: quiz/templates/quiz/home.html:18
+msgid "Tacho <span>Quiz</span>"
+msgstr "<span>Test<span> Tahograf"
+
+#: quiz/templates/quiz/home.html:22
+msgid ""
+"Test your knowledge of driving times, rest periods, tachograph rules and "
+"road safety. Built for professional drivers."
+msgstr ""
+"Testează-ți cunoștințele despre timpii de conducere, perioadele de repaus, "
+"regulile privind tahograful și siguranța rutieră. Creat pentru șoferi "
+"profesioniști."
+
+#: quiz/templates/quiz/home.html:32
+msgid "Questions"
+msgstr "Întrebări"
+
+#: quiz/templates/quiz/home.html:39
+msgid "Categories"
+msgstr "Categorii"
+
+#: quiz/templates/quiz/home.html:45
+msgid "Free"
+msgstr "Gratuit"
+
+#: quiz/templates/quiz/home.html:48
+msgid "Always"
+msgstr "Întotdeauna"
+
+#: quiz/templates/quiz/home.html:62
+msgid "CHOOSE QUIZ CATEGORY"
+msgstr "ALEGE CATEGORIA"
+
+#: quiz/templates/quiz/home.html:71
+msgid "LOGIN TO START QUIZ"
+msgstr "AUTENTIFICATE SA INCEPI TESTUL"
+
+#: quiz/templates/quiz/login.html:5 quiz/templates/quiz/login.html:11
+#: quiz/templates/quiz/register.html:61
+#: tachoquiz/templates/tachoquiz/base.html:171
+msgid "Login"
+msgstr "Autentificare"
+
+#: quiz/templates/quiz/login.html:22 quiz/templates/quiz/register.html:21
+msgid "Username"
+msgstr "Nume de utilizator"
+
+#: quiz/templates/quiz/login.html:27 quiz/templates/quiz/register.html:38
+msgid "Password"
+msgstr "Parolă"
+
+#: quiz/templates/quiz/login.html:33
+msgid "Forgot password?"
+msgstr "Am uitat parola"
+
+#: quiz/templates/quiz/login.html:40
+msgid "Don't have an account?"
+msgstr "Nu ai un cont?"
+
+#: quiz/templates/quiz/login.html:41
+msgid "Sign Up"
+msgstr "Înregistrează-te"
+
+#: quiz/templates/quiz/password_reset.html:5
+#: quiz/templates/quiz/password_reset.html:11
+msgid "Reset Password"
+msgstr "Resetează  Parolă"
+
+#: quiz/templates/quiz/password_reset.html:20
+#: quiz/templates/quiz/register.html:30
+msgid "Email"
+msgstr "Email"
+
+#: quiz/templates/quiz/password_reset.html:31
+msgid "SEND RESET LINK"
+msgstr "TRIMITE LINKUL DE RESETARE"
+
+#: quiz/templates/quiz/password_reset_complete.html:5
+#: quiz/templates/quiz/password_reset_complete.html:11
+msgid "Password Reset Complete"
+msgstr "Resetarea parolei este finalizată"
+
+#: quiz/templates/quiz/password_reset_complete.html:16
+msgid "Your password has been changed successfully."
+msgstr "Parola ta a fost schimbată cu succes."
+
+#: quiz/templates/quiz/password_reset_confirm.html:5
+#: quiz/templates/quiz/password_reset_confirm.html:11
+msgid "Set New Password"
+msgstr "Setează o parolă nouă"
+
+#: quiz/templates/quiz/password_reset_confirm.html:23
+msgid "New password"
+msgstr "Parolă nouă"
+
+#: quiz/templates/quiz/password_reset_confirm.html:33
+msgid "Confirm new password"
+msgstr "Confirmă parola nouă"
+
+#: quiz/templates/quiz/password_reset_confirm.html:41
+msgid "RESET PASSWORD"
+msgstr "RESETEAZĂ PAROLA"
+
+#: quiz/templates/quiz/password_reset_confirm.html:47
+msgid "This password reset link is invalid or has expired."
+msgstr "Acest link pentru resetarea parolei este invalid sau a expirat."
+
+#: quiz/templates/quiz/password_reset_confirm.html:51
+msgid "REQUEST A NEW RESET LINK"
+msgstr "SOLICITĂ UN NOU LINK DE RESETARE"
+
+#: quiz/templates/quiz/password_reset_done.html:5
+msgid "Password Reset Sent"
+msgstr "Resetarea parolei a fost trimisă"
+
+#: quiz/templates/quiz/password_reset_done.html:11
+msgid "Check Your Email"
+msgstr "Verifică emailul"
+
+#: quiz/templates/quiz/password_reset_done.html:16
+msgid ""
+"If an account exists with the email address you entered, password reset "
+"instructions have been generated."
+msgstr ""
+"Dacă există un cont asociat adresei de email introduse, au fost generate "
+"instrucțiuni pentru resetarea parolei."
+
+#: quiz/templates/quiz/password_reset_done.html:23
+msgid "Please check your email for the password reset link."
+msgstr "Verifică emailul pentru linkul de resetare a parolei."
+
+#: quiz/templates/quiz/password_reset_done.html:27
+msgid "BACK TO LOGIN"
+msgstr "ÎNAPOI LA AUTENTIFICARE"
+
+#: quiz/templates/quiz/quiz.html:15
+#, python-format
+msgid "Question %(current)s of %(total)s"
+msgstr "Întrebarea %(current)s din %(total)s"
+
+#: quiz/templates/quiz/quiz.html:74
+msgid "SEE RESULTS"
+msgstr "VEZI REZULTATELE"
+
+#: quiz/templates/quiz/quiz.html:76
+msgid "NEXT QUESTION"
+msgstr "ÎNTREBAREA URMĂTOARE"
+
+#: quiz/templates/quiz/quiz.html:92
+msgid "CHECK ANSWER"
+msgstr "VERIFICĂ RĂSPUNSUL"
+
+#: quiz/templates/quiz/quiz_history.html:5
+#: quiz/templates/quiz/quiz_history.html:12
+msgid "Quiz History"
+msgstr "Istoric"
+
+#: quiz/templates/quiz/quiz_history.html:28
+msgid "Deleted Category"
+msgstr "Categorie ștearsă"
+
+#: quiz/templates/quiz/quiz_history.html:51
+msgid "You have not completed any quizzes yet."
+msgstr "Nu ai finalizat încă niciun quiz."
+
+#: quiz/templates/quiz/quiz_history.html:55
+msgid "START QUIZ"
+msgstr "ÎNCEPE QUIZ-UL"
+
+#: quiz/templates/quiz/register.html:5 quiz/templates/quiz/register.html:11
+msgid "Create Account"
+msgstr "Creează un cont"
+
+#: quiz/templates/quiz/register.html:47
+msgid "Password confirmation"
+msgstr "Confirmarea parolei"
+
+#: quiz/templates/quiz/register.html:55
+msgid "REGISTER"
+msgstr "ÎNREGISTRARE"
+
+#: quiz/templates/quiz/register.html:59
+msgid "Already have an account?"
+msgstr "Ai deja un cont?"
+
+#: quiz/templates/quiz/score.html:5 tachoquiz/templates/tachoquiz/base.html:145
+msgid "Score"
+msgstr "Scor"
+
+#: quiz/templates/quiz/score.html:11
+msgid "Quiz Completed"
+msgstr "Test finalizat"
+
+#: quiz/templates/quiz/score.html:15
+msgid "Your Score"
+msgstr "Scorul tău"
+
+#: quiz/templates/quiz/score.html:36
+msgid "Excellent work!"
+msgstr "Excelent"
+
+#: quiz/templates/quiz/score.html:38
+msgid "Good job!"
+msgstr "Bravo"
+
+#: quiz/templates/quiz/score.html:40
+msgid "Keep practising!"
+msgstr "Continuă să exersezi!"
+
+#: quiz/templates/quiz/score.html:47
+msgid "Correct answers:"
+msgstr "Răspunsuri corecte:"
+
+#: quiz/templates/quiz/score.html:52
+msgid "Incorrect answers:"
+msgstr "Răspunsuri incorecte:"
+
+#: quiz/templates/quiz/score.html:57
+msgid "Total questions:"
+msgstr "Total întrebări:"
+
+#: quiz/templates/quiz/score.html:64
+msgid "PLAY AGAIN"
+msgstr "JOACĂ DIN NOU"
+
+#: quiz/views.py:63
+msgid "Invalid username or password."
+msgstr "Numele de utilizator sau parola sunt incorecte."
+
+#: quiz/views.py:73
+msgid "You've been logged out successfully."
+msgstr "Te-ai deconectat cu succes."
+
+#: quiz/views.py:94
+msgid "No completed quiz was found. Please start a new quiz."
+msgstr "Nu a fost găsit niciun test finalizat. Începe un test nou."
+
+#: quiz/views.py:200
+msgid "No questions available for this category."
+msgstr "Nu există întrebări disponibile pentru această categorie."
+
+#: quiz/views.py:217
+msgid "Quiz session expired. Please start the quiz again."
+msgstr "Sesiunea testului a expirat. Începe testul din nou."
+
+#: quiz/views.py:261
+msgid "Please answer the question before continuing."
+msgstr "Răspunde la întrebare înainte de a continua."
+
+#: quiz/views.py:274
+msgid "Please answer all questions before submitting the quiz."
+msgstr "Răspunde la toate întrebările înainte de a finaliza testul."
+
+#: tachoquiz/templates/tachoquiz/base.html:112
+#, python-format
+msgid "Hello, %(username)s"
+msgstr "Salut, %(username)s"
+
+#: tachoquiz/templates/tachoquiz/base.html:123
+#: tachoquiz/templates/tachoquiz/base.html:168
+msgid "Home"
+msgstr "Acasă"
+
+#: tachoquiz/templates/tachoquiz/base.html:134
+msgid "Quiz"
+msgstr "Test"
+
+#: tachoquiz/templates/tachoquiz/base.html:156
+msgid "History"
+msgstr "Istoric"
+
+#: tachoquiz/templates/tachoquiz/base.html:162
+msgid "Logout"
+msgstr "Deconectare"
+
+#: tachoquiz/templates/tachoquiz/base.html:174
+msgid "Register"
+msgstr "Înregistrare"
+
+#: tachoquiz/templates/tachoquiz/base.html:247
+msgid "Learn tacho. Build confidence."
+msgstr "Învață regulile tahografului. Condu cu încredere."
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "                            Hello, %(username)s\n"
+#~ "                        "
+#~ msgstr "Salut, %(username)s"

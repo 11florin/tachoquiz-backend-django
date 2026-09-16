@@ -1,14 +1,15 @@
 {% extends "tachoquiz/base.html" %}
+{% load i18n %}
 
 {% block title %}
-  Quiz History | Tacho Quiz
+  {% translate "Quiz History" %} | Tacho Quiz
 {% endblock %}
 
 {% block content %}
 <section class="score-section">
 
     <div class="screen-header">
-        <h1>Quiz History</h1>
+        <h1>{% translate "Quiz History" %}</h1>
     </div>
 
     {% if results %}
@@ -24,7 +25,7 @@
                             {% if result.category %}
                                 {{ result.category.name }}
                             {% else %}
-                                Deleted Category
+                                {% translate "Deleted Category" %}
                             {% endif %}
                         </h2>
 
@@ -47,11 +48,11 @@
 
         <div class="login-body">
             <p>
-                You have not completed any quizzes yet.
+                {% translate "You have not completed any quizzes yet." %}
             </p>
 
             <a href="{% url 'categories' %}" class="action-btn">
-                START QUIZ
+                {% translate "START QUIZ" %}
             </a>
         </div>
 
