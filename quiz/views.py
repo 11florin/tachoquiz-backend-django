@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db.models import Count
 from django.http import JsonResponse
+from django.utils.translation import gettext as _
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from .forms import RegistrationForm
 from .models import Category, Question, Answer, QuizResult
@@ -59,7 +60,7 @@ def login_view(request):
             return redirect("home")
 
         return render(request, "quiz/login.html", {
-            "error": "Invalid username or password."
+            "error": _("Invalid username or password.")
         })
 
     return render(request, "quiz/login.html")
@@ -69,7 +70,7 @@ def login_view(request):
 def logout_view(request):
     """Log out the current user and redirect to the home page."""
     logout(request)
-    messages.success(request, "You've been logged out successfully.")
+    messages.success(request, _("You've been logged out successfully."))
     return redirect("home")
 
 
@@ -90,7 +91,7 @@ def score_view(request):
     if not quiz_complete or not question_ids:
         messages.error(
             request,
-            "No completed quiz was found. Please start a new quiz."
+            _("No completed quiz was found. Please start a new quiz.")
         )
         return redirect("categories")
 
@@ -196,7 +197,7 @@ def category_quiz(request, slug):
         if not question_ids:
             messages.info(
                 request,
-                "No questions available for this category."
+                _("No questions available for this category.")
             )
             return redirect("categories")
 
@@ -213,7 +214,7 @@ def category_quiz(request, slug):
     if not question_ids:
         messages.error(
             request,
-            "Quiz session expired. Please start the quiz again."
+            _("Quiz session expired. Please start the quiz again.")
         )
         return redirect("categories")
 
@@ -257,7 +258,7 @@ def category_quiz(request, slug):
             if selected_answer is None:
                 messages.error(
                     request,
-                    "Please answer the question before continuing."
+                    _("Please answer the question before continuing.")
                 )
                 return redirect("category-quiz", slug=slug)
 
@@ -270,7 +271,7 @@ def category_quiz(request, slug):
                 if len(quiz_answers) != len(question_ids):
                     messages.error(
                         request,
-                        "Please answer all questions before submitting the quiz."
+                        _("Please answer all questions before submitting the quiz.")
                     )
                     return redirect("categories")
 
