@@ -1,60 +1,79 @@
 {% extends "tachoquiz/base.html" %} 
-{% load static %} 
+{% load static i18n %} 
 
 {% block title %} 
-About | Tacho Quiz 
+{% translate "About" %} | Tacho Quiz
 {% endblock %}
 
 {% block content %}
 <section class="about-section">
   <div class="screen-header">
-    <h1>About this app</h1>
+    <h1>{% translate "About this app" %}</h1>
   </div>
 
   <div class="about-body">
     <div class="about-item">
       <p>
+        {% blocktranslate trimmed %}
         Tacho Quiz was created by a professional driver who understands
-        first-hand how challenging the early stages of a driving career can be.
-        When I first entered the industry, I found the learning process
-        overwhelming - especially when it came to understanding driving times,
-        rest periods, tachograph rules, and preparing for the CPC qualification.
+first-hand how challenging the early stages of a professional driving career can be.
+When I first entered the industry, I found the learning process
+overwhelming - especially when it came to understanding driving times,
+rest periods, tachograph rules, and preparing for the CPC qualification.
+        {% endblocktranslate %}
       </p>
     </div>
     <div class="divider"></div>
     <div class="about-item">
       <p>
+        {% blocktranslate trimmed %}
         This application was built with a simple purpose: to make learning
         easier, clearer, and more accessible for drivers at any stage of their
         journey. Tacho Quiz helps drivers revise essential knowledge through
         short, focused questions that can be completed anywhere - during breaks,
         at home, or while preparing for CPC assessments.
+        {% endblocktranslate %}
       </p>
     </div>
     <div class="divider"></div>
     <div class="about-item">
       <p>
+        {% blocktranslate trimmed %}
         The quiz format encourages repetition and confidence-building, allowing
         users to strengthen their understanding of key regulations without
         pressure. Whether you are a new driver navigating tachograph rules or an
         experienced professional refreshing your knowledge, this app supports
         you in becoming safer, more informed, and better prepared.
+        {% endblocktranslate %}
       </p>
     </div>
     <div class="divider"></div>
     <div class="about-item">
       <p>
+        {% blocktranslate trimmed %}
         Tacho Quiz was created by a driver, for drivers - with the goal of
         making the path toward CPC certification and professional development
         smoother and more approachable.
+        {% endblocktranslate %}
       </p>
     </div>
     <div class="divider"></div>
     <div class="about-item">
       <p>
-        Disclaimer: This quiz is not an official DVSA test. The questions are
-        independently created for study purposes and are based on publicly
-        available guidance, not on DVSA copyrighted exam materials.
+        {% blocktranslate trimmed %}
+        <strong>Disclaimer:</strong> Tacho Quiz is an independent educational application intended
+to support professional drivers in the United Kingdom. It is not affiliated
+with, endorsed by, or approved by the DVSA or any other UK government
+authority.
+
+The questions and explanations are independently created for learning and
+revision purposes and are not official DVSA or CPC examination questions.
+
+While reasonable efforts are made to keep the information accurate and up
+to date, regulations and official guidance may change. Users should always
+check the latest official UK legislation and guidance before relying on the
+information for professional or legal compliance.
+        {% endblocktranslate %}
       </p>
     </div>
   </div>
@@ -65,7 +84,7 @@ About | Tacho Quiz
       - Developed by Florin Albu - 
     </p>
     <a href="{% url 'home' %}" class="action-btn action-btn--full">
-    Back to Home
+    {% translate "Back to Home" %}
     </a>
   </div>
 </section>
