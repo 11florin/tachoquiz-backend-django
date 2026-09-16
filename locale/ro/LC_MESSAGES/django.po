@@ -2,13 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-15 12:59+0000\n"
+"POT-Creation-Date: 2026-09-16 11:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,15 +32,17 @@ msgstr "Despre această aplicație"
 #: quiz/templates/quiz/about.html:17
 msgid ""
 "Tacho Quiz was created by a professional driver who understands first-hand "
-"how challenging the early stages of a professional driving career can be. When I first "
-"entered the industry, I found the learning process overwhelming - especially "
-"when it came to understanding driving times, rest periods, tachograph rules, "
-"and preparing for the CPC qualification."
-msgstr "Tacho Quiz a fost creat de un șofer profesionist care înțelege din proprie experiență " 
-"cât de dificile pot fi primele etape ale unei cariere în domeniul transporturilor. Când am intrat " 
-"pentru prima dată în această industrie, procesul de învățare mi s-a părut copleșitor - în special " 
-"în ceea ce privește înțelegerea timpilor de conducere, perioadelor de repaus, regulilor privind tahograful" 
-"și pregătirea pentru calificarea CPC."
+"how challenging the early stages of a professional driving career can be. "
+"When I first entered the industry, I found the learning process overwhelming "
+"- especially when it came to understanding driving times, rest periods, "
+"tachograph rules, and preparing for the CPC qualification."
+msgstr ""
+"Tacho Quiz a fost creat de un șofer profesionist care înțelege din proprie "
+"experiență cât de dificile pot fi primele etape ale unei cariere în domeniul "
+"transporturilor. Când am intrat pentru prima dată în această industrie, "
+"procesul de învățare mi s-a părut copleșitor - în special în ceea ce "
+"privește înțelegerea timpilor de conducere, perioadelor de repaus, regulilor "
+"privind tahografulși pregătirea pentru calificarea CPC."
 
 #: quiz/templates/quiz/about.html:29
 msgid ""
@@ -51,11 +51,13 @@ msgid ""
 "Tacho Quiz helps drivers revise essential knowledge through short, focused "
 "questions that can be completed anywhere - during breaks, at home, or while "
 "preparing for CPC assessments."
-msgstr "Această aplicație a fost creată cu un scop simplu: să facă procesul de " 
-"învățare mai ușor, mai clar și mai accesibil pentru șoferi, indiferent de etapa " 
-"în care se află în cariera lor. Tacho Quiz îi ajută pe șoferi să recapituleze " 
-"cunoștințele esențiale prin întrebări scurte și bine structurate, care pot fi " 
-"parcurse oriunde - în timpul pauzelor, acasă sau în timpul pregătirii pentru evaluările CPC."
+msgstr ""
+"Această aplicație a fost creată cu un scop simplu: să facă procesul de "
+"învățare mai ușor, mai clar și mai accesibil pentru șoferi, indiferent de "
+"etapa în care se află în cariera lor. Tacho Quiz îi ajută pe șoferi să "
+"recapituleze cunoștințele esențiale prin întrebări scurte și bine "
+"structurate, care pot fi parcurse oriunde - în timpul pauzelor, acasă sau în "
+"timpul pregătirii pentru evaluările CPC."
 
 #: quiz/templates/quiz/about.html:41
 msgid ""
@@ -64,20 +66,24 @@ msgid ""
 "Whether you are a new driver navigating tachograph rules or an experienced "
 "professional refreshing your knowledge, this app supports you in becoming "
 "safer, more informed, and better prepared."
-msgstr "Formatul de test încurajează repetarea și dezvoltarea încrederii în propriile " 
-"cunoștințe, permițând utilizatorilor să își consolideze înțelegerea reglementărilor " 
-"importante fără presiune. Indiferent dacă ești un șofer începător care învață regulile " 
-"privind tahograful sau un șofer profesionist cu experiență care dorește să își reîmprospăteze " 
-"cunoștințele, această aplicație te ajută să fii mai bine informat, mai bine pregătit și să conduci " 
-"în condiții de mai mare siguranță."
+msgstr ""
+"Formatul de test încurajează repetarea și dezvoltarea încrederii în "
+"propriile cunoștințe, permițând utilizatorilor să își consolideze "
+"înțelegerea reglementărilor importante fără presiune. Indiferent dacă ești "
+"un șofer începător care învață regulile privind tahograful sau un șofer "
+"profesionist cu experiență care dorește să își reîmprospăteze cunoștințele, "
+"această aplicație te ajută să fii mai bine informat, mai bine pregătit și să "
+"conduci în condiții de mai mare siguranță."
 
 #: quiz/templates/quiz/about.html:53
 msgid ""
 "Tacho Quiz was created by a driver, for drivers - with the goal of making "
 "the path toward CPC certification and professional development smoother and "
 "more approachable."
-msgstr "Tacho Quiz a fost creat de un șofer, pentru șoferi - cu scopul de a face " 
-"pregătirea pentru certificarea CPC și dezvoltarea profesională mai simple și mai accesibile."
+msgstr ""
+"Tacho Quiz a fost creat de un șofer, pentru șoferi - cu scopul de a face "
+"pregătirea pentru certificarea CPC și dezvoltarea profesională mai simple și "
+"mai accesibile."
 
 #: quiz/templates/quiz/about.html:63
 msgid ""
@@ -91,18 +97,17 @@ msgid ""
 "change. Users should always check the latest official UK legislation and "
 "guidance before relying on the information for professional or legal "
 "compliance."
-msgstr "<strong>Declinarea responsabilității:</strong> Tacho Quiz este o aplicație educațională "
-"independentă, destinată sprijinirii șoferilor profesioniști din Regatul Unit."
-"Aplicația nu este afiliată, susținută sau aprobată de DVSA sau de orice altă "
-"autoritate guvernamentală din Regatul Unit."
-
-"Întrebările și explicațiile sunt create independent în scop educațional și "
-"de recapitulare și nu reprezintă întrebări oficiale din examenele DVSA sau CPC."
-
-"Deși se depun eforturi rezonabile pentru ca informațiile să fie corecte și "
-"actualizate, reglementările și ghidurile oficiale se pot modifica. Utilizatorii "
-"trebuie să verifice întotdeauna cea mai recentă legislație și ghidurile oficiale "
-"din Regatul Unit înainte de a se baza pe aceste informații în scop profesional "
+msgstr ""
+"<strong>Declinarea responsabilității:</strong> Tacho Quiz este o aplicație "
+"educațională independentă, destinată sprijinirii șoferilor profesioniști din "
+"Regatul Unit.Aplicația nu este afiliată, susținută sau aprobată de DVSA sau "
+"de orice altă autoritate guvernamentală din Regatul Unit.Întrebările și "
+"explicațiile sunt create independent în scop educațional și de recapitulare "
+"și nu reprezintă întrebări oficiale din examenele DVSA sau CPC.Deși se depun "
+"eforturi rezonabile pentru ca informațiile să fie corecte și actualizate, "
+"reglementările și ghidurile oficiale se pot modifica. Utilizatorii trebuie "
+"să verifice întotdeauna cea mai recentă legislație și ghidurile oficiale din "
+"Regatul Unit înainte de a se baza pe aceste informații în scop profesional "
 "sau pentru respectarea obligațiilor legale."
 
 #: quiz/templates/quiz/about.html:87
@@ -124,6 +129,26 @@ msgstr "Nu există categorii de quiz disponibile."
 #: quiz/templates/quiz/categories.html:60
 msgid "Choose a category to start your quiz."
 msgstr "Alege o categorie pentru a începe testul."
+
+#: quiz/templates/quiz/confirmation.html:5
+msgid "Account Created"
+msgstr "Cont creat"
+
+#: quiz/templates/quiz/confirmation.html:12
+msgid "Welcome!"
+msgstr "Bine ai venit!"
+
+#: quiz/templates/quiz/confirmation.html:16
+msgid ""
+"Your account has been created successfully. Log in to start your first quiz."
+msgstr ""
+"Contul tău a fost creat cu succes. Autentifică-te pentru a începe primul "
+"test."
+
+#: quiz/templates/quiz/confirmation.html:23 quiz/templates/quiz/login.html:37
+#: quiz/templates/quiz/password_reset_complete.html:20
+msgid "LOGIN"
+msgstr "AUTENTIFICARE"
 
 #: quiz/templates/quiz/home.html:14
 msgid "CPC Preparation"
@@ -183,11 +208,6 @@ msgstr "Parolă"
 #: quiz/templates/quiz/login.html:33
 msgid "Forgot password?"
 msgstr "Am uitat parola"
-
-#: quiz/templates/quiz/login.html:37
-#: quiz/templates/quiz/password_reset_complete.html:20
-msgid "LOGIN"
-msgstr "AUTENTIFICARE"
 
 #: quiz/templates/quiz/login.html:40
 msgid "Don't have an account?"
@@ -359,6 +379,34 @@ msgstr "Total întrebări:"
 msgid "PLAY AGAIN"
 msgstr "JOACĂ DIN NOU"
 
+#: quiz/views.py:63
+msgid "Invalid username or password."
+msgstr "Numele de utilizator sau parola sunt incorecte."
+
+#: quiz/views.py:73
+msgid "You've been logged out successfully."
+msgstr "Te-ai deconectat cu succes."
+
+#: quiz/views.py:94
+msgid "No completed quiz was found. Please start a new quiz."
+msgstr "Nu a fost găsit niciun test finalizat. Începe un test nou."
+
+#: quiz/views.py:200
+msgid "No questions available for this category."
+msgstr "Nu există întrebări disponibile pentru această categorie."
+
+#: quiz/views.py:217
+msgid "Quiz session expired. Please start the quiz again."
+msgstr "Sesiunea testului a expirat. Începe testul din nou."
+
+#: quiz/views.py:261
+msgid "Please answer the question before continuing."
+msgstr "Răspunde la întrebare înainte de a continua."
+
+#: quiz/views.py:274
+msgid "Please answer all questions before submitting the quiz."
+msgstr "Răspunde la toate întrebările înainte de a finaliza testul."
+
 #: tachoquiz/templates/tachoquiz/base.html:112
 #, python-format
 msgid "Hello, %(username)s"
@@ -384,6 +432,10 @@ msgstr "Deconectare"
 #: tachoquiz/templates/tachoquiz/base.html:174
 msgid "Register"
 msgstr "Înregistrare"
+
+#: tachoquiz/templates/tachoquiz/base.html:247
+msgid "Learn tacho. Build confidence."
+msgstr "Învață regulile tahografului. Condu cu încredere."
 
 #, python-format
 #~ msgid ""

@@ -1,24 +1,26 @@
 {% extends "tachoquiz/base.html" %}
-{% load static %}
+{% load static i18n %}
 
 {% block title %}
-  Account Created | Tacho Quiz
+  {% translate "Account Created" %} | Tacho Quiz
 {% endblock %}
 
 {% block content %}
 
 <section class="confirm-section">
     <div class="screen-header">
-        <h1 id="welcome-title">Welcome!</h1>
+        <h1 id="welcome-title">{% translate "Welcome!" %}</h1>
     </div>
 
     <p class="hero-desc confirm-p">
+        {% blocktranslate trimmed %}
         Your account has been created successfully.
         Log in to start your first quiz.
+        {% endblocktranslate %}
     </p>
 
     <a href="{% url 'login' %}" class="action-btn">
-        LOGIN
+        {% translate "LOGIN" %}
     </a>
 </section>
 
