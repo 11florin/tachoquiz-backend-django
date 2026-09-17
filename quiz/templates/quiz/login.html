@@ -28,11 +28,13 @@
                 <input type="password" id="password" name="password" required>
             </div>
 
+            {% comment %}
             <p class="forgot-link">
                 <a href="{% url 'password_reset' %}">
                     {% translate "Forgot password?" %}
                 </a>
             </p>
+            {% endcomment %}
 
             <button type="submit" class="action-btn form-group">{% translate "LOGIN" %}</button>
 
