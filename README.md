@@ -657,6 +657,50 @@ Category images can now be uploaded through Django Admin, stored in Cloudinary a
 
 ---
 
+## Deployment
+
+Tacho Quiz is deployed on Heroku in the EU region.
+
+The production application uses:
+
+- **Heroku** for hosting
+- **Heroku Postgres** for the production database
+- **Gunicorn** as the production WSGI server
+- **WhiteNoise** for static files
+- **Cloudinary** for media storage
+- **Python 3.12**
+
+Sensitive configuration is stored using Heroku Config Vars and is not committed to GitHub.
+
+The following environment variables are configured:
+
+```text
+ALLOWED_HOSTS
+CLOUDINARY_API_KEY
+CLOUDINARY_API_SECRET
+CLOUDINARY_CLOUD_NAME
+DATABASE_URL
+DEBUG
+SECRET_KEY
+```
+
+The `Procfile` runs database migrations automatically before each release and starts the application using Gunicorn:
+
+```text
+release: python manage.py migrate --noinput
+web: gunicorn tachoquiz.wsgi
+```
+
+A Django fixture (`quiz/fixtures/quiz_data.json`) is used to populate the production database with the initial quiz content.
+
+The deployed application was tested successfully for authentication, quiz functionality, quiz history, PostgreSQL, Cloudinary media, static files, and English/Romanian translations.
+
+### Known Limitations
+
+Password reset email delivery is currently disabled for the assessment deployment. A production email provider will be configured before a future public release.
+
+---
+
 
 # Bugs & Development Challenges
 
