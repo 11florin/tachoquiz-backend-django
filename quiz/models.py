@@ -1,10 +1,12 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import get_language
 
 # Create your models here.
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100, verbose_name="Category (English)",)
+    name_ro = models.CharField(max_length=100, verbose_name="Category (Romanian)",)
     slug = models.SlugField(max_length=100, unique=True)
     image = models.ImageField(
         upload_to="categories/",
@@ -15,26 +17,54 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "Categories"
 
+    @property
+    def localized_name(self):
+        if get_language() == "ro":
+            return self.name_ro
+        return self.name_en
+
     def __str__(self):
-        return self.name
+        return self.name_en
 
 
 class Question(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="questions",)
-    text = models.TextField(verbose_name="Question")
-    explanation = models.TextField()
+    text_en = models.TextField(verbose_name="Question (English)")
+    text_ro = models.TextField(verbose_name="Question (Romanian)")
+    explanation_en = models.TextField(verbose_name="Explanation (English)")
+    explanation_ro = models.TextField(verbose_name="Explanation (Romanian)")
+
+    @property
+    def localized_text(self):
+        if get_language() == "ro":
+            return self.text_ro
+        return self.text_en
+
+
+    @property
+    def localized_explanation(self):
+        if get_language() == "ro":
+            return self.explanation_ro
+        return self.explanation_en
 
     def __str__(self):
-        return self.text
+        return self.text_en
 
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answers",)
-    text = models.CharField(max_length=255)
+    text_en = models.CharField(max_length=255, verbose_name="Answer (English)",)
+    text_ro = models.CharField(max_length=255, verbose_name="Answer (Romanian)",)
     is_correct = models.BooleanField(default=False)
 
+    @property
+    def localized_text(self):
+        if get_language() == "ro":
+            return self.text_ro
+        return self.text_en
+
     def __str__(self):
-        return self.text
+        return self.text_en
 
 
 class QuizResult(models.Model):
