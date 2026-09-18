@@ -23,7 +23,7 @@
                     <div class="history-main">
                         <h2>
                             {% if result.category %}
-                                {{ result.category.name }}
+                                {{ result.category.localized_name }}
                             {% else %}
                                 {% translate "Deleted Category" %}
                             {% endif %}
