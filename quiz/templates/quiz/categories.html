@@ -10,7 +10,7 @@
 <section class="categories-section">
 
     <div class="screen-header">
-        <h1><h1>{% translate "Quiz Categories" %}</h1></h1>
+        <h1>{% translate "Quiz Categories" %}</h1>
     </div>
 
     <div class="categories-grid">
@@ -26,18 +26,18 @@
                     {% if category.image %}
                     <img
                         src="{{ category.image.url }}"
-                        alt="{{ category.name }}"
+                        alt="{{ category.localized_name }}"
                         class="category-image"
                     >
                     {% endif %}
 
-                    <span>{{ category.name }}</span>
+                    <span>{{ category.localized_name }}</span>
                 </a>
 
             {% else %}
 
                 <div class="cat-btn disabled-category">
-                    {{ category.name }}
+                    {{ category.localized_name }}
                     <span class="category-unavailable">
                         {% translate "No questions available" %}
                     </span>
