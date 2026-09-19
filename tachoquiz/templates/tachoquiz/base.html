@@ -137,17 +137,6 @@
 
                 <li>
                     <a
-                        href="{% url 'score' %}"
-                        {% if request.resolver_match.url_name == 'score' %}
-                            class="active" aria-current="page"
-                        {% endif %}
-                    >
-                        {% translate "Score" %}
-                    </a>
-                </li>
-
-                <li>
-                    <a
                         href="{% url 'quiz-history' %}"
                         {% if request.resolver_match.url_name == 'quiz-history' %}
                             class="active" aria-current="page"
