@@ -33,41 +33,88 @@ class Command(BaseCommand):
         with file:
             reader = csv.DictReader(file)
 
+            required_columns = {
+                "category_en",
+                "category_ro",
+                "question_en",
+                "question_ro",
+                "explanation_en",
+                "explanation_ro",
+                "answer_1_en",
+                "answer_1_ro",
+                "answer_2_en",
+                "answer_2_ro",
+                "answer_3_en",
+                "answer_3_ro",
+                "answer_4_en",
+                "answer_4_ro",
+                "correct_answer",
+            }
+
+            missing_columns = required_columns - set(reader.fieldnames or [])
+
+            if missing_columns:
+                raise CommandError(
+                    "CSV file is missing required columns: "
+                    + ", ".join(sorted(missing_columns))
+                )
+
             for row_number, row in enumerate(reader, start=2):
-                category_name = row["category"].strip()
-                question_text = row["question"].strip()
-                explanation = row["explanation"].strip()
+                category_en = row["category_en"].strip()
+                category_ro = row["category_ro"].strip()
+
+                question_en = row["question_en"].strip()
+                question_ro = row["question_ro"].strip()
+
+                explanation_en = row["explanation_en"].strip()
+                explanation_ro = row["explanation_ro"].strip()
 
                 answers = [
-                    row["answer_1"].strip(),
-                    row["answer_2"].strip(),
-                    row["answer_3"].strip(),
-                    row["answer_4"].strip(),
+                    {
+                        "text_en": row["answer_1_en"].strip(),
+                        "text_ro": row["answer_1_ro"].strip(),
+                    },
+                    {
+                        "text_en": row["answer_2_en"].strip(),
+                        "text_ro": row["answer_2_ro"].strip(),
+                    },
+                    {
+                        "text_en": row["answer_3_en"].strip(),
+                        "text_ro": row["answer_3_ro"].strip(),
+                    },
+                    {
+                        "text_en": row["answer_4_en"].strip(),
+                        "text_ro": row["answer_4_ro"].strip(),
+                    },
                 ]
 
                 correct_answer = row["correct_answer"].strip()
 
-                if not category_name:
+                if not category_en or not category_ro:
                     self.stderr.write(
-                        f"Row {row_number}: category is required."
+                        f"Row {row_number}: category is required in both languages."
                     )
                     continue
 
-                if not question_text:
+                if not question_en or not question_ro:
                     self.stderr.write(
-                        f"Row {row_number}: question is required."
+                        f"Row {row_number}: question is required in both languages."
                     )
                     continue
 
-                if not explanation:
+                if not explanation_en or not explanation_ro:
                     self.stderr.write(
-                        f"Row {row_number}: explanation is required."
+                        f"Row {row_number}: explanation is required in both languages."
                     )
                     continue
 
-                if any(not answer for answer in answers):
+                if any(
+                    not answer["text_en"] or not answer["text_ro"]
+                    for answer in answers
+                ):
                     self.stderr.write(
-                        f"Row {row_number}: all four answers are required."
+                        f"Row {row_number}: all four answers are required "
+                        "in both languages."
                     )
                     continue
 
@@ -80,15 +127,20 @@ class Command(BaseCommand):
 
                 with transaction.atomic():
                     category, created = Category.objects.get_or_create(
-                        name=category_name,
+                        name_en=category_en,
                         defaults={
-                            "slug": slugify(category_name),
+                            "name_ro": category_ro,
+                            "slug": slugify(category_en),
                         },
                     )
 
+                    if not created and category.name_ro != category_ro:
+                        category.name_ro = category_ro
+                        category.save(update_fields=["name_ro"])
+
                     if Question.objects.filter(
                         category=category,
-                        text=question_text,
+                        text_en=question_en,
                     ).exists():
                         self.stdout.write(
                             f"Row {row_number} skipped: "
@@ -98,17 +150,20 @@ class Command(BaseCommand):
 
                     question = Question.objects.create(
                         category=category,
-                        text=question_text,
-                        explanation=explanation,
+                        text_en=question_en,
+                        text_ro=question_ro,
+                        explanation_en=explanation_en,
+                        explanation_ro=explanation_ro,
                     )
 
-                    for index, answer_text in enumerate(
+                    for index, answer in enumerate(
                         answers,
                         start=1,
                     ):
                         Answer.objects.create(
                             question=question,
-                            text=answer_text,
+                            text_en=answer["text_en"],
+                            text_ro=answer["text_ro"],
                             is_correct=(
                                 index == int(correct_answer)
                             ),
@@ -116,6 +171,7 @@ class Command(BaseCommand):
 
                 self.stdout.write(
                     self.style.SUCCESS(
-                        f"Row {row_number} imported: {question_text}"
+                        f"Row {row_number} imported: {question_en}"
                     )
                 )
+  

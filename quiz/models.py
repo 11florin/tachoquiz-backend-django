@@ -83,3 +83,4 @@ class QuizResult(models.Model):
             f"{self.category} - "
             f"{self.score}/{self.total_questions}"
         )
+    
