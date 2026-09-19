@@ -701,6 +701,30 @@ Password reset email delivery is currently disabled for the assessment deploymen
 
 ---
 
+## Bilingual Quiz Content
+
+The Tacho Quiz dataset was expanded to provide complete quiz content in both English and Romanian.
+
+### What Was Added
+
+- 13 quiz categories
+- 192 questions
+- 768 answer options
+- 4 answers per question
+- English and Romanian questions, answers and explanations
+- 12 scenario-based Study Cases
+- CSV-based quiz content stored in `quiz/data/questions.csv`
+- Custom Django management command for importing quiz content
+- Quiz History support for the bilingual categories
+
+The dataset was validated locally and successfully deployed and tested on Heroku in both English and Romanian.
+
+### UX Improvement
+
+The `Score` link was removed from the navigation bar because the score page is only required after completing a quiz. Previous results remain available through Quiz History.
+
+
+
 
 # Bugs & Development Challenges
 
