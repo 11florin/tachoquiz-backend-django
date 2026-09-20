@@ -870,3 +870,20 @@ Detailed implementation history is available through the repository's GitHub Iss
 **Florin Albu**
 
 TachoQuiz is being developed as a full-stack web development portfolio project.
+
+
+---
+## Images
+[truck driving time](https://unsplash.com/photos/a-white-semi-truck-driving-down-a-rural-road-ZhNYKwjRMh4)
+[truck driver rest](https://unsplash.com/photos/parked-trucks-kGoPcmpPT7c)
+[calendar rest](https://unsplash.com/photos/a-calendar-with-red-push-buttons-pinned-to-it-bwOAixLG0uc)
+[coffee break](https://unsplash.com/photos/a-yellow-coffee-trailer-parked-next-to-a-car-9SwAWAvRQsg)
+[working time](https://unsplash.com/photos/pink-bell-alarm-clock-showing-210-I84vGUYGUtQ)
+[tachograph](https://en.wikipedia.org/wiki/Digital_tachograph)
+[driver records](https://chatgpt.com/s/m_6aafe465e1788191864b6b4f80d7491e)
+[two truck drivers](https://unsplash.com/photos/two-red-and-green-semi-trucks-parked-at-road-16CrZmN9l60)
+[truck ferry](https://unsplash.com/photos/a-group-of-cars-parked-on-a-road-next-to-a-body-of-water-RT1a-NTfp2k)
+[road emergency](https://unsplash.com/photos/a-couple-of-trucks-that-are-sitting-in-the-street-_mv4_eYTXeY)
+[road enforcement](https://commons.wikimedia.org/wiki/File:Speed_enforcement_camera_road_sign_%27ACHTUNG_RADARKONTROLLE%27_01.jpg)
+[quiz study](https://unsplash.com/photos/aerial-photography-of-freight-truck-lot-GOD2mDNujuU)
+---
