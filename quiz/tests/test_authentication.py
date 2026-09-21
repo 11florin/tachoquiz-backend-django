@@ -130,3 +130,18 @@ class AuthenticationTest(TestCase):
             response,
             reverse("categories")
         )
+
+    def test_login_redirects_to_next_url(self):
+        response = self.client.post(
+            f"{reverse('login')}?next={reverse('quiz')}",
+            {
+                "username": "testuser",
+                "password": "testpassword123",
+            }
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("quiz"),
+            fetch_redirect_response=False,
+        )
