@@ -67,3 +67,25 @@ class AuthenticationTest(TestCase):
         self.assertFalse(
             "_auth_user_id" in self.client.session
         )
+
+    def test_user_can_register(self):
+        response = self.client.post(
+            reverse("register"),
+            {
+                "username": "newuser",
+                "email": "newuser@example.com",
+                "password1": "StrongPassword123!",
+                "password2": "StrongPassword123!",
+            }
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("confirmation")
+        )
+
+        self.assertTrue(
+            get_user_model().objects.filter(
+                username="newuser"
+            ).exists()
+        )
