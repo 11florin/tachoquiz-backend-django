@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from quiz.models import Category, Question
+from quiz.models import Answer, Category, Question
 
 
 class QuizFunctionalityTest(TestCase):
@@ -25,6 +25,13 @@ class QuizFunctionalityTest(TestCase):
             text_ro="Care este timpul maxim zilnic de conducere?",
             explanation_en="Test explanation.",
             explanation_ro="Explicație de test.",
+        )
+
+        self.answer = Answer.objects.create(
+            question=self.question,
+            text_en="9 hours",
+            text_ro="9 ore",
+            is_correct=True,
         )
 
         self.client.login(
@@ -110,4 +117,39 @@ class QuizFunctionalityTest(TestCase):
         self.assertEqual(
             response.context["total_questions"],
             1
+        )
+
+    def test_selected_answer_is_saved_in_session(self):
+        # Start the quiz first.
+        self.client.get(
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            )
+        )
+
+        # Submit an answer to the current question.
+        response = self.client.post(
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            ),
+            {
+                "answer": self.answer.id,
+            }
+        )
+
+        self.assertRedirects(
+            response,
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            )
+        )
+
+        session = self.client.session
+
+        self.assertEqual(
+            session["quiz_answers"][str(self.question.id)],
+            str(self.answer.id),
         )
