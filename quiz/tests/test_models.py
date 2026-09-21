@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.utils import translation
 
-from quiz.models import Category, Question
+from quiz.models import Category, Question, Answer
 
 
 class CategoryModelTest(TestCase):
@@ -82,4 +82,52 @@ class QuestionModelTest(TestCase):
             self.assertEqual(
                 self.question.localized_explanation,
                 "Aceasta este explicația în limba română."
+            )
+
+
+class AnswerModelTest(TestCase):
+
+    def setUp(self):
+        self.category = Category.objects.create(
+            name_en="Driving Time",
+            name_ro="Timp de conducere",
+            slug="driving-time",
+        )
+
+        self.question = Question.objects.create(
+            category=self.category,
+            text_en="What is the maximum daily driving time?",
+            text_ro="Care este timpul maxim zilnic de conducere?",
+            explanation_en="This is the English explanation.",
+            explanation_ro="Aceasta este explicația în limba română.",
+        )
+
+        self.answer = Answer.objects.create(
+            question=self.question,
+            text_en="9 hours",
+            text_ro="9 ore",
+            is_correct=True,
+        )
+
+    def test_answer_belongs_to_question(self):
+        self.assertEqual(
+            self.answer.question,
+            self.question
+        )
+
+    def test_answer_is_correct(self):
+        self.assertTrue(self.answer.is_correct)
+
+    def test_answer_localized_text_in_english(self):
+        with translation.override("en"):
+            self.assertEqual(
+                self.answer.localized_text,
+                "9 hours"
+            )
+
+    def test_answer_localized_text_in_romanian(self):
+        with translation.override("ro"):
+            self.assertEqual(
+                self.answer.localized_text,
+                "9 ore"
             )
