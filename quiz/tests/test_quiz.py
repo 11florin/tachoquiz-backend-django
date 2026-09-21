@@ -66,3 +66,18 @@ class QuizFunctionalityTest(TestCase):
         self.assertFalse(
             session["quiz_result_saved"]
         )
+
+    def test_quiz_session_contains_category_questions(self):
+        self.client.get(
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            )
+        )
+
+        session = self.client.session
+
+        self.assertIn(
+            self.question.id,
+            session["quiz_question_ids"]
+        )
