@@ -81,3 +81,33 @@ class QuizFunctionalityTest(TestCase):
             self.question.id,
             session["quiz_question_ids"]
         )
+
+    def test_first_question_is_displayed(self):
+        response = self.client.get(
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            )
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertTemplateUsed(
+            response,
+            "quiz/quiz.html"
+        )
+
+        self.assertEqual(
+            response.context["question"],
+            self.question
+        )
+
+        self.assertEqual(
+            response.context["question_number"],
+            1
+        )
+
+        self.assertEqual(
+            response.context["total_questions"],
+            1
+        )
