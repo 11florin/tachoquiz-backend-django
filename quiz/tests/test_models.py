@@ -179,3 +179,16 @@ class QuizResultModelTest(TestCase):
             self.quiz_result.total_questions,
             10
         )
+
+    def test_quiz_result_string_representation(self):
+        self.assertEqual(
+            str(self.quiz_result),
+            "testuser - Driving Time - 8/10"
+        )
+
+    def test_quiz_result_category_becomes_null_when_category_deleted(self):
+        self.category.delete()
+
+        self.quiz_result.refresh_from_db()
+
+        self.assertIsNone(self.quiz_result.category)
