@@ -52,3 +52,18 @@ class AuthenticationTest(TestCase):
         self.assertFalse(
             "_auth_user_id" in self.client.session
         )
+
+
+    def test_user_can_logout(self):
+        self.client.login(
+            username="testuser",
+            password="testpassword123",
+        )
+
+        response = self.client.get(reverse("logout"))
+
+        self.assertRedirects(response, reverse("home"))
+
+        self.assertFalse(
+            "_auth_user_id" in self.client.session
+        )
