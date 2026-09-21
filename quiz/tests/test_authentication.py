@@ -89,3 +89,23 @@ class AuthenticationTest(TestCase):
                 username="newuser"
             ).exists()
         )
+
+    def test_user_cannot_register_with_duplicate_username(self):
+        response = self.client.post(
+            reverse("register"),
+            {
+                "username": "testuser",
+                "email": "another@example.com",
+                "password1": "StrongPassword123!",
+                "password2": "StrongPassword123!",
+            }
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(
+            get_user_model().objects.filter(
+                username="testuser"
+            ).count(),
+            1
+        )
