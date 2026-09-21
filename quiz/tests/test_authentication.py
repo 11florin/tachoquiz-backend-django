@@ -109,3 +109,24 @@ class AuthenticationTest(TestCase):
             ).count(),
             1
         )
+
+    def test_unauthenticated_user_cannot_access_quiz(self):
+        response = self.client.get(reverse("quiz"))
+
+        self.assertRedirects(
+            response,
+            f"{reverse('login')}?next={reverse('quiz')}"
+        )
+
+    def test_authenticated_user_can_access_quiz(self):
+        self.client.login(
+            username="testuser",
+            password="testpassword123",
+        )
+
+        response = self.client.get(reverse("quiz"))
+
+        self.assertRedirects(
+            response,
+            reverse("categories")
+        )
