@@ -34,6 +34,13 @@ class QuizFunctionalityTest(TestCase):
             is_correct=True,
         )
 
+        self.second_answer = Answer.objects.create(
+            question=self.question,
+            text_en="10 hours",
+            text_ro="10 ore",
+            is_correct=False,
+        )
+
         self.client.login(
             username="testuser",
             password="testpassword123",
@@ -145,6 +152,39 @@ class QuizFunctionalityTest(TestCase):
                 "category-quiz",
                 kwargs={"slug": self.category.slug},
             )
+        )
+
+        session = self.client.session
+
+        self.assertEqual(
+            session["quiz_answers"][str(self.question.id)],
+            str(self.answer.id),
+        )
+
+
+    def test_answer_cannot_be_changed_after_submission(self):
+        quiz_url = reverse(
+            "category-quiz",
+            kwargs={"slug": self.category.slug},
+        )
+
+        # Start the quiz.
+        self.client.get(quiz_url)
+
+        # Submit the first answer.
+        self.client.post(
+            quiz_url,
+            {
+                "answer": self.answer.id,
+            }
+        )
+
+        # Try to submit a different answer.
+        self.client.post(
+            quiz_url,
+            {
+                "answer": self.second_answer.id,
+            }
         )
 
         session = self.client.session
