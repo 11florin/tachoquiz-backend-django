@@ -1,11 +1,34 @@
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
 
 class AuthenticationTest(TestCase):
 
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username="testuser",
+            password="testpassword123",
+        )
+
     def test_login_page_loads(self):
         response = self.client.get(reverse("login"))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "quiz/login.html")
+
+
+    def test_user_can_login_with_valid_credentials(self):
+        response = self.client.post(
+            reverse("login"),
+            {
+                "username": "testuser",
+                "password": "testpassword123",
+            }
+        )
+
+        self.assertRedirects(response, reverse("home"))
+
+        self.assertTrue(
+            "_auth_user_id" in self.client.session
+        )
