@@ -32,3 +32,23 @@ class AuthenticationTest(TestCase):
         self.assertTrue(
             "_auth_user_id" in self.client.session
         )
+
+    def test_user_cannot_login_with_invalid_credentials(self):
+        response = self.client.post(
+            reverse("login"),
+            {
+                "username": "testuser",
+                "password": "wrongpassword",
+            }
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertContains(
+            response,
+            "Invalid username or password."
+        )
+
+        self.assertFalse(
+            "_auth_user_id" in self.client.session
+        )
