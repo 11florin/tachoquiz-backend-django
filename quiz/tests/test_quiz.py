@@ -283,3 +283,55 @@ class QuizFunctionalityTest(TestCase):
             session["question_index"],
             1
         )
+
+
+    def test_completing_all_questions_redirects_to_score(self):
+        quiz_url = reverse(
+            "category-quiz",
+            kwargs={"slug": self.category.slug},
+        )
+
+        # Start the quiz.
+        self.client.get(quiz_url)
+
+        # Answer every question in the order stored in the session.
+        for _ in range(2):
+            session = self.client.session
+
+            question_index = session["question_index"]
+            question_ids = session["quiz_question_ids"]
+
+            current_question_id = question_ids[question_index]
+
+            current_question = Question.objects.get(
+                id=current_question_id
+            )
+
+            answer = current_question.answers.first()
+
+            # Submit an answer.
+            self.client.post(
+                quiz_url,
+                {
+                    "answer": answer.id,
+                }
+            )
+
+            # Move to the next question.
+            response = self.client.post(
+                quiz_url,
+                {
+                    "action": "next",
+                }
+            )
+
+        self.assertRedirects(
+            response,
+            reverse("score")
+        )
+
+        session = self.client.session
+
+        self.assertTrue(
+            session["quiz_complete"]
+        )
