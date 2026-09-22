@@ -335,3 +335,51 @@ class QuizFunctionalityTest(TestCase):
         self.assertTrue(
             session["quiz_complete"]
         )
+
+    def test_next_does_not_advance_without_answer(self):
+        quiz_url = reverse(
+            "category-quiz",
+            kwargs={"slug": self.category.slug},
+        )
+
+        # Start the quiz.
+        self.client.get(quiz_url)
+
+        # Try to click Next without answering.
+        response = self.client.post(
+            quiz_url,
+            {
+                "action": "next",
+            }
+        )
+
+        self.assertRedirects(
+            response,
+            quiz_url
+        )
+
+        session = self.client.session
+
+        self.assertEqual(
+            session["question_index"],
+            0
+        )
+
+    def test_category_without_questions_redirects_to_categories(self):
+        empty_category = Category.objects.create(
+            name_en="Empty Category",
+            name_ro="Categorie goală",
+            slug="empty-category",
+        )
+
+        response = self.client.get(
+            reverse(
+                "category-quiz",
+                kwargs={"slug": empty_category.slug},
+            )
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("categories")
+        )
