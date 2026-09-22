@@ -26,6 +26,27 @@ class QuizFunctionalityTest(TestCase):
             explanation_en="Test explanation.",
             explanation_ro="Explicație de test.",
         )
+        self.second_question = Question.objects.create(
+            category=self.category,
+            text_en="What is the normal weekly driving limit?",
+            text_ro="Care este limita normală săptămânală de conducere?",
+            explanation_en="Test explanation.",
+            explanation_ro="Explicație de test.",
+        )
+
+        self.second_question_answer = Answer.objects.create(
+            question=self.second_question,
+            text_en="56 hours",
+            text_ro="56 de ore",
+            is_correct=True,
+        )
+
+        self.second_question_wrong_answer = Answer.objects.create(
+            question=self.second_question,
+            text_en="60 hours",
+            text_ro="60 de ore",
+            is_correct=False,
+        )
 
         self.answer = Answer.objects.create(
             question=self.question,
@@ -111,9 +132,13 @@ class QuizFunctionalityTest(TestCase):
             "quiz/quiz.html"
         )
 
+        session = self.client.session
+
+        first_question_id = session["quiz_question_ids"][0]
+
         self.assertEqual(
-            response.context["question"],
-            self.question
+            response.context["question"].id,
+            first_question_id
         )
 
         self.assertEqual(
@@ -123,44 +148,48 @@ class QuizFunctionalityTest(TestCase):
 
         self.assertEqual(
             response.context["total_questions"],
-            1
+            2
         )
 
     def test_selected_answer_is_saved_in_session(self):
-        # Start the quiz first.
-        self.client.get(
-            reverse(
-                "category-quiz",
-                kwargs={"slug": self.category.slug},
-            )
+        quiz_url = reverse(
+            "category-quiz",
+            kwargs={"slug": self.category.slug},
         )
 
-        # Submit an answer to the current question.
+        # Start the quiz.
+        self.client.get(quiz_url)
+
+        session = self.client.session
+
+        # Find which question was randomly selected first.
+        first_question_id = session["quiz_question_ids"][0]
+
+        first_question = Question.objects.get(
+            id=first_question_id
+        )
+
+        first_answer = first_question.answers.first()
+
+        # Submit an answer belonging to the current question.
         response = self.client.post(
-            reverse(
-                "category-quiz",
-                kwargs={"slug": self.category.slug},
-            ),
+            quiz_url,
             {
-                "answer": self.answer.id,
+                "answer": first_answer.id,
             }
         )
 
         self.assertRedirects(
             response,
-            reverse(
-                "category-quiz",
-                kwargs={"slug": self.category.slug},
-            )
+            quiz_url
         )
 
         session = self.client.session
 
         self.assertEqual(
-            session["quiz_answers"][str(self.question.id)],
-            str(self.answer.id),
+            session["quiz_answers"][str(first_question.id)],
+            str(first_answer.id),
         )
-
 
     def test_answer_cannot_be_changed_after_submission(self):
         quiz_url = reverse(
@@ -171,25 +200,86 @@ class QuizFunctionalityTest(TestCase):
         # Start the quiz.
         self.client.get(quiz_url)
 
+        session = self.client.session
+
+        first_question_id = session["quiz_question_ids"][0]
+
+        first_question = Question.objects.get(
+            id=first_question_id
+        )
+
+        answers = list(first_question.answers.all())
+
+        first_answer = answers[0]
+        second_answer = answers[1]
+
         # Submit the first answer.
         self.client.post(
             quiz_url,
             {
-                "answer": self.answer.id,
+                "answer": first_answer.id,
             }
         )
 
-        # Try to submit a different answer.
+        # Try to change it.
         self.client.post(
             quiz_url,
             {
-                "answer": self.second_answer.id,
+                "answer": second_answer.id,
             }
         )
 
         session = self.client.session
 
         self.assertEqual(
-            session["quiz_answers"][str(self.question.id)],
-            str(self.answer.id),
+            session["quiz_answers"][str(first_question.id)],
+            str(first_answer.id),
+        )
+
+    def test_next_moves_to_next_question(self):
+        quiz_url = reverse(
+            "category-quiz",
+            kwargs={"slug": self.category.slug},
+        )
+
+        # Start the quiz.
+        self.client.get(quiz_url)
+
+        session = self.client.session
+
+        # Find which question Django randomly selected first.
+        first_question_id = session["quiz_question_ids"][0]
+
+        first_question = Question.objects.get(
+            id=first_question_id
+        )
+
+        first_answer = first_question.answers.first()
+
+        # Answer the first question.
+        self.client.post(
+            quiz_url,
+            {
+                "answer": first_answer.id,
+            }
+        )
+
+        # Click Next.
+        response = self.client.post(
+            quiz_url,
+            {
+                "action": "next",
+            }
+        )
+
+        self.assertRedirects(
+            response,
+            quiz_url
+        )
+
+        session = self.client.session
+
+        self.assertEqual(
+            session["question_index"],
+            1
         )
