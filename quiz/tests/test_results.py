@@ -60,10 +60,22 @@ class QuizResultsTest(TestCase):
 
         self.assertContains(
             response,
-            "8/10"
+            "8 / 10"
         )
 
         self.assertNotContains(
             response,
-            "5/10"
+            "5 / 10"
+        )
+
+    def test_unauthenticated_user_cannot_access_quiz_history(self):
+        self.client.logout()
+
+        response = self.client.get(
+            reverse("quiz-history")
+        )
+
+        self.assertRedirects(
+            response,
+            f"{reverse('login')}?next={reverse('quiz-history')}"
         )
