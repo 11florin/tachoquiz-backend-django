@@ -213,3 +213,42 @@ class QuizScoringTest(TestCase):
             quiz_result.total_questions,
             2
         )
+
+    def test_score_result_is_not_saved_twice(self):
+        session = self.client.session
+
+        session["quiz_question_ids"] = [
+            self.question_one.id,
+            self.question_two.id,
+        ]
+
+        session["quiz_answers"] = {
+            str(self.question_one.id): str(self.correct_answer_one.id),
+            str(self.question_two.id): str(self.wrong_answer_two.id),
+        }
+
+        session["quiz_complete"] = True
+        session["quiz_category_id"] = self.category.id
+        session["quiz_result_saved"] = False
+
+        session.save()
+
+        # First visit to the score page.
+        self.client.get(
+            reverse("score")
+        )
+
+        self.assertEqual(
+            QuizResult.objects.count(),
+            1
+        )
+
+        # Visit the score page again.
+        self.client.get(
+            reverse("score")
+        )
+
+        self.assertEqual(
+            QuizResult.objects.count(),
+            1
+        )
