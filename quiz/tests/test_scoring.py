@@ -252,3 +252,18 @@ class QuizScoringTest(TestCase):
             QuizResult.objects.count(),
             1
         )
+
+    def test_score_redirects_if_quiz_not_complete(self):
+        response = self.client.get(
+            reverse("score")
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("categories")
+        )
+
+        self.assertEqual(
+            QuizResult.objects.count(),
+            0
+        )
