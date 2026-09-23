@@ -111,3 +111,20 @@ class QuizResultsTest(TestCase):
             response.context["results"].count(),
             0
         )
+
+    def test_quiz_history_contains_only_current_user_results(self):
+        response = self.client.get(
+            reverse("quiz-history")
+        )
+
+        results = response.context["results"]
+
+        self.assertIn(
+            self.user_result,
+            results
+        )
+
+        self.assertNotIn(
+            self.other_user_result,
+            results
+        )
