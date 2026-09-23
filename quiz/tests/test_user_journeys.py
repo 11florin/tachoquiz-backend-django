@@ -102,3 +102,34 @@ class UserJourneyTest(TestCase):
             200
         )
 
+        # 4. Find which question Django selected first
+        session = self.client.session
+
+        first_question_id = session["quiz_question_ids"][0]
+
+        first_question = Question.objects.get(
+            id=first_question_id
+        )
+
+        correct_answer = first_question.answers.get(
+            is_correct=True
+        )
+
+        # 5. User submits the correct answer
+        answer_response = self.client.post(
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            ),
+            {
+                "answer": correct_answer.id,
+            },
+        )
+
+        self.assertRedirects(
+            answer_response,
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            ),
+        )
