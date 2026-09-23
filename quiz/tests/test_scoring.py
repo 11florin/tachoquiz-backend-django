@@ -163,3 +163,53 @@ class QuizScoringTest(TestCase):
             response.context["percentage"],
             50
         )
+
+    def test_score_saves_quiz_result(self):
+        session = self.client.session
+
+        session["quiz_question_ids"] = [
+            self.question_one.id,
+            self.question_two.id,
+        ]
+
+        session["quiz_answers"] = {
+            str(self.question_one.id): str(self.correct_answer_one.id),
+            str(self.question_two.id): str(self.wrong_answer_two.id),
+        }
+
+        session["quiz_complete"] = True
+        session["quiz_category_id"] = self.category.id
+        session["quiz_result_saved"] = False
+
+        session.save()
+
+        self.client.get(
+            reverse("score")
+        )
+
+        self.assertEqual(
+            QuizResult.objects.count(),
+            1
+        )
+
+        quiz_result = QuizResult.objects.first()
+
+        self.assertEqual(
+            quiz_result.user,
+            self.user
+        )
+
+        self.assertEqual(
+            quiz_result.category,
+            self.category
+        )
+
+        self.assertEqual(
+            quiz_result.score,
+            1
+        )
+
+        self.assertEqual(
+            quiz_result.total_questions,
+            2
+        )
