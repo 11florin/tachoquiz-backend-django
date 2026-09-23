@@ -79,3 +79,35 @@ class QuizResultsTest(TestCase):
             response,
             f"{reverse('login')}?next={reverse('quiz-history')}"
         )
+
+    def test_user_with_no_results_can_access_quiz_history(self):
+        user_without_results = get_user_model().objects.create_user(
+            username="newuser",
+            password="newpassword123",
+        )
+
+        self.client.logout()
+
+        self.client.login(
+            username="newuser",
+            password="newpassword123",
+        )
+
+        response = self.client.get(
+            reverse("quiz-history")
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200
+        )
+
+        self.assertTemplateUsed(
+            response,
+            "quiz/quiz_history.html"
+        )
+
+        self.assertEqual(
+            response.context["results"].count(),
+            0
+        )
