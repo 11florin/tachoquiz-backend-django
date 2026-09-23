@@ -115,3 +115,51 @@ class QuizScoringTest(TestCase):
             response.context["percentage"],
             100
         )
+
+    def test_score_with_one_correct_and_one_wrong_answer(self):
+        session = self.client.session
+
+        session["quiz_question_ids"] = [
+            self.question_one.id,
+            self.question_two.id,
+        ]
+
+        session["quiz_answers"] = {
+            str(self.question_one.id): str(self.correct_answer_one.id),
+            str(self.question_two.id): str(self.wrong_answer_two.id),
+        }
+
+        session["quiz_complete"] = True
+        session["quiz_category_id"] = self.category.id
+        session["quiz_result_saved"] = False
+
+        session.save()
+
+        response = self.client.get(
+            reverse("score")
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200
+        )
+
+        self.assertEqual(
+            response.context["correct_answers"],
+            1
+        )
+
+        self.assertEqual(
+            response.context["incorrect_answers"],
+            1
+        )
+
+        self.assertEqual(
+            response.context["total_questions"],
+            2
+        )
+
+        self.assertEqual(
+            response.context["percentage"],
+            50
+        )
