@@ -145,3 +145,18 @@ class AuthenticationTest(TestCase):
             reverse("quiz"),
             fetch_redirect_response=False,
         )
+
+        def test_login_rejects_external_next_url(self):
+            response = self.client.post(
+                reverse("login") + "?next=https://example.com",
+                {
+                    "username": "testuser",
+                    "password": "testpassword123",
+                },
+            )
+
+            self.assertRedirects(
+                response,
+                reverse("home"),
+            )
+            
