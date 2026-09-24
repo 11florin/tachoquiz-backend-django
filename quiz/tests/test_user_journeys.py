@@ -250,3 +250,23 @@ class UserJourneyTest(TestCase):
             result.total_questions,
             2
         )
+
+        # 12. User opens Quiz History
+        history_response = self.client.get(
+            reverse("quiz-history")
+        )
+
+        self.assertEqual(
+            history_response.status_code,
+            200
+        )
+
+        self.assertContains(
+            history_response,
+            "2 / 2"
+        )
+
+        self.assertIn(
+            result,
+            history_response.context["results"]
+        )
