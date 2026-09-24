@@ -468,7 +468,7 @@ header {
 }
 .hero-stat-label {
   font-size: 11px;
-  color: var(--color-text-dim);
+  color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -524,7 +524,7 @@ header {
 /* Apply styles only when the button is active (not disabled). 
    Prevents hover, pointer and shadow effects on disabled buttons. */
 .action-btn:not(:disabled):not([disabled]) {
-  background: var(--color-primary-dark);
+  background: #1d4ed8;
   color: #fff;
   cursor: pointer;
   box-shadow: 0 0 24px rgba(59, 130, 246, 0.3);
@@ -541,7 +541,7 @@ header {
   transform: scale(0.98);
 }
 a.action-btn {
-  background: var(--color-primary-dark);
+  background: #1d4ed8;
   color: #fff;
   cursor: pointer;
   box-shadow: 0 0 16px rgba(59, 130, 246, 0.3);
