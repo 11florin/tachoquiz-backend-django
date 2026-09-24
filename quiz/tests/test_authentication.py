@@ -60,7 +60,7 @@ class AuthenticationTest(TestCase):
             password="testpassword123",
         )
 
-        response = self.client.get(reverse("logout"))
+        response = self.client.post(reverse("logout"))
 
         self.assertRedirects(response, reverse("home"))
 
@@ -146,17 +146,29 @@ class AuthenticationTest(TestCase):
             fetch_redirect_response=False,
         )
 
-        def test_login_rejects_external_next_url(self):
-            response = self.client.post(
-                reverse("login") + "?next=https://example.com",
-                {
-                    "username": "testuser",
-                    "password": "testpassword123",
-                },
-            )
+    def test_login_rejects_external_next_url(self):
+        response = self.client.post(
+            reverse("login") + "?next=https://example.com",
+            {
+                "username": "testuser",
+                "password": "testpassword123",
+            },
+        )
 
-            self.assertRedirects(
-                response,
-                reverse("home"),
+        self.assertRedirects(
+            response,
+            reverse("home"),
+        )
+
+    def test_logout_rejects_get_request(self):
+            self.client.login(
+                username="testuser",
+                password="testpassword123",
             )
-            
+        
+            response = self.client.get(reverse("logout"))
+        
+            self.assertEqual(
+                response.status_code,
+                405,
+            )
