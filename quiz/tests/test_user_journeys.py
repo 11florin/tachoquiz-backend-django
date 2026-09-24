@@ -184,3 +184,44 @@ class UserJourneyTest(TestCase):
                 kwargs={"slug": self.category.slug},
             ),
         )
+
+        # 9. User finishes the quiz
+        finish_response = self.client.post(
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            ),
+            {
+                "action": "next",
+            },
+        )
+
+        self.assertRedirects(
+            finish_response,
+            reverse("score"),
+        )
+
+        # 10. User opens the score page
+        score_response = self.client.get(
+            reverse("score")
+        )
+
+        self.assertEqual(
+            score_response.status_code,
+            200
+        )
+
+        self.assertEqual(
+            score_response.context["correct_answers"],
+            2
+        )
+
+        self.assertEqual(
+            score_response.context["total_questions"],
+            2
+        )
+
+        self.assertEqual(
+            score_response.context["percentage"],
+            100
+        )
