@@ -156,7 +156,7 @@ msgstr "Pregătire CPC"
 
 #: quiz/templates/quiz/home.html:18
 msgid "Tacho <span>Quiz</span>"
-msgstr "<span>Test<span> Tahograf"
+msgstr "<span>Test</span> Tahograf"
 
 #: quiz/templates/quiz/home.html:22
 msgid ""
