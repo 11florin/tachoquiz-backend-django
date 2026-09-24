@@ -133,3 +133,54 @@ class UserJourneyTest(TestCase):
                 kwargs={"slug": self.category.slug},
             ),
         )
+
+        # 6. User clicks Next
+        next_response = self.client.post(
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            ),
+            {
+                "action": "next",
+            },
+        )
+
+        self.assertRedirects(
+            next_response,
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            ),
+        )
+
+        # 7. Find the second question
+        session = self.client.session
+
+        second_question_id = session["quiz_question_ids"][1]
+
+        second_question = Question.objects.get(
+            id=second_question_id
+        )
+
+        correct_answer = second_question.answers.get(
+            is_correct=True
+        )
+
+        # 8. User submits the correct answer
+        answer_response = self.client.post(
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            ),
+            {
+                "answer": correct_answer.id,
+            },
+        )
+
+        self.assertRedirects(
+            answer_response,
+            reverse(
+                "category-quiz",
+                kwargs={"slug": self.category.slug},
+            ),
+        )
