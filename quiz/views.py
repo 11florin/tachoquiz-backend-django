@@ -6,6 +6,7 @@ from django.db.models import Count
 from django.http import JsonResponse
 from django.utils.translation import gettext as _
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.views.decorators.http import require_POST
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from .forms import RegistrationForm
 from .models import Category, Question, Answer, QuizResult
@@ -72,10 +73,13 @@ def login_view(request):
 
 
 
+@require_POST
 def logout_view(request):
-    """Log out the current user and redirect to the home page."""
     logout(request)
-    messages.success(request, _("You've been logged out successfully."))
+    messages.success(
+        request,
+        _("You've been logged out successfully.")
+    )
     return redirect("home")
 
 
