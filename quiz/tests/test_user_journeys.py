@@ -225,3 +225,28 @@ class UserJourneyTest(TestCase):
             score_response.context["percentage"],
             100
         )
+
+        # 11. Quiz result was saved
+        self.assertEqual(
+            QuizResult.objects.count(),
+            1
+        )
+
+        result = QuizResult.objects.get(
+            user=self.user
+        )
+
+        self.assertEqual(
+            result.category,
+            self.category
+        )
+
+        self.assertEqual(
+            result.score,
+            2
+        )
+
+        self.assertEqual(
+            result.total_questions,
+            2
+        )
