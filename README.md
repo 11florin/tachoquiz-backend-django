@@ -865,14 +865,6 @@ Detailed implementation history is available through the repository's GitHub Iss
 
 ---
 
-# Author
-
-**Florin Albu**
-
-TachoQuiz is being developed as a full-stack web development portfolio project.
-
-
----
 ## Images
 [truck driving time](https://unsplash.com/photos/a-white-semi-truck-driving-down-a-rural-road-ZhNYKwjRMh4)
 [truck driver rest](https://unsplash.com/photos/parked-trucks-kGoPcmpPT7c)
@@ -886,4 +878,49 @@ TachoQuiz is being developed as a full-stack web development portfolio project.
 [road emergency](https://unsplash.com/photos/a-couple-of-trucks-that-are-sitting-in-the-street-_mv4_eYTXeY)
 [road enforcement](https://commons.wikimedia.org/wiki/File:Speed_enforcement_camera_road_sign_%27ACHTUNG_RADARKONTROLLE%27_01.jpg)
 [quiz study](https://unsplash.com/photos/aerial-photography-of-freight-truck-lot-GOD2mDNujuU)
+---
+
+## Testing
+
+### Automated Testing
+
+Automated testing was carried out using Django's built-in testing framework.
+
+The test suite covers the application's models, authentication system,
+quiz functionality, scoring, user results, and an important end-to-end
+user journey.
+
+The tests are organised into separate files according to the functionality
+being tested:
+
+- `test_models.py` — model creation, relationships, validation and localisation
+- `test_authentication.py` — registration, login, logout and protected views
+- `test_quiz.py` — quiz categories, questions, answers and quiz progression
+- `test_scoring.py` — quiz completion and score calculation
+- `test_results.py` — saving and displaying quiz results
+- `test_user_journeys.py` — complete user journey through the application
+
+The complete test suite can be run with:
+
+`python manage.py test`
+
+Final automated test result:
+
+- **48 tests executed**
+- **48 tests passed**
+- **0 failures**
+- **0 errors**
+
+This confirms that the tested backend functionality behaves as expected.
+
+![48 automated tests passed](quiz/static/quiz/images/testing-img/48-tests-pass.png)
+---
+
+# Author
+
+**Florin Albu**
+
+TachoQuiz is being developed as a full-stack web development portfolio project.
+
+
 ---
