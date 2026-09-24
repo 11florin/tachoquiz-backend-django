@@ -147,9 +147,12 @@
                 </li>
 
                 <li>
-                    <a href="{% url 'logout' %}">
-                        {% translate "Logout" %}
-                    </a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit"  class="nav-logout">
+                            {% translate "Logout" %}
+                        </button>
+                    </form>
                 </li>
 
             {% else %}
@@ -222,7 +225,7 @@
 
     <div class="image-container">
       <img
-        src="{% static 'quiz/images/truck-img2.png' %}"
+        src="{% static 'quiz/images/truck-img2.webp' %}"
         alt="Illustration of a truck"
       />
     </div>
