@@ -12,7 +12,7 @@ progression, score calculation, and persistent quiz result storage.
 **---**
 
 ## Table of Contents
-
+- [Mockups Image](#Mockups-Image)
 - [Project Overview](#project-overview)
   - [Current Functionality](#current-functionality)
 - [Technologies Used](#technologies-used)
@@ -58,6 +58,16 @@ progression, score calculation, and persistent quiz result storage.
   - [Bugs Found and Fixed During Testing](#bugs-found-and-fixed-during-testing)
   - [Testing Summary](#testing-summary)
 - [Author](#author)
+
+---
+## Mockups Image
+
+![](quiz/static/quiz/images/mockups/mockup-desktop.png)
+![](quiz/static/quiz/images/mockups/mockup-tablet.png)
+![](quiz/static/quiz/images/mockups/mockup-phone.png)
+
+
+---
 
 ## Project Overview
 
