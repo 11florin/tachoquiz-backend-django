@@ -914,6 +914,211 @@ Final automated test result:
 This confirms that the tested backend functionality behaves as expected.
 
 ![48 automated tests passed](quiz/static/quiz/images/testing-img/48-tests-pass.png)
+
+### Manual Testing
+
+Manual testing was carried out to verify the main functionality of the
+application from a user's perspective.
+
+The application was tested in both English and Romanian where relevant.
+
+| # | Test | Expected Result | Result |
+|---|---|---|---|
+| 1 | Open registration page | Registration page loads correctly | PASS |
+| 2 | Register with valid details | User account is created successfully | PASS |
+| 3 | Login with invalid credentials | Error message is displayed | PASS |
+| 4 | Login with valid credentials | User is authenticated successfully | PASS |
+| 5 | Access quiz while logged out | User is redirected to the login page | PASS |
+| 6 | Logout | User is logged out successfully | PASS |
+| 7 | Access protected page after logout | User is redirected to the login page | PASS |
+| 8 | Login after protected-page redirect | User returns to the intended quiz area | PASS |
+| 9 | Open categories page | All 13 quiz categories are displayed | PASS |
+| 10 | Start a category quiz | Quiz starts successfully | PASS |
+| 11 | Display a question | Exactly four answer options are displayed | PASS |
+| 12 | Continue without selecting an answer | User cannot continue without answering | PASS |
+| 13 | Select an answer | Selected answer is recorded | PASS |
+| 14 | Submit an answer | Question explanation is displayed | PASS |
+| 15 | Try to change submitted answer | Submitted answer cannot be changed | PASS |
+| 16 | Continue to next question | Next question is displayed | PASS |
+| 17 | Complete all questions | Quiz completes and redirects to the score page | PASS |
+| 18 | View score | Correct, incorrect, total and percentage results are displayed | PASS |
+| 19 | View quiz history | Completed quiz result appears in the user's history | PASS |
+| 20 | Start another quiz | A new quiz session is created correctly | PASS |
+| 21 | Open navigation on mobile | Hamburger navigation is displayed and works | PASS |
+| 22 | Use navigation on mobile | Navigation links work correctly | PASS |
+| 23 | Logout on mobile | Logout works correctly | PASS |
+| 24 | Change language on mobile | English/Romanian language switching works | PASS |
+| 25 | Complete quiz on mobile | Quiz remains usable without horizontal scrolling | PASS |
+| 26 | View score on mobile | Score page displays correctly | PASS |
+| 27 | Test tablet layout | Layout displays correctly around 768px | PASS |
+| 28 | Test desktop layout | Layout displays correctly at 1024px and above | PASS |
+| 29 | Display longer Romanian content | Longer translated text remains readable and usable | PASS |
+| 30 | Resize/orient the viewport | Layout remains responsive and usable | PASS |
+
+Final manual testing result:
+
+- **30 tests completed**
+- **30 tests passed**
+- **0 failed**
+
+---
+
+### HTML Validation
+
+The rendered HTML output of the application's main pages was validated
+using the W3C Nu HTML Checker.
+
+| Page | Result |
+|---|---|
+| Home | PASS - No errors or warnings |
+| Register | PASS - No errors or warnings |
+| Login | PASS - No errors or warnings |
+| Categories | PASS - No errors or warnings |
+| Quiz | PASS - No errors or warnings |
+| Score | PASS - No errors or warnings |
+| Quiz History | PASS - No errors or warnings |
+
+During HTML validation, an unclosed `<span>` element was identified in
+the Romanian translation of the home page.
+
+The translation was corrected and Django translation messages were
+recompiled using:
+
+`python manage.py compilemessages`
+
+The page was then revalidated successfully with no errors or warnings.
+![HTML Validator](quiz/static/quiz/images/testing-img/HTML-validator.png)
+
+---
+
+### CSS Validation
+
+The application's CSS was validated using the W3C CSS Validator.
+
+The final validation completed successfully with:
+
+- **0 CSS errors**
+![CSS Validator](quiz/static/quiz/images/testing-img/CSS-validator.png)
+
+---
+
+### Accessibility and Colour Contrast
+
+Accessibility was tested using Lighthouse and the WebAIM Contrast Checker.
+
+During Lighthouse testing, insufficient colour contrast was identified
+for some secondary text and action button elements.
+
+The affected colours were adjusted and the CSS specificity of the action
+button styles was corrected.
+
+Additional manual colour contrast testing was then carried out using
+WebAIM.
+
+| Foreground | Background | Result |
+|---|---|---|
+| `#94A3B8` | `#1E293B` | WCAG AA PASS |
+| `#FFFFFF` | `#1D4ED8` | WCAG AA PASS |
+| `#F1F5F9` | `#0F172A` | WCAG AA PASS |
+| `#64748B` | `#0F172A` | WCAG AA FAIL - before fix |
+| `#94A3B8` | `#0F172A` | WCAG AA PASS - after fix |
+
+The original `--color-text-dim` value of `#64748B` produced insufficient
+contrast for normal-sized text against the main `#0F172A` background.
+
+It was therefore changed to `#94A3B8` and retested successfully.
+![WebAIM](quiz/static/quiz/images/testing-img/WebAIM-Contrast.png)
+![WebAIM](quiz/static/quiz/images/testing-img/WebAIM-Contrast2.png)
+![WebAIM](quiz/static/quiz/images/testing-img/WebAIM-Contrast3.png)
+---
+
+### Lighthouse Testing
+
+Lighthouse testing was carried out against the deployed Heroku application
+after the final accessibility and performance improvements.
+
+| Category | Mobile | Desktop |
+|---|---:|---:|
+| Performance | 72 | 82 |
+| Accessibility | 100 | 100 |
+| Best Practices | 100 | 100 |
+| SEO | 100 | 100 |
+
+The application achieved full scores for Accessibility, Best Practices
+and SEO on both Mobile and Desktop tests.
+
+Performance results were lower on the deployed Heroku environment.
+Lighthouse identified areas such as JavaScript execution, render-blocking
+resources, font loading and caching as possible areas for future
+optimisation.
+
+These performance findings do not prevent the application's core
+functionality from operating correctly and can be addressed as future
+optimisation work.
+
+![Lighthouse Mobile](quiz/static/quiz/images/testing-img/lighthouse-home-mobile.png)
+![Lighthouse Desktop](quiz/static/quiz/images/testing-img/lighthouse-home-desktop.png)
+
+---
+
+### Image Optimisation
+
+Lighthouse initially identified the main hero image as a significant
+performance opportunity.
+
+The original PNG image was resized and converted to WebP:
+
+- Original format: PNG
+- New format: WebP
+- Optimised dimensions: 760 × 507 pixels
+- Optimised file size: approximately 39 KB
+
+This significantly reduced the size of the main hero image while
+maintaining suitable visual quality.
+
+---
+
+### Bugs Found and Fixed During Testing
+
+Several issues were identified and corrected during US17 testing.
+
+| Issue | Fix | Retest Result |
+|---|---|---|
+| Login `next` parameter could accept an unsafe external redirect | Added `url_has_allowed_host_and_scheme()` validation | PASS |
+| Logout was accessible using a GET request | Changed logout to POST-only with CSRF protection and `@require_POST` | PASS |
+| Score link in the navbar could be accessed without a completed quiz | Removed the Score link from the main navigation | PASS |
+| Romanian home translation contained an unclosed `<span>` element | Corrected the translation and recompiled messages | PASS |
+| Lighthouse identified insufficient colour contrast | Updated affected text/button colours and CSS specificity | PASS |
+| WebAIM identified `#64748B` as insufficient for normal text | Changed `--color-text-dim` to `#94A3B8` | PASS |
+| Main hero PNG was unnecessarily large | Resized and converted the image to WebP | PASS |
+| New WebP asset caused a stale WhiteNoise static manifest during testing | Rebuilt static files using `collectstatic` | PASS |
+
+After the fixes were applied, the complete Django automated test suite
+was run again:
+
+- **48 tests passed**
+- **0 failures**
+- **0 errors**
+
+---
+
+### Testing Summary
+
+US17 testing covered automated backend testing, manual functional testing,
+responsive design, HTML and CSS validation, accessibility, colour contrast,
+performance and important user journeys.
+
+Final results:
+
+- **48 / 48 automated tests passed**
+- **30 / 30 manual tests passed**
+- **HTML validation passed**
+- **CSS validation passed**
+- **WCAG AA colour contrast issues identified and corrected**
+- **Lighthouse Accessibility: 100**
+- **Lighthouse Best Practices: 100**
+- **Lighthouse SEO: 100**
+- **Application successfully deployed and tested on Heroku**
 ---
 
 # Author
