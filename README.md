@@ -12,8 +12,8 @@ progression, score calculation, and persistent quiz result storage.
 **---**
 
 ## Table of Contents
-- [Mockups Image](#Mockups-Image)
-- [Wireframes](#Wireframes)
+- [Mockups Image](#mockups-image)
+- [Wireframes](#wireframes)
 - [Project Overview](#project-overview)
   - [Current Functionality](#current-functionality)
 - [Technologies Used](#technologies-used)
