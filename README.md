@@ -12,7 +12,7 @@ progression, score calculation, and persistent quiz result storage.
 **---**
 
 ## Table of Contents
-- [Mockups Image](#mockups-image)
+- [Mockups](#mockups-image)
 - [Wireframes](#wireframes)
 - [Project Overview](#project-overview)
   - [Current Functionality](#current-functionality)
@@ -61,38 +61,69 @@ progression, score calculation, and persistent quiz result storage.
 - [Author](#author)
 
 ---
-## Mockups Image
+## Mockups
 
-![](quiz/static/quiz/images/mockups/mockup-desktop.png)
-![](quiz/static/quiz/images/mockups/mockup-tablet.png)
-![](quiz/static/quiz/images/mockups/mockup-phone.png)
-
-
----
-## Wireframes
-
-![Home Mobile](quiz/static/quiz/images/wireframes/1-Home-mobile.png)
-![Quiz Mobile](quiz/static/quiz/images/wireframes/2-Quiz-mobile.png)
-![Score Mobile](quiz/static/quiz/images/wireframes/3-Score-tablet.png)
-![Login Mobile](quiz/static/quiz/images/wireframes/4-Login-desktop.png)
-![About Mobile](quiz/static/quiz/images/wireframes/5-About-mobile.png)
-
-### Tablet
-
-![Home Tablet](quiz/static/quiz/images/wireframes/1-Home-tablet.png)
-![Quiz Tablet](quiz/static/quiz/images/wireframes/2-Quiz-tablet.png)
-![Score Tablet](quiz/static/quiz/images/wireframes/3-Score-tablet.png)
-![Login Tablet](quiz/static/quiz/images/wireframes/4-Login-tablet.png)
-![About Tablet](quiz/static/quiz/images/wireframes/5-About-tablet.png)
+The following mockups show the completed TachoQuiz application across
+desktop, tablet and mobile screen sizes.
 
 ### Desktop
 
-![Home Desktop](quiz/static/quiz/images/wireframes/1-Home-desktop.png)
-![Quiz Desktop](quiz/static/quiz/images/wireframes/2-Quiz-desktop.png)
-![Score Desktop](quiz/static/quiz/images/wireframes/3-Score-desktop.png)
-![Login Desktop](quiz/static/quiz/images/wireframes/4-Login-desktop.png)
-![About Desktop](quiz/static/quiz/images/wireframes/5-About-desktop.png)
+![TachoQuiz Desktop Mockup](quiz/static/quiz/images/mockups/mockup-desktop.png)
 
+### Tablet
+
+![TachoQuiz Tablet Mockup](quiz/static/quiz/images/mockups/mockup-tablet.png)
+
+### Mobile
+
+![TachoQuiz Phone Mockup](quiz/static/quiz/images/mockups/mockup-phone.png)
+
+---
+
+
+## Wireframes
+
+Wireframes were created during the frontend design stage to plan the
+layout and responsive behaviour of the main TachoQuiz pages across
+mobile, tablet and desktop devices.
+
+### Mobile Wireframes
+
+![Home Mobile](quiz/static/quiz/images/wireframes/1-Home-mobile.png)
+
+![Quiz Mobile](quiz/static/quiz/images/wireframes/2-Quiz-mobile.png)
+
+![Score Mobile](quiz/static/quiz/images/wireframes/3-Score-mobile.png)
+
+![Login Mobile](quiz/static/quiz/images/wireframes/4-Login-mobile.png)
+
+![About Mobile](quiz/static/quiz/images/wireframes/5-About-mobile.png)
+
+
+### Tablet Wireframes
+
+![Home Tablet](quiz/static/quiz/images/wireframes/1-Home-tablet.png)
+
+![Quiz Tablet](quiz/static/quiz/images/wireframes/2-Quiz-tablet.png)
+
+![Score Tablet](quiz/static/quiz/images/wireframes/3-Score-tablet.png)
+
+![Login Tablet](quiz/static/quiz/images/wireframes/4-Login-tablet.png)
+
+![About Tablet](quiz/static/quiz/images/wireframes/5-About-tablet.png)
+
+
+### Desktop Wireframes
+
+![Home Desktop](quiz/static/quiz/images/wireframes/1-Home-desktop.png)
+
+![Quiz Desktop](quiz/static/quiz/images/wireframes/2-Quiz-desktop.png)
+
+![Score Desktop](quiz/static/quiz/images/wireframes/3-Score-desktop.png)
+
+![Login Desktop](quiz/static/quiz/images/wireframes/4-Login-desktop.png)
+
+![About Desktop](quiz/static/quiz/images/wireframes/5-About-desktop.png)
 
 ---
 
@@ -161,45 +192,84 @@ Pull Request, tested against its Acceptance Criteria, and merged into
 
 ## Project Structure
 
-``` text
+```text
 tachoquiz-backend-django/
+├── LICENSE
+├── Procfile
+├── README.md
 ├── manage.py
 ├── requirements.txt
-├── README.md
+│
 ├── locale/
+│   └── ro/
+│       └── LC_MESSAGES/
+│           ├── django.po
+│           └── django.mo
+│
 ├── tachoquiz/
 │   ├── settings.py
 │   ├── urls.py
 │   ├── asgi.py
-│   └── wsgi.py
+│   ├── wsgi.py
+│   └── templates/
+│       └── tachoquiz/
+│           └── base.html
+│
 └── quiz/
-    ├── data/
-    │   └── questions.csv
-    ├── management/
-    │   └── commands/
-    │       └── import_questions.py
-    ├── migrations/
-    ├── static/
-    │   └── quiz/
-    │       ├── css/
-    │       ├── images/
-    │       └── js/
-    ├── templates/
-    │   ├── quiz/
-    │   └── tachoquiz/
-    ├── tests/
-    │   ├── test_authentication.py
-    │   ├── test_models.py
-    │   ├── test_quiz.py
-    │   ├── test_results.py
-    │   ├── test_scoring.py
-    │   └── test_user_journeys.py
     ├── admin.py
     ├── apps.py
     ├── forms.py
+    ├── middleware.py
     ├── models.py
     ├── urls.py
-    └── views.py
+    ├── views.py
+    │
+    ├── data/
+    │   └── questions.csv
+    │
+    ├── management/
+    │   └── commands/
+    │       └── import_questions.py
+    │
+    ├── migrations/
+    │   └── 0001_initial.py ... 0007_*.py
+    │
+    ├── templates/
+    │   └── quiz/
+    │       ├── home.html
+    │       ├── about.html
+    │       ├── categories.html
+    │       ├── quiz.html
+    │       ├── score.html
+    │       ├── quiz_history.html
+    │       ├── login.html
+    │       ├── register.html
+    │       ├── confirmation.html
+    │       └── password_reset*.html
+    │
+    ├── static/
+    │   └── quiz/
+    │       ├── css/
+    │       │   └── style.css
+    │       ├── js/
+    │       │   ├── navbar.js
+    │       │   ├── quiz.js
+    │       │   ├── score.js
+    │       │   └── timezone.js
+    │       └── images/
+    │           ├── icons/
+    │           ├── mockups/
+    │           ├── testing-img/
+    │           ├── wireframes/
+    │           └── truck-img2.webp
+    │
+    └── tests/
+        ├── test_authentication.py
+        ├── test_models.py
+        ├── test_quiz.py
+        ├── test_results.py
+        ├── test_scoring.py
+        └── test_user_journeys.py
 ```
 
 The `tachoquiz` directory contains project-level configuration.
@@ -981,11 +1051,9 @@ Cloudinary and displayed dynamically through Django templates.
 
 6.  Django templates access the image using:
 
-   \`\`\`django
-
-   {{ category.image.url }}
-
-   \`\`\`
+```django
+{{ category.image.url }}
+```
 
 **---**
 
@@ -993,11 +1061,11 @@ Cloudinary and displayed dynamically through Django templates.
 
 Tacho Quiz is deployed on Heroku in the EU region.
 
-The production application uses:
+The deployed application uses:
 
 -   **Heroku** for hosting
 
--   **Heroku Postgres** for the production database
+-   **Heroku Postgres** for the deployed database
 
 -   **Gunicorn** as the production WSGI server
 
