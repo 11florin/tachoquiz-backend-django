@@ -13,6 +13,7 @@ progression, score calculation, and persistent quiz result storage.
 
 ## Table of Contents
 - [Mockups Image](#Mockups-Image)
+- [Wireframes](#Wireframes)
 - [Project Overview](#project-overview)
   - [Current Functionality](#current-functionality)
 - [Technologies Used](#technologies-used)
@@ -65,6 +66,32 @@ progression, score calculation, and persistent quiz result storage.
 ![](quiz/static/quiz/images/mockups/mockup-desktop.png)
 ![](quiz/static/quiz/images/mockups/mockup-tablet.png)
 ![](quiz/static/quiz/images/mockups/mockup-phone.png)
+
+
+---
+## Wireframes
+
+![Home Mobile](quiz/static/quiz/images/wireframes/1-Home-mobile.png)
+![Quiz Mobile](quiz/static/quiz/images/wireframes/2-Quiz-mobile.png)
+![Score Mobile](quiz/static/quiz/images/wireframes/3-Score-tablet.png)
+![Login Mobile](quiz/static/quiz/images/wireframes/4-Login-desktop.png)
+![About Mobile](quiz/static/quiz/images/wireframes/5-About-mobile.png)
+
+### Tablet
+
+![Home Tablet](quiz/static/quiz/images/wireframes/1-Home-tablet.png)
+![Quiz Tablet](quiz/static/quiz/images/wireframes/2-Quiz-tablet.png)
+![Score Tablet](quiz/static/quiz/images/wireframes/3-Score-tablet.png)
+![Login Tablet](quiz/static/quiz/images/wireframes/4-Login-tablet.png)
+![About Tablet](quiz/static/quiz/images/wireframes/5-About-tablet.png)
+
+### Desktop
+
+![Home Desktop](quiz/static/quiz/images/wireframes/1-Home-desktop.png)
+![Quiz Desktop](quiz/static/quiz/images/wireframes/2-Quiz-desktop.png)
+![Score Desktop](quiz/static/quiz/images/wireframes/3-Score-desktop.png)
+![Login Desktop](quiz/static/quiz/images/wireframes/4-Login-desktop.png)
+![About Desktop](quiz/static/quiz/images/wireframes/5-About-desktop.png)
 
 
 ---
