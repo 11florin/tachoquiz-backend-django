@@ -12,6 +12,12 @@ from .forms import RegistrationForm
 from .models import Category, Question, Answer, QuizResult
 
 
+def page_not_found(request, exception):
+    """Return visitors to the home page when a route does not exist."""
+    messages.info(request, _("The page you requested was not found."))
+    return redirect("home")
+
+
 
 def home(request):
     """Render the home page."""
@@ -97,17 +103,32 @@ def score_view(request):
     question_ids = request.session.get("quiz_question_ids", [])
     quiz_complete = request.session.get("quiz_complete", False)
 
-    if not quiz_complete or not question_ids:
+    if (
+        quiz_complete is not True
+        or not isinstance(question_ids, list)
+        or not question_ids
+        or not all(isinstance(question_id, int) for question_id in question_ids)
+    ):
         messages.error(
             request,
             _("No completed quiz was found. Please start a new quiz.")
         )
         return redirect("categories")
 
-    selected_answer_ids = list(quiz_answers.values())
+    if not isinstance(quiz_answers, dict):
+        quiz_answers = {}
+
+    selected_answer_ids = []
+    for question_id in question_ids:
+        answer_id = quiz_answers.get(str(question_id))
+        if isinstance(answer_id, int) or (
+            isinstance(answer_id, str) and answer_id.isdigit()
+        ):
+            selected_answer_ids.append(answer_id)
 
     correct_answers = Answer.objects.filter(
         id__in=selected_answer_ids,
+        question_id__in=question_ids,
         is_correct=True,
     ).count()
 
@@ -120,26 +141,43 @@ def score_view(request):
         else 0
     )
 
-    quiz_result_saved = request.session.get(
-    "quiz_result_saved",
-    False,
-)
+    quiz_result_saved = request.session.get("quiz_result_saved") is True
+    saved_result_id = request.session.get("quiz_result_id")
 
-    if not quiz_result_saved:
+    result_exists = (
+        isinstance(saved_result_id, int)
+        and QuizResult.objects.filter(
+            id=saved_result_id,
+            user=request.user,
+        ).exists()
+    )
+
+    if not quiz_result_saved and not result_exists:
         category_id = request.session.get("quiz_category_id")
 
-        category = get_object_or_404(
-            Category,
-            id=category_id,
-        )
+        if not isinstance(category_id, int):
+            messages.error(
+                request,
+                _("No completed quiz was found. Please start a new quiz.")
+            )
+            return redirect("categories")
 
-        QuizResult.objects.create(
+        category = Category.objects.filter(id=category_id).first()
+        if category is None:
+            messages.error(
+                request,
+                _("No completed quiz was found. Please start a new quiz.")
+            )
+            return redirect("categories")
+
+        result = QuizResult.objects.create(
             user=request.user,
             category=category,
             score=correct_answers,
             total_questions=total_questions,
         )
 
+        request.session["quiz_result_id"] = result.id
         request.session["quiz_result_saved"] = True
 
     context = {
@@ -193,11 +231,18 @@ def category_quiz(request, slug):
 
     active_category_id = request.session.get("quiz_category_id")
     quiz_complete = request.session.get("quiz_complete", False)
+    stored_question_ids = request.session.get("quiz_question_ids")
+    valid_question_ids = (
+        isinstance(stored_question_ids, list)
+        and all(isinstance(question_id, int) for question_id in stored_question_ids)
+    )
 
     # Start a new quiz if there is no active quiz for this category,
     # or if the previous quiz has already been completed.
     if request.method == "GET" and (
-        active_category_id != category.id or quiz_complete
+        active_category_id != category.id
+        or quiz_complete is True
+        or not valid_question_ids
     ):
         question_ids = list(
             category.questions.order_by("?").values_list("id", flat=True)
@@ -216,11 +261,17 @@ def category_quiz(request, slug):
         request.session["quiz_answers"] = {}
         request.session["quiz_complete"] = False
         request.session["quiz_result_saved"] = False
+        request.session["quiz_result_id"] = None
 
     question_ids = request.session.get("quiz_question_ids", [])
     question_index = request.session.get("question_index", 0)
 
-    if not question_ids:
+    if (
+        not isinstance(question_ids, list)
+        or not question_ids
+        or not all(isinstance(question_id, int) for question_id in question_ids)
+        or not isinstance(question_index, int)
+    ):
         messages.error(
             request,
             _("Quiz session expired. Please start the quiz again.")
@@ -244,6 +295,8 @@ def category_quiz(request, slug):
     )
 
     quiz_answers = request.session.get("quiz_answers", {})
+    if not isinstance(quiz_answers, dict):
+        quiz_answers = {}
     saved_answer_id = quiz_answers.get(str(question.id))
 
     selected_answer = None
@@ -277,7 +330,10 @@ def category_quiz(request, slug):
             if question_index >= len(question_ids):
                 quiz_answers = request.session.get("quiz_answers", {})
 
-                if len(quiz_answers) != len(question_ids):
+                if not all(
+                    str(question_id) in quiz_answers
+                    for question_id in question_ids
+                ):
                     messages.error(
                         request,
                         _("Please answer all questions before submitting the quiz.")
