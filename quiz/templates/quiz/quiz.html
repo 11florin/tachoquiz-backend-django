@@ -16,7 +16,7 @@ Quiz | Tacho Quiz
     </p>
   </div>
 
-  <div class="question-box">
+  <div class="question-box" id="question-heading">
     <p>{{ question.localized_text }}</p>
   </div>
 
@@ -24,7 +24,7 @@ Quiz | Tacho Quiz
   <p class="status-text">{{ error }}</p>
   {% endif %}
 
-  <form method="POST">
+  <form method="POST" aria-labelledby="question-heading">
     {% csrf_token %}
 
     <div class="answers-list">
@@ -57,6 +57,17 @@ Quiz | Tacho Quiz
         </span>
 
         <span> {{ answer.localized_text }} </span>
+        {% if selected_answer %}
+          {% if answer.id == correct_answer.id %}
+            <span class="answer-feedback correct-feedback">
+              {% translate "Correct answer" %}
+            </span>
+          {% elif answer.id == selected_answer.id %}
+            <span class="answer-feedback wrong-feedback">
+              {% translate "Incorrect answer" %}
+            </span>
+          {% endif %}
+        {% endif %}
       </label>
 
       {% endfor %}
@@ -64,7 +75,14 @@ Quiz | Tacho Quiz
 
     {% if selected_answer %}
 
-    <div class="explanation-box show">
+    <div class="explanation-box show" role="status" aria-live="polite">
+      <p class="answer-result">
+        {% if selected_answer.id == correct_answer.id %}
+          {% translate "Correct." %}
+        {% else %}
+          {% translate "Incorrect." %}
+        {% endif %}
+      </p>
       <p>{{ question.localized_explanation }}</p>
     </div>
 
