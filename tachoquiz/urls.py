@@ -22,3 +22,5 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path("", include("quiz.urls")),
 ]
+
+handler404 = "quiz.views.page_not_found"

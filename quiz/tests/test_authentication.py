@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.test import override_settings
 from django.urls import reverse
 
 
@@ -159,6 +160,12 @@ class AuthenticationTest(TestCase):
             response,
             reverse("home"),
         )
+
+    @override_settings(DEBUG=False)
+    def test_unknown_route_redirects_to_home(self):
+        response = self.client.get("/does-not-exist/")
+
+        self.assertRedirects(response, reverse("home"))
 
     def test_logout_rejects_get_request(self):
             self.client.login(
