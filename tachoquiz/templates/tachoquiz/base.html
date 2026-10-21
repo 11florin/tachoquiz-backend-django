@@ -147,6 +147,17 @@
                 </li>
 
                 <li>
+                    <a
+                        href="{% url 'revision-notes' %}"
+                        {% if request.resolver_match.url_name == 'revision-notes' or request.resolver_match.url_name == 'revision-note-detail' or request.resolver_match.url_name == 'revision-note-create' or request.resolver_match.url_name == 'revision-note-edit' or request.resolver_match.url_name == 'revision-note-delete' %}
+                            class="active" aria-current="page"
+                        {% endif %}
+                    >
+                        {% translate "Notes" %}
+                    </a>
+                </li>
+
+                <li>
                     <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
                         <button type="submit"  class="nav-logout">

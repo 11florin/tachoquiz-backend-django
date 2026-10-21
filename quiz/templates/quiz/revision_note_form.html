@@ -1,0 +1,63 @@
+{% extends "tachoquiz/base.html" %}
+{% load i18n %}
+
+{% block title %}
+  {{ title }} | Tacho Quiz
+{% endblock %}
+
+{% block content %}
+<section class="about-section">
+  <div class="screen-header">
+    <h1>{{ title }}</h1>
+  </div>
+
+  <form method="post" class="register-form">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="form-error">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
+
+    <div class="form-group">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+      {% if form.title.errors %}
+        <div class="form-error">{{ form.title.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      {{ form.category.label_tag }}
+      {{ form.category }}
+      {% if form.category.errors %}
+        <div class="form-error">{{ form.category.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      {{ form.content.label_tag }}
+      {{ form.content }}
+      {% if form.content.errors %}
+        <div class="form-error">{{ form.content.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="screen-footer">
+      <button type="submit" class="action-btn">
+        {% translate "SAVE NOTE" %}
+      </button>
+      {% if note %}
+        <a href="{% url 'revision-note-detail' note.pk %}" class="action-btn action-btn--ghost">
+          {% translate "CANCEL" %}
+        </a>
+      {% else %}
+        <a href="{% url 'revision-notes' %}" class="action-btn action-btn--ghost">
+          {% translate "CANCEL" %}
+        </a>
+      {% endif %}
+    </div>
+  </form>
+</section>
+{% endblock %}

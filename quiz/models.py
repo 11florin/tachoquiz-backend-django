@@ -2,11 +2,16 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import get_language
 
-# Create your models here.
 
 class Category(models.Model):
-    name_en = models.CharField(max_length=100, verbose_name="Category (English)",)
-    name_ro = models.CharField(max_length=100, verbose_name="Category (Romanian)",)
+    name_en = models.CharField(
+        max_length=100,
+        verbose_name="Category (English)",
+    )
+    name_ro = models.CharField(
+        max_length=100,
+        verbose_name="Category (Romanian)",
+    )
     slug = models.SlugField(max_length=100, unique=True)
     image = models.ImageField(
         upload_to="categories/",
@@ -28,7 +33,11 @@ class Category(models.Model):
 
 
 class Question(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="questions",)
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        related_name="questions",
+    )
     text_en = models.TextField(verbose_name="Question (English)")
     text_ro = models.TextField(verbose_name="Question (Romanian)")
     explanation_en = models.TextField(verbose_name="Explanation (English)")
@@ -39,7 +48,6 @@ class Question(models.Model):
         if get_language() == "ro":
             return self.text_ro
         return self.text_en
-
 
     @property
     def localized_explanation(self):
@@ -52,9 +60,19 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answers",)
-    text_en = models.CharField(max_length=255, verbose_name="Answer (English)",)
-    text_ro = models.CharField(max_length=255, verbose_name="Answer (Romanian)",)
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE,
+        related_name="answers",
+    )
+    text_en = models.CharField(
+        max_length=255,
+        verbose_name="Answer (English)",
+    )
+    text_ro = models.CharField(
+        max_length=255,
+        verbose_name="Answer (Romanian)",
+    )
     is_correct = models.BooleanField(default=False)
 
     @property
@@ -68,8 +86,17 @@ class Answer(models.Model):
 
 
 class QuizResult(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="quiz_results",)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="quiz_results",)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="quiz_results",
+    )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="quiz_results",
+    )
     score = models.PositiveIntegerField()
     total_questions = models.PositiveIntegerField()
     completed_at = models.DateTimeField(auto_now_add=True)
@@ -83,4 +110,28 @@ class QuizResult(models.Model):
             f"{self.category} - "
             f"{self.score}/{self.total_questions}"
         )
-    
+
+
+class RevisionNote(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="revision_notes",
+    )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="revision_notes",
+    )
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-updated_at", "-created_at"]
+
+    def __str__(self):
+        return self.title

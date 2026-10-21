@@ -1,0 +1,54 @@
+{% extends "tachoquiz/base.html" %}
+{% load i18n %}
+
+{% block title %}
+  {% translate "My revision notes" %} | Tacho Quiz
+{% endblock %}
+
+{% block content %}
+<section class="score-section">
+  <div class="screen-header">
+    <h1>{% translate "My revision notes" %}</h1>
+  </div>
+
+  <div class="screen-footer">
+    <a href="{% url 'revision-note-create' %}" class="action-btn">
+      {% translate "ADD NOTE" %}
+    </a>
+  </div>
+
+  {% if notes %}
+    <div class="history-list">
+      {% for note in notes %}
+        <div class="history-item">
+          <div class="history-main">
+            <h2>
+              <a href="{% url 'revision-note-detail' note.pk %}">{{ note.title }}</a>
+            </h2>
+            <p class="history-date">
+              {% if note.category %}
+                {{ note.category.localized_name }}
+              {% else %}
+                {% translate "General revision" %}
+              {% endif %}
+              · {{ note.updated_at|date:"d M Y, H:i" }}
+            </p>
+          </div>
+          <div class="history-score">
+            <a href="{% url 'revision-note-edit' note.pk %}" class="small-link">
+              {% translate "Edit" %}
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="login-body">
+      <p>{% translate "You have not created any revision notes yet." %}</p>
+      <a href="{% url 'revision-note-create' %}" class="action-btn">
+        {% translate "CREATE FIRST NOTE" %}
+      </a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}
