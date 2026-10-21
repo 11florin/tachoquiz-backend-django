@@ -164,6 +164,41 @@ class QuizScoringTest(TestCase):
             50
         )
 
+    def test_score_with_all_wrong_answers_saves_zero_percent_result(self):
+        session = self.client.session
+
+        session["quiz_question_ids"] = [
+            self.question_one.id,
+            self.question_two.id,
+        ]
+        session["quiz_answers"] = {
+            str(self.question_one.id): str(self.wrong_answer_one.id),
+            str(self.question_two.id): str(self.wrong_answer_two.id),
+        }
+        session["quiz_complete"] = True
+        session["quiz_category_id"] = self.category.id
+        session["quiz_result_saved"] = False
+        session.save()
+
+        response = self.client.get(reverse("score"))
+
+        self.assertEqual(response.context["percentage"], 0)
+        result = QuizResult.objects.get(user=self.user)
+        self.assertEqual(result.score, 0)
+        self.assertEqual(result.total_questions, 2)
+
+    def test_corrupt_session_data_redirects_without_crashing(self):
+        session = self.client.session
+        session["quiz_question_ids"] = "not-a-list"
+        session["quiz_answers"] = ["not-a-dictionary"]
+        session["quiz_complete"] = True
+        session.save()
+
+        response = self.client.get(reverse("score"))
+
+        self.assertRedirects(response, reverse("categories"))
+        self.assertEqual(QuizResult.objects.count(), 0)
+
     def test_score_saves_quiz_result(self):
         session = self.client.session
 
