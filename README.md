@@ -1870,7 +1870,7 @@ The final targeted test run used the project's virtual environment:
 
 ```text
 ./venv/bin/python manage.py test quiz.tests
-Result: PASS (50 tests, 0 failures, 0 errors)
+Result: PASS (51 tests, 0 failures, 0 errors)
 ```
 
 The test and manual checklist covers all six quiz categories, correct
