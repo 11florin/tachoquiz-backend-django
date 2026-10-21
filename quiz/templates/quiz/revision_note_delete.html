@@ -1,0 +1,35 @@
+{% extends "tachoquiz/base.html" %}
+{% load i18n %}
+
+{% block title %}
+  {% translate "Delete revision note" %} | Tacho Quiz
+{% endblock %}
+
+{% block content %}
+<section class="about-section">
+  <div class="screen-header">
+    <h1>{% translate "Delete revision note" %}</h1>
+  </div>
+
+  <div class="about-body">
+    <div class="about-item">
+      <p>
+        {% blocktranslate with title=note.title %}
+          Are you sure you want to delete "{{ title }}"?
+        {% endblocktranslate %}
+      </p>
+      <p>{% translate "This action cannot be undone." %}</p>
+    </div>
+  </div>
+
+  <form method="post" class="screen-footer">
+    {% csrf_token %}
+    <button type="submit" class="action-btn">
+      {% translate "CONFIRM DELETE" %}
+    </button>
+    <a href="{% url 'revision-note-detail' note.pk %}" class="action-btn action-btn--ghost">
+      {% translate "CANCEL" %}
+    </a>
+  </form>
+</section>
+{% endblock %}

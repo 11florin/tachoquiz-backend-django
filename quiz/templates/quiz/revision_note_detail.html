@@ -1,0 +1,43 @@
+{% extends "tachoquiz/base.html" %}
+{% load i18n %}
+
+{% block title %}
+  {{ note.title }} | Tacho Quiz
+{% endblock %}
+
+{% block content %}
+<section class="about-section">
+  <div class="screen-header">
+    <h1>{{ note.title }}</h1>
+  </div>
+
+  <div class="about-body">
+    <div class="about-item">
+      <p class="history-date">
+        {% if note.category %}
+          {% translate "Category" %}: {{ note.category.localized_name }}
+        {% else %}
+          {% translate "Category" %}: {% translate "General revision" %}
+        {% endif %}
+      </p>
+      <p class="history-date">
+        {% translate "Updated" %}: {{ note.updated_at|date:"d M Y, H:i" }}
+      </p>
+      <div class="divider"></div>
+      <p>{{ note.content|linebreaksbr }}</p>
+    </div>
+  </div>
+
+  <div class="screen-footer">
+    <a href="{% url 'revision-note-edit' note.pk %}" class="action-btn">
+      {% translate "EDIT NOTE" %}
+    </a>
+    <a href="{% url 'revision-note-delete' note.pk %}" class="action-btn action-btn--secondary">
+      {% translate "DELETE NOTE" %}
+    </a>
+    <a href="{% url 'revision-notes' %}" class="action-btn action-btn--ghost">
+      {% translate "BACK TO NOTES" %}
+    </a>
+  </div>
+</section>
+{% endblock %}

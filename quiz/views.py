@@ -1,22 +1,44 @@
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
+
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
 from django.db.models import Count
 from django.http import JsonResponse
-from django.utils.translation import gettext as _
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
-from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
-from .forms import RegistrationForm
-from .models import Category, Question, Answer, QuizResult
+
+from .forms import RegistrationForm, RevisionNoteForm
+from .models import Answer, Category, Question, QuizResult, RevisionNote
+
+
+def _parse_positive_int(value):
+    """Return a positive integer or None when the input is invalid."""
+    if value is None or isinstance(value, bool):
+        return None
+
+    if isinstance(value, int):
+        return value if value > 0 else None
+
+    if isinstance(value, str):
+        cleaned = value.strip()
+        if not cleaned or not cleaned.isdigit():
+            return None
+        try:
+            number = int(cleaned)
+        except ValueError:
+            return None
+        return number if number > 0 else None
+
+    return None
 
 
 def page_not_found(request, exception):
     """Return visitors to the home page when a route does not exist."""
     messages.info(request, _("The page you requested was not found."))
     return redirect("home")
-
 
 
 def home(request):
@@ -32,7 +54,6 @@ def register(request):
         if form.is_valid():
             form.save()
             return redirect("confirmation")
-
     else:
         form = RegistrationForm()
 
@@ -47,7 +68,6 @@ def confirmation(request):
 def about(request):
     """Render the about page."""
     return render(request, "quiz/about.html")
-
 
 
 def login_view(request):
@@ -71,21 +91,19 @@ def login_view(request):
 
             return redirect("home")
 
-        return render(request, "quiz/login.html", {
-            "error": _("Invalid username or password.")
-        })
+        return render(
+            request,
+            "quiz/login.html",
+            {"error": _("Invalid username or password.")},
+        )
 
     return render(request, "quiz/login.html")
-
 
 
 @require_POST
 def logout_view(request):
     logout(request)
-    messages.success(
-        request,
-        _("You've been logged out successfully.")
-    )
+    messages.success(request, _("You've been logged out successfully."))
     return redirect("home")
 
 
@@ -98,7 +116,6 @@ def quiz_view(request):
 @login_required
 def score_view(request):
     """Calculate and display the completed quiz score."""
-
     quiz_answers = request.session.get("quiz_answers", {})
     question_ids = request.session.get("quiz_question_ids", [])
     quiz_complete = request.session.get("quiz_complete", False)
@@ -111,7 +128,7 @@ def score_view(request):
     ):
         messages.error(
             request,
-            _("No completed quiz was found. Please start a new quiz.")
+            _("No completed quiz was found. Please start a new quiz."),
         )
         return redirect("categories")
 
@@ -121,10 +138,9 @@ def score_view(request):
     selected_answer_ids = []
     for question_id in question_ids:
         answer_id = quiz_answers.get(str(question_id))
-        if isinstance(answer_id, int) or (
-            isinstance(answer_id, str) and answer_id.isdigit()
-        ):
-            selected_answer_ids.append(answer_id)
+        parsed_answer_id = _parse_positive_int(answer_id)
+        if parsed_answer_id is not None:
+            selected_answer_ids.append(parsed_answer_id)
 
     correct_answers = Answer.objects.filter(
         id__in=selected_answer_ids,
@@ -134,12 +150,7 @@ def score_view(request):
 
     total_questions = len(question_ids)
     incorrect_answers = total_questions - correct_answers
-
-    percentage = (
-        round((correct_answers / total_questions) * 100)
-        if total_questions
-        else 0
-    )
+    percentage = round((correct_answers / total_questions) * 100) if total_questions else 0
 
     quiz_result_saved = request.session.get("quiz_result_saved") is True
     saved_result_id = request.session.get("quiz_result_id")
@@ -158,7 +169,7 @@ def score_view(request):
         if not isinstance(category_id, int):
             messages.error(
                 request,
-                _("No completed quiz was found. Please start a new quiz.")
+                _("No completed quiz was found. Please start a new quiz."),
             )
             return redirect("categories")
 
@@ -166,7 +177,7 @@ def score_view(request):
         if category is None:
             messages.error(
                 request,
-                _("No completed quiz was found. Please start a new quiz.")
+                _("No completed quiz was found. Please start a new quiz."),
             )
             return redirect("categories")
 
@@ -193,10 +204,7 @@ def score_view(request):
 @login_required
 def quiz_history(request):
     """Display quiz results belonging to the logged-in user."""
-
-    results = QuizResult.objects.filter(
-        user=request.user
-    )
+    results = QuizResult.objects.filter(user=request.user)
 
     return render(
         request,
@@ -206,11 +214,87 @@ def quiz_history(request):
 
 
 @login_required
+def revision_notes(request):
+    """List all revision notes created by the current user."""
+    notes = RevisionNote.objects.filter(user=request.user)
+    return render(request, "quiz/revision_notes.html", {"notes": notes})
+
+
+@login_required
+def revision_note_create(request):
+    """Create a new personal revision note."""
+    if request.method == "POST":
+        form = RevisionNoteForm(request.POST)
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.user = request.user
+            note.save()
+            messages.success(request, _("Revision note created."))
+            return redirect("revision-note-detail", pk=note.pk)
+    else:
+        form = RevisionNoteForm()
+
+    return render(
+        request,
+        "quiz/revision_note_form.html",
+        {"form": form, "title": _("Create revision note")},
+    )
+
+
+@login_required
+def revision_note_detail(request, pk):
+    """Display a single revision note."""
+    note = get_object_or_404(RevisionNote, pk=pk)
+    if note.user != request.user:
+        messages.error(request, _("You do not have permission to view this note."))
+        return redirect("revision-notes")
+    return render(request, "quiz/revision_note_detail.html", {"note": note})
+
+
+@login_required
+def revision_note_edit(request, pk):
+    """Edit an existing revision note owned by the current user."""
+    note = get_object_or_404(RevisionNote, pk=pk)
+    if note.user != request.user:
+        messages.error(request, _("You do not have permission to edit this note."))
+        return redirect("revision-notes")
+
+    if request.method == "POST":
+        form = RevisionNoteForm(request.POST, instance=note)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Revision note updated."))
+            return redirect("revision-note-detail", pk=note.pk)
+    else:
+        form = RevisionNoteForm(instance=note)
+
+    return render(
+        request,
+        "quiz/revision_note_form.html",
+        {"form": form, "note": note, "title": _("Edit revision note")},
+    )
+
+
+@login_required
+def revision_note_delete(request, pk):
+    """Delete a revision note after user confirmation."""
+    note = get_object_or_404(RevisionNote, pk=pk)
+    if note.user != request.user:
+        messages.error(request, _("You do not have permission to delete this note."))
+        return redirect("revision-notes")
+
+    if request.method == "POST":
+        note.delete()
+        messages.success(request, _("Revision note deleted."))
+        return redirect("revision-notes")
+
+    return render(request, "quiz/revision_note_delete.html", {"note": note})
+
+
+@login_required
 def categories(request):
     """Display quiz categories and their number of questions."""
-    categories = Category.objects.annotate(
-        question_count=Count("questions")
-    )
+    categories = Category.objects.annotate(question_count=Count("questions"))
 
     return render(
         request,
@@ -237,22 +321,15 @@ def category_quiz(request, slug):
         and all(isinstance(question_id, int) for question_id in stored_question_ids)
     )
 
-    # Start a new quiz if there is no active quiz for this category,
-    # or if the previous quiz has already been completed.
     if request.method == "GET" and (
         active_category_id != category.id
         or quiz_complete is True
         or not valid_question_ids
     ):
-        question_ids = list(
-            category.questions.order_by("?").values_list("id", flat=True)
-        )
+        question_ids = list(category.questions.order_by("?").values_list("id", flat=True))
 
         if not question_ids:
-            messages.info(
-                request,
-                _("No questions available for this category.")
-            )
+            messages.info(request, _("No questions available for this category."))
             return redirect("categories")
 
         request.session["quiz_category_id"] = category.id
@@ -274,15 +351,12 @@ def category_quiz(request, slug):
     ):
         messages.error(
             request,
-            _("Quiz session expired. Please start the quiz again.")
+            _("Quiz session expired. Please start the quiz again."),
         )
         return redirect("categories")
 
     if request.session.get("quiz_category_id") != category.id:
-        messages.error(
-            request,
-            "Quiz session expired. Please start the quiz again."
-        )
+        messages.error(request, "Quiz session expired. Please start the quiz again.")
         return redirect("categories")
 
     if question_index >= len(question_ids):
@@ -297,30 +371,25 @@ def category_quiz(request, slug):
     quiz_answers = request.session.get("quiz_answers", {})
     if not isinstance(quiz_answers, dict):
         quiz_answers = {}
-    saved_answer_id = quiz_answers.get(str(question.id))
+    saved_answer_id = _parse_positive_int(quiz_answers.get(str(question.id)))
 
     selected_answer = None
-
-    if saved_answer_id:
+    if saved_answer_id is not None:
         selected_answer = Answer.objects.filter(
             id=saved_answer_id,
             question=question,
         ).first()
 
-    correct_answer = question.answers.filter(
-        is_correct=True
-    ).first()
+    correct_answer = question.answers.filter(is_correct=True).first()
 
     if request.method == "POST":
         action = request.POST.get("action")
 
-        # Move to the next question only after the current
-        # question has already been answered.
         if action == "next":
             if selected_answer is None:
                 messages.error(
                     request,
-                    _("Please answer the question before continuing.")
+                    _("Please answer the question before continuing."),
                 )
                 return redirect("category-quiz", slug=slug)
 
@@ -330,13 +399,10 @@ def category_quiz(request, slug):
             if question_index >= len(question_ids):
                 quiz_answers = request.session.get("quiz_answers", {})
 
-                if not all(
-                    str(question_id) in quiz_answers
-                    for question_id in question_ids
-                ):
+                if not all(str(question_id) in quiz_answers for question_id in question_ids):
                     messages.error(
                         request,
-                        _("Please answer all questions before submitting the quiz.")
+                        _("Please answer all questions before submitting the quiz."),
                     )
                     return redirect("categories")
 
@@ -345,14 +411,13 @@ def category_quiz(request, slug):
 
             return redirect("category-quiz", slug=slug)
 
-        # Do not allow an already answered question
-        # to be answered again.
         if selected_answer is not None:
             return redirect("category-quiz", slug=slug)
 
         answer_id = request.POST.get("answer")
+        parsed_answer_id = _parse_positive_int(answer_id)
 
-        if not answer_id:
+        if parsed_answer_id is None:
             return render(
                 request,
                 "quiz/quiz.html",
@@ -361,15 +426,13 @@ def category_quiz(request, slug):
                     "question": question,
                     "question_number": question_index + 1,
                     "total_questions": len(question_ids),
-                    "is_last_question": (
-                        question_index == len(question_ids) - 1
-                    ),
-                    "error": "Please select an answer.",
+                    "is_last_question": question_index == len(question_ids) - 1,
+                    "error": "Invalid answer selected. Please choose a valid answer.",
                 },
             )
 
         answer = Answer.objects.filter(
-            id=answer_id,
+            id=parsed_answer_id,
             question=question,
         ).first()
 
@@ -382,9 +445,7 @@ def category_quiz(request, slug):
                     "question": question,
                     "question_number": question_index + 1,
                     "total_questions": len(question_ids),
-                    "is_last_question": (
-                        question_index == len(question_ids) - 1
-                    ),
+                    "is_last_question": question_index == len(question_ids) - 1,
                     "error": "Invalid answer selected.",
                 },
             )
@@ -402,9 +463,7 @@ def category_quiz(request, slug):
             "question": question,
             "question_number": question_index + 1,
             "total_questions": len(question_ids),
-            "is_last_question": (
-                question_index == len(question_ids) - 1
-            ),
+            "is_last_question": question_index == len(question_ids) - 1,
             "selected_answer": selected_answer,
             "correct_answer": correct_answer,
         },
@@ -413,7 +472,6 @@ def category_quiz(request, slug):
 
 def set_timezone(request):
     """Store the user's browser timezone in the session."""
-
     if request.method != "POST":
         return JsonResponse(
             {"error": "POST request required."},

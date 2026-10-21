@@ -15,7 +15,6 @@ urlpatterns = [
         ),
         name="password_reset",
     ),
-
     path(
         "password-reset/done/",
         auth_views.PasswordResetDoneView.as_view(
@@ -23,7 +22,6 @@ urlpatterns = [
         ),
         name="password_reset_done",
     ),
-
     path(
         "reset/<uidb64>/<token>/",
         auth_views.PasswordResetConfirmView.as_view(
@@ -31,7 +29,6 @@ urlpatterns = [
         ),
         name="password_reset_confirm",
     ),
-
     path(
         "reset/done/",
         auth_views.PasswordResetCompleteView.as_view(
@@ -39,12 +36,16 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
-
     path("quiz/<slug:slug>/", views.category_quiz, name="category-quiz"),
     path("quiz/", views.quiz_view, name="quiz"),
     path("score/", views.score_view, name="score"),
     path("history/", views.quiz_history, name="quiz-history"),
+    path("notes/", views.revision_notes, name="revision-notes"),
+    path("notes/new/", views.revision_note_create, name="revision-note-create"),
+    path("notes/<int:pk>/", views.revision_note_detail, name="revision-note-detail"),
+    path("notes/<int:pk>/edit/", views.revision_note_edit, name="revision-note-edit"),
+    path("notes/<int:pk>/delete/", views.revision_note_delete, name="revision-note-delete"),
     path("categories/", views.categories, name="categories"),
     path("about/", views.about, name="about"),
-    path("set-timezone/", views.set_timezone, name="set-timezone",),
+    path("set-timezone/", views.set_timezone, name="set-timezone"),
 ]
