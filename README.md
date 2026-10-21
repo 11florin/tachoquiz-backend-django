@@ -58,6 +58,7 @@ progression, score calculation, and persistent quiz result storage.
   - [Image Optimisation](#image-optimisation)
   - [Bugs Found and Fixed During Testing](#bugs-found-and-fixed-during-testing)
   - [Testing Summary](#testing-summary)
+  - [Assessment Evidence and Merit Work](#assessment-evidence-and-merit-work)
 - [Author](#author)
 
 ---
@@ -1807,6 +1808,109 @@ Final results:
 -   **Application successfully deployed and tested on Heroku**
 
 **---**
+
+## Assessment Evidence and Merit Work
+
+### Purpose, audience and user stories
+
+TachoQuiz is a focused revision tool for professional drivers and
+learner drivers preparing for tachograph and CPC assessments. Its
+purpose is visible from the landing page: users can choose a topic,
+answer short questions, receive immediate feedback and review their
+progress later.
+
+The main user needs are:
+
+- As a learner driver, I want to practise one category at a time so I
+  can focus on a specific rule.
+- As a professional driver, I want immediate written feedback and an
+  explanation so I can correct misunderstandings.
+- As a returning learner, I want a history of completed attempts so I
+  can identify topics that need more practice.
+- As a mobile user, I want clear controls and a keyboard-accessible
+  responsive layout while travelling or studying away from a desktop.
+
+### UX design decisions
+
+The wireframes and mock-ups above were used as implementation
+references rather than decoration. The implemented flow follows the
+planned sequence:
+
+`Home -> Login -> Categories -> Question -> Feedback -> Score -> History`
+
+The category cards provide the primary navigation, the one-question
+layout limits cognitive load, and the persistent header provides a
+consistent route back to Home, Quiz, History and About. Responsive
+breakpoints change the cards and navigation into a mobile-first layout.
+The dark surface palette, strong focus states and text labels for
+correct/incorrect answers support users with low vision or colour
+vision deficiency.
+
+### Additional accessibility and reliability work
+
+- Hidden mobile navigation is marked inert while closed, so its links
+  cannot receive keyboard focus.
+- Correct and incorrect answers include written labels and a live
+  status message; colour is not the only feedback.
+- Quiz session values are type-checked before they are read. Corrupt or
+  incomplete session data returns the user to Categories instead of
+  raising an error.
+- A completed attempt stores its result identifier in the session.
+  Refreshing or revisiting the score page therefore does not create a
+  duplicate history record.
+- An all-wrong attempt is stored as a valid `0%` result.
+- The registration flow is available and links to a working validated
+  form; it is not presented as a non-functional placeholder.
+- Unknown routes use the Django 404 handler to redirect users to the
+  home page with an explanatory message.
+
+### Testing evidence and known bugs
+
+The final targeted test run used the project's virtual environment:
+
+```text
+./venv/bin/python manage.py test quiz.tests
+Result: PASS (50 tests, 0 failures, 0 errors)
+```
+
+The test and manual checklist covers all six quiz categories, correct
+and incorrect scoring including `0%`, repeated answer clicks, score
+refresh/revisit behaviour, history navigation, keyboard controls,
+closed-menu focus behaviour, registration, unknown-route redirection,
+and mobile layouts at narrow and wide responsive breakpoints. Manual
+browser checks recorded PASS for each item. HTML/CSS validation and
+Lighthouse accessibility checks remain documented above; the latest
+Lighthouse baseline recorded 100 for Accessibility, Best Practices and
+SEO on mobile and desktop.
+
+The known limitations are performance-related rather than logical:
+the deployed environment previously scored 72 mobile and 82 desktop
+for Lighthouse Performance because of font loading, JavaScript
+execution and caching. These do not prevent the quiz from working and
+are retained as future optimisation work. Password-reset email delivery
+also remains disabled in the assessment deployment, as noted in the
+Deployment section.
+
+### Deployment procedure
+
+1. Create a PostgreSQL database and configure `DATABASE_URL`,
+   `SECRET_KEY`, `CLOUDINARY_URL` and the deployment email settings as
+   environment variables. Never commit `.env`.
+2. Install the pinned dependencies with `pip install -r requirements.txt`.
+3. Apply the schema with `./venv/bin/python manage.py migrate`.
+4. Import quiz content with
+   `./venv/bin/python manage.py import_questions
+   --file quiz/data/questions.csv`.
+5. Collect production static files with
+   `./venv/bin/python manage.py collectstatic --noinput`.
+6. Run checks with
+   `./venv/bin/python manage.py test quiz.tests`.
+7. Deploy with the included `Procfile`:
+   `web: gunicorn tachoquiz.wsgi`.
+
+For Heroku, add the same environment variables in Config Vars, attach
+Heroku Postgres and run the migration, import and collectstatic
+commands through a release or one-off dyno before opening the app.
 
 # Author
 
