@@ -90,41 +90,41 @@ mobile, tablet and desktop devices.
 
 ### Mobile Wireframes
 
-![Home Mobile](quiz/static/quiz/images/wireframes/1-Home-mobile.png)
+![Home Mobile](quiz/static/quiz/images/wireframes/1-home-mobile.png)
 
-![Quiz Mobile](quiz/static/quiz/images/wireframes/2-Quiz-mobile.png)
+![Quiz Mobile](quiz/static/quiz/images/wireframes/2-quiz-mobile.png)
 
-![Score Mobile](quiz/static/quiz/images/wireframes/3-Score-mobile.png)
+![Score Mobile](quiz/static/quiz/images/wireframes/3-score-mobile.png)
 
-![Login Mobile](quiz/static/quiz/images/wireframes/4-Login-mobile.png)
+![Login Mobile](quiz/static/quiz/images/wireframes/4-login-mobile.png)
 
-![About Mobile](quiz/static/quiz/images/wireframes/5-About-mobile.png)
+![About Mobile](quiz/static/quiz/images/wireframes/5-about-mobile.png)
 
 
 ### Tablet Wireframes
 
-![Home Tablet](quiz/static/quiz/images/wireframes/1-Home-tablet.png)
+![Home Tablet](quiz/static/quiz/images/wireframes/1-home-tablet.png)
 
-![Quiz Tablet](quiz/static/quiz/images/wireframes/2-Quiz-tablet.png)
+![Quiz Tablet](quiz/static/quiz/images/wireframes/2-quiz-tablet.png)
 
-![Score Tablet](quiz/static/quiz/images/wireframes/3-Score-tablet.png)
+![Score Tablet](quiz/static/quiz/images/wireframes/3-score-tablet.png)
 
-![Login Tablet](quiz/static/quiz/images/wireframes/4-Login-tablet.png)
+![Login Tablet](quiz/static/quiz/images/wireframes/4-login-tablet.png)
 
-![About Tablet](quiz/static/quiz/images/wireframes/5-About-tablet.png)
+![About Tablet](quiz/static/quiz/images/wireframes/5-about-tablet.png)
 
 
 ### Desktop Wireframes
 
-![Home Desktop](quiz/static/quiz/images/wireframes/1-Home-desktop.png)
+![Home Desktop](quiz/static/quiz/images/wireframes/1-home-desktop.png)
 
-![Quiz Desktop](quiz/static/quiz/images/wireframes/2-Quiz-desktop.png)
+![Quiz Desktop](quiz/static/quiz/images/wireframes/2-quiz-desktop.png)
 
-![Score Desktop](quiz/static/quiz/images/wireframes/3-Score-desktop.png)
+![Score Desktop](quiz/static/quiz/images/wireframes/3-score-desktop.png)
 
-![Login Desktop](quiz/static/quiz/images/wireframes/4-Login-desktop.png)
+![Login Desktop](quiz/static/quiz/images/wireframes/4-login-desktop.png)
 
-![About Desktop](quiz/static/quiz/images/wireframes/5-About-desktop.png)
+![About Desktop](quiz/static/quiz/images/wireframes/5-about-desktop.png)
 
 ---
 
@@ -326,14 +326,91 @@ active language.
 
 Stores completed quiz attempts.
 
--   `user` --- ForeignKey to the authenticated user
--   `category` --- ForeignKey to `Category`
--   `score`
--   `total_questions`
--   `completed_at`
+-   `user` --- ForeignKey to the authenticated user (`CASCADE`)
+-   `category` --- ForeignKey to `Category` (`SET_NULL` when a category is removed)
+-   `score` --- `PositiveIntegerField` for total correct answers in the attempt
+-   `total_questions` --- `PositiveIntegerField` for the quiz size
+-   `completed_at` --- timestamp recorded automatically when the result is created
 
 The category relationship on saved results uses `SET_NULL` so historical
 attempts can remain available if a category is later removed.
+
+### RevisionNote
+
+Stores each user's personal revision notes.
+
+-   `user` --- ForeignKey to the authenticated user (`CASCADE`)
+-   `category` --- optional ForeignKey to `Category` (`SET_NULL` when needed)
+-   `title` --- revision note subject/title
+-   `content` --- free-form revision note text
+-   `created_at` --- automatic creation timestamp
+-   `updated_at` --- automatic update timestamp
+
+Each note is private to its owner and can be created, edited and deleted
+through the app interface rather than the Django admin area.
+
+### Entity Relationship Diagram
+
+```mermaid
+erDiagram
+    USER ||--o{ QUIZRESULT : completes
+    USER ||--o{ REVISIONNOTE : owns
+    CATEGORY ||--o{ QUESTION : contains
+    CATEGORY ||--o{ QUIZRESULT : stores
+    CATEGORY ||--o{ REVISIONNOTE : groups
+    QUESTION ||--o{ ANSWER : has
+    QUESTION ||--o{ QUIZRESULT : is_scored_in
+
+    USER {
+        int id
+        string username
+        string email
+    }
+
+    CATEGORY {
+        int id
+        string name_en
+        string name_ro
+        string slug
+        string image
+    }
+
+    QUESTION {
+        int id
+        int category_id
+        text text_en
+        text text_ro
+        text explanation_en
+        text explanation_ro
+    }
+
+    ANSWER {
+        int id
+        int question_id
+        text text_en
+        text text_ro
+        bool is_correct
+    }
+
+    QUIZRESULT {
+        int id
+        int user_id
+        int category_id
+        int score
+        int total_questions
+        datetime completed_at
+    }
+
+    REVISIONNOTE {
+        int id
+        int user_id
+        int category_id
+        string title
+        text content
+        datetime created_at
+        datetime updated_at
+    }
+```
 
 ------------------------------------------------------------------------
 
@@ -1396,15 +1473,11 @@ Automated testing was carried out using Django's built-in testing
 framework.
 
 The test suite covers the application's models, authentication system,
-
-quiz functionality, scoring, user results, and an important end-to-end
-
-user journey.
+quiz functionality, scoring, user results, revision-note CRUD, and an
+important end-to-end user journey.
 
 The tests are organised into separate files according to the
-functionality
-
-being tested:
+functionality being tested:
 
 -   `test_models.py` --- model creation, relationships, validation and
     localisation
@@ -1412,34 +1485,35 @@ being tested:
 -   `test_authentication.py` --- registration, login, logout and
     protected views
 
--   `test_quiz.py` --- quiz categories, questions, answers and quiz
-    progression
+-   `test_quiz.py` --- quiz categories, questions, answers, answer validation,
+    and quiz progression
 
 -   `test_scoring.py` --- quiz completion and score calculation
 
 -   `test_results.py` --- saving and displaying quiz results
 
--   `test_user_journeys.py` --- complete user journey through the
-    application
+-   `test_revision_notes.py` --- personal revision-note CRUD and ownership checks
+
+-   `test_user_journeys.py` --- complete user journey through the application
 
 The complete test suite can be run with:
 
-`python manage.py test`
+`./venv/bin/python manage.py test`
 
 Final automated test result:
 
--   **48 tests executed**
+-   **51 tests executed**
 
--   **48 tests passed**
+-   **51 tests passed**
 
 -   **0 failures**
 
 -   **0 errors**
 
-This confirms that the tested backend functionality behaves as expected.
+This confirms that the tested backend functionality behaves as expected
+across the application's 13 quiz categories and core user journeys.
 
-![48 automated tests
-passed](quiz/static/quiz/images/testing-img/48-tests-pass.png)
+![51 automated tests passed](quiz/static/quiz/images/testing-img/48-tests-pass.png)
 
 ### Manual Testing
 
@@ -1606,7 +1680,7 @@ recompiled using:
 The page was then revalidated successfully with no errors or warnings.
 
 ![HTML
-Validator](quiz/static/quiz/images/testing-img/HTML-validator.png)
+Validator](quiz/static/quiz/images/testing-img/html-validator.png)
 
 **---**
 
@@ -1618,7 +1692,7 @@ The final validation completed successfully with:
 
 -   **0 CSS errors**
 
-![CSS Validator](quiz/static/quiz/images/testing-img/CSS-validator.png)
+![CSS Validator](quiz/static/quiz/images/testing-img/css-validator.png)
 
 **---**
 
@@ -1653,11 +1727,11 @@ contrast for normal-sized text against the main `#0F172A` background.
 
 It was therefore changed to `#94A3B8` and retested successfully.
 
-![WebAIM](quiz/static/quiz/images/testing-img/WebAIM-Contrast.png)
+![WebAIM](quiz/static/quiz/images/testing-img/webaim-contrast.png)
 
-![WebAIM](quiz/static/quiz/images/testing-img/WebAIM-Contrast2.png)
+![WebAIM](quiz/static/quiz/images/testing-img/webaim-contrast2.png)
 
-![WebAIM](quiz/static/quiz/images/testing-img/WebAIM-Contrast3.png)
+![WebAIM](quiz/static/quiz/images/testing-img/webaim-contrast3.png)
 
 **---**
 
@@ -1769,7 +1843,7 @@ After the fixes were applied, the complete Django automated test suite
 
 was run again:
 
--   **48 tests passed**
+-   **51 tests passed**
 
 -   **0 failures**
 
@@ -1789,7 +1863,7 @@ performance and important user journeys.
 
 Final results:
 
--   **48 / 48 automated tests passed**
+-   **51 / 51 automated tests passed**
 
 -   **30 / 30 manual tests passed**
 
@@ -1893,24 +1967,23 @@ Deployment section.
 
 ### Deployment procedure
 
-1. Create a PostgreSQL database and configure `DATABASE_URL`,
-   `SECRET_KEY`, `CLOUDINARY_URL` and the deployment email settings as
-   environment variables. Never commit `.env`.
+1. Create a PostgreSQL database and configure the app environment variables
+   in the deployment platform: `DATABASE_URL` or the `DB_NAME`, `DB_USER`,
+   `DB_PASSWORD`, `DB_HOST`, and `DB_PORT` values, `SECRET_KEY`, `DEBUG`,
+   `ALLOWED_HOSTS`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`,
+   `CLOUDINARY_API_SECRET`, and any email settings required for password-reset
+   delivery. Never commit `.env`.
 2. Install the pinned dependencies with `pip install -r requirements.txt`.
 3. Apply the schema with `./venv/bin/python manage.py migrate`.
-4. Import quiz content with
-   `./venv/bin/python manage.py import_questions
-   --file quiz/data/questions.csv`.
-5. Collect production static files with
-   `./venv/bin/python manage.py collectstatic --noinput`.
-6. Run checks with
-   `./venv/bin/python manage.py test quiz.tests`.
-7. Deploy with the included `Procfile`:
-   `web: gunicorn tachoquiz.wsgi`.
+4. Import quiz content with `./venv/bin/python manage.py import_questions --file quiz/data/questions.csv`.
+5. Collect production static files with `./venv/bin/python manage.py collectstatic --noinput`.
+6. Run checks with `./venv/bin/python manage.py test`.
+7. Deploy with the included `Procfile`: `web: gunicorn tachoquiz.wsgi`.
 
-For Heroku, add the same environment variables in Config Vars, attach
-Heroku Postgres and run the migration, import and collectstatic
-commands through a release or one-off dyno before opening the app.
+For Heroku, add the same values in Config Vars, attach Heroku Postgres,
+set `DEBUG=False` and a valid `ALLOWED_HOSTS` list, then run the migration,
+import and collectstatic commands through a release or one-off dyno before
+opening the app.
 
 # Author
 
