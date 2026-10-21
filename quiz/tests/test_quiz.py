@@ -191,6 +191,45 @@ class QuizFunctionalityTest(TestCase):
             str(first_answer.id),
         )
 
+    def test_invalid_answer_id_returns_helpful_error(self):
+        quiz_url = reverse(
+            "category-quiz",
+            kwargs={"slug": self.category.slug},
+        )
+
+        self.client.get(quiz_url)
+
+        response = self.client.post(
+            quiz_url,
+            {"answer": "non-numeric"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response,
+            "Invalid answer selected. Please choose a valid answer.",
+        )
+
+    def test_invalid_answer_ids_in_session_are_ignored(self):
+        quiz_url = reverse(
+            "category-quiz",
+            kwargs={"slug": self.category.slug},
+        )
+
+        self.client.get(quiz_url)
+
+        session = self.client.session
+        session["quiz_answers"] = {str(self.question.id): "non-numeric"}
+        session["quiz_question_ids"] = [self.question.id]
+        session["quiz_complete"] = True
+        session["question_index"] = 0
+        session.save()
+
+        response = self.client.get(reverse("score"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["correct_answers"], 0)
+
     def test_answer_cannot_be_changed_after_submission(self):
         quiz_url = reverse(
             "category-quiz",
