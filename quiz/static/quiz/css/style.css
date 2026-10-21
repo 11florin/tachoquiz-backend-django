@@ -151,7 +151,6 @@ header {
   transform-origin: center;
 }
 
-/* X animation generated with assistance from Claude AI */
 .hamburger[aria-expanded="true"] .bar:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
 }
@@ -519,8 +518,6 @@ header {
   }
 }
 
-/* Button state styling generated with assistance from Claude AI */
-
 /* Apply styles only when the button is active (not disabled). 
    Prevents hover, pointer and shadow effects on disabled buttons. */
 .action-btn:not(:disabled):not([disabled]) {
@@ -741,6 +738,22 @@ a.action-btn {
 }
 .answer-btn:disabled {
   cursor: default;
+}
+.answer-feedback {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.correct-feedback {
+  color: var(--color-correct);
+}
+.wrong-feedback {
+  color: var(--color-wrong);
+}
+.answer-result {
+  margin-bottom: 6px;
+  font-weight: 700;
 }
 /* Explanation box */
 .explanation-box {
