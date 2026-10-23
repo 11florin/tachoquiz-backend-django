@@ -359,7 +359,6 @@ erDiagram
     CATEGORY ||--o{ QUIZRESULT : stores
     CATEGORY ||--o{ REVISIONNOTE : groups
     QUESTION ||--o{ ANSWER : has
-    QUESTION ||--o{ QUIZRESULT : is_scored_in
 
     USER {
         int id
@@ -1502,9 +1501,9 @@ The complete test suite can be run with:
 
 Final automated test result:
 
--   **51 tests executed**
+-   **57 tests executed**
 
--   **51 tests passed**
+-   **57 tests passed**
 
 -   **0 failures**
 
@@ -1513,7 +1512,7 @@ Final automated test result:
 This confirms that the tested backend functionality behaves as expected
 across the application's 13 quiz categories and core user journeys.
 
-![51 automated tests passed](quiz/static/quiz/images/testing-img/48-tests-pass.png)
+![57 automated tests passed](quiz/static/quiz/images/testing-img/48-tests-pass.png)
 
 ### Manual Testing
 
@@ -1843,7 +1842,7 @@ After the fixes were applied, the complete Django automated test suite
 
 was run again:
 
--   **51 tests passed**
+-   **57 tests passed**
 
 -   **0 failures**
 
@@ -1863,7 +1862,7 @@ performance and important user journeys.
 
 Final results:
 
--   **51 / 51 automated tests passed**
+-   **57 / 57 automated tests passed**
 
 -   **30 / 30 manual tests passed**
 
@@ -1944,7 +1943,7 @@ The final targeted test run used the project's virtual environment:
 
 ```text
 ./venv/bin/python manage.py test quiz.tests
-Result: PASS (51 tests, 0 failures, 0 errors)
+Result: PASS (57 tests, 0 failures, 0 errors)
 ```
 
 The test and manual checklist covers all six quiz categories, correct
