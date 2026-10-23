@@ -92,19 +92,22 @@ class Command(BaseCommand):
 
                 if not category_en or not category_ro:
                     self.stderr.write(
-                        f"Row {row_number}: category is required in both languages."
+                        f"Row {row_number}: category is required "
+                        "in both languages."
                     )
                     continue
 
                 if not question_en or not question_ro:
                     self.stderr.write(
-                        f"Row {row_number}: question is required in both languages."
+                        f"Row {row_number}: question is required "
+                        "in both languages."
                     )
                     continue
 
                 if not explanation_en or not explanation_ro:
                     self.stderr.write(
-                        f"Row {row_number}: explanation is required in both languages."
+                        f"Row {row_number}: explanation is required "
+                        "in both languages."
                     )
                     continue
 
@@ -174,4 +177,4 @@ class Command(BaseCommand):
                         f"Row {row_number} imported: {question_en}"
                     )
                 )
-  
+
