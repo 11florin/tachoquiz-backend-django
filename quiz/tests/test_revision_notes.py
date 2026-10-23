@@ -35,9 +35,14 @@ class RevisionNoteCrudTests(TestCase):
         )
 
         note = RevisionNote.objects.get(title="Daily rest plan")
-        self.assertRedirects(response, reverse("revision-note-detail", args=[note.pk]))
+        self.assertRedirects(
+            response,
+            reverse("revision-note-detail", args=[note.pk]),
+        )
 
-        detail_response = self.client.get(reverse("revision-note-detail", args=[note.pk]))
+        detail_response = self.client.get(
+            reverse("revision-note-detail", args=[note.pk])
+        )
         self.assertContains(detail_response, "Daily rest plan")
 
     def test_user_can_edit_their_own_revision_note(self):
@@ -58,7 +63,10 @@ class RevisionNoteCrudTests(TestCase):
         )
 
         note.refresh_from_db()
-        self.assertRedirects(response, reverse("revision-note-detail", args=[note.pk]))
+        self.assertRedirects(
+            response,
+            reverse("revision-note-detail", args=[note.pk]),
+        )
         self.assertEqual(note.title, "Updated title")
         self.assertEqual(note.content, "Updated content")
 
@@ -70,8 +78,12 @@ class RevisionNoteCrudTests(TestCase):
             content="Not for you",
         )
 
-        edit_response = self.client.get(reverse("revision-note-edit", args=[note.pk]))
-        delete_response = self.client.get(reverse("revision-note-delete", args=[note.pk]))
+        edit_response = self.client.get(
+            reverse("revision-note-edit", args=[note.pk])
+        )
+        delete_response = self.client.get(
+            reverse("revision-note-delete", args=[note.pk])
+        )
 
         self.assertRedirects(edit_response, reverse("revision-notes"))
         self.assertRedirects(delete_response, reverse("revision-notes"))
@@ -84,7 +96,9 @@ class RevisionNoteCrudTests(TestCase):
             content="Remove me",
         )
 
-        response = self.client.post(reverse("revision-note-delete", args=[note.pk]))
+        response = self.client.post(
+            reverse("revision-note-delete", args=[note.pk])
+        )
 
         self.assertRedirects(response, reverse("revision-notes"))
         self.assertFalse(RevisionNote.objects.filter(pk=note.pk).exists())
