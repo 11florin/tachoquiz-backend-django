@@ -24,7 +24,9 @@ class UserJourneyTest(TestCase):
             text_en="What is the daily driving limit?",
             text_ro="Care este limita zilnică de conducere?",
             explanation_en="The normal daily driving limit is 9 hours.",
-            explanation_ro="Limita normală zilnică de conducere este de 9 ore.",
+            explanation_ro=(
+                "Limita normală zilnică de conducere este de 9 ore."
+            ),
         )
 
         self.correct_answer_one = Answer.objects.create(
@@ -46,7 +48,9 @@ class UserJourneyTest(TestCase):
             text_en="What is the weekly driving limit?",
             text_ro="Care este limita săptămânală de conducere?",
             explanation_en="The weekly driving limit is 56 hours.",
-            explanation_ro="Limita săptămânală de conducere este de 56 de ore.",
+            explanation_ro=(
+                "Limita săptămânală de conducere este de 56 de ore."
+            ),
         )
 
         self.correct_answer_two = Answer.objects.create(
