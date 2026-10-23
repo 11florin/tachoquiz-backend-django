@@ -38,7 +38,10 @@ class RevisionNoteForm(forms.ModelForm):
                 attrs={"placeholder": "Enter a short title"}
             ),
             "content": forms.Textarea(
-                attrs={"rows": 6, "placeholder": "Write your revision notes here..."}
+                attrs={
+                    "rows": 6,
+                    "placeholder": "Write your revision notes here...",
+                }
             ),
         }
 
