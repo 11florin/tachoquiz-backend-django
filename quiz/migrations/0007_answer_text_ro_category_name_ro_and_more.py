@@ -13,36 +13,56 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='answer',
             name='text_ro',
-            field=models.CharField(default='', max_length=255, verbose_name='Answer (Romanian)'),
+            field=models.CharField(
+                default='',
+                max_length=255,
+                verbose_name='Answer (Romanian)',
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='category',
             name='name_ro',
-            field=models.CharField(default='', max_length=100, verbose_name='Category (Romanian)'),
+            field=models.CharField(
+                default='',
+                max_length=100,
+                verbose_name='Category (Romanian)',
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='question',
             name='explanation_ro',
-            field=models.TextField(default='', verbose_name='Explanation (Romanian)'),
+            field=models.TextField(
+                default='',
+                verbose_name='Explanation (Romanian)',
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='question',
             name='text_ro',
-            field=models.TextField(default='', verbose_name='Question (Romanian)'),
+            field=models.TextField(
+                default='',
+                verbose_name='Question (Romanian)',
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='answer',
             name='text_en',
-            field=models.CharField(max_length=255, verbose_name='Answer (English)'),
+            field=models.CharField(
+                max_length=255,
+                verbose_name='Answer (English)',
+            ),
         ),
         migrations.AlterField(
             model_name='category',
             name='name_en',
-            field=models.CharField(max_length=100, verbose_name='Category (English)'),
+            field=models.CharField(
+                max_length=100,
+                verbose_name='Category (English)',
+            ),
         ),
         migrations.AlterField(
             model_name='question',
