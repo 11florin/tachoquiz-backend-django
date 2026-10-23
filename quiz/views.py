@@ -124,7 +124,9 @@ def score_view(request):
         quiz_complete is not True
         or not isinstance(question_ids, list)
         or not question_ids
-        or not all(isinstance(question_id, int) for question_id in question_ids)
+        or not all(
+            isinstance(question_id, int) for question_id in question_ids
+        )
     ):
         messages.error(
             request,
@@ -150,7 +152,11 @@ def score_view(request):
 
     total_questions = len(question_ids)
     incorrect_answers = total_questions - correct_answers
-    percentage = round((correct_answers / total_questions) * 100) if total_questions else 0
+    percentage = (
+        round((correct_answers / total_questions) * 100)
+        if total_questions
+        else 0
+    )
 
     quiz_result_saved = request.session.get("quiz_result_saved") is True
     saved_result_id = request.session.get("quiz_result_id")
@@ -246,7 +252,10 @@ def revision_note_detail(request, pk):
     """Display a single revision note."""
     note = get_object_or_404(RevisionNote, pk=pk)
     if note.user != request.user:
-        messages.error(request, _("You do not have permission to view this note."))
+        messages.error(
+            request,
+            _("You do not have permission to view this note."),
+        )
         return redirect("revision-notes")
     return render(request, "quiz/revision_note_detail.html", {"note": note})
 
@@ -256,7 +265,10 @@ def revision_note_edit(request, pk):
     """Edit an existing revision note owned by the current user."""
     note = get_object_or_404(RevisionNote, pk=pk)
     if note.user != request.user:
-        messages.error(request, _("You do not have permission to edit this note."))
+        messages.error(
+            request,
+            _("You do not have permission to edit this note."),
+        )
         return redirect("revision-notes")
 
     if request.method == "POST":
@@ -280,7 +292,10 @@ def revision_note_delete(request, pk):
     """Delete a revision note after user confirmation."""
     note = get_object_or_404(RevisionNote, pk=pk)
     if note.user != request.user:
-        messages.error(request, _("You do not have permission to delete this note."))
+        messages.error(
+            request,
+            _("You do not have permission to delete this note."),
+        )
         return redirect("revision-notes")
 
     if request.method == "POST":
@@ -318,7 +333,10 @@ def category_quiz(request, slug):
     stored_question_ids = request.session.get("quiz_question_ids")
     valid_question_ids = (
         isinstance(stored_question_ids, list)
-        and all(isinstance(question_id, int) for question_id in stored_question_ids)
+        and all(
+            isinstance(question_id, int)
+            for question_id in stored_question_ids
+        )
     )
 
     if request.method == "GET" and (
@@ -326,10 +344,15 @@ def category_quiz(request, slug):
         or quiz_complete is True
         or not valid_question_ids
     ):
-        question_ids = list(category.questions.order_by("?").values_list("id", flat=True))
+        question_ids = list(
+            category.questions.order_by("?").values_list("id", flat=True)
+        )
 
         if not question_ids:
-            messages.info(request, _("No questions available for this category."))
+            messages.info(
+                request,
+                _("No questions available for this category."),
+            )
             return redirect("categories")
 
         request.session["quiz_category_id"] = category.id
@@ -346,7 +369,9 @@ def category_quiz(request, slug):
     if (
         not isinstance(question_ids, list)
         or not question_ids
-        or not all(isinstance(question_id, int) for question_id in question_ids)
+        or not all(
+            isinstance(question_id, int) for question_id in question_ids
+        )
         or not isinstance(question_index, int)
     ):
         messages.error(
@@ -356,7 +381,10 @@ def category_quiz(request, slug):
         return redirect("categories")
 
     if request.session.get("quiz_category_id") != category.id:
-        messages.error(request, "Quiz session expired. Please start the quiz again.")
+        messages.error(
+            request,
+            "Quiz session expired. Please start the quiz again.",
+        )
         return redirect("categories")
 
     if question_index >= len(question_ids):
@@ -399,10 +427,16 @@ def category_quiz(request, slug):
             if question_index >= len(question_ids):
                 quiz_answers = request.session.get("quiz_answers", {})
 
-                if not all(str(question_id) in quiz_answers for question_id in question_ids):
+                if not all(
+                    str(question_id) in quiz_answers
+                    for question_id in question_ids
+                ):
                     messages.error(
                         request,
-                        _("Please answer all questions before submitting the quiz."),
+                        _(
+                            "Please answer all questions before "
+                            "submitting the quiz."
+                        ),
                     )
                     return redirect("categories")
 
@@ -426,8 +460,13 @@ def category_quiz(request, slug):
                     "question": question,
                     "question_number": question_index + 1,
                     "total_questions": len(question_ids),
-                    "is_last_question": question_index == len(question_ids) - 1,
-                    "error": "Invalid answer selected. Please choose a valid answer.",
+                    "is_last_question": (
+                        question_index == len(question_ids) - 1
+                    ),
+                    "error": (
+                        "Invalid answer selected. "
+                        "Please choose a valid answer."
+                    ),
                 },
             )
 
@@ -445,7 +484,9 @@ def category_quiz(request, slug):
                     "question": question,
                     "question_number": question_index + 1,
                     "total_questions": len(question_ids),
-                    "is_last_question": question_index == len(question_ids) - 1,
+                    "is_last_question": (
+                        question_index == len(question_ids) - 1
+                    ),
                     "error": "Invalid answer selected.",
                 },
             )
@@ -463,7 +504,9 @@ def category_quiz(request, slug):
             "question": question,
             "question_number": question_index + 1,
             "total_questions": len(question_ids),
-            "is_last_question": question_index == len(question_ids) - 1,
+            "is_last_question": (
+                question_index == len(question_ids) - 1
+            ),
             "selected_answer": selected_answer,
             "correct_answer": correct_answer,
         },
