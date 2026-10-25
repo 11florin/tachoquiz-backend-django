@@ -11,23 +11,23 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-        model_name="category",
-        old_name="name",
-        new_name="name_en",
+            model_name="category",
+            old_name="name",
+            new_name="name_en",
         ),
-    migrations.RenameField(
-        model_name="question",
-        old_name="text",
-        new_name="text_en",
+        migrations.RenameField(
+            model_name="question",
+            old_name="text",
+            new_name="text_en",
         ),
-    migrations.RenameField(
-        model_name="question",
-        old_name="explanation",
-        new_name="explanation_en",
+        migrations.RenameField(
+            model_name="question",
+            old_name="explanation",
+            new_name="explanation_en",
         ),
-    migrations.RenameField(
-        model_name="answer",
-        old_name="text",
-        new_name="text_en",
+        migrations.RenameField(
+            model_name="answer",
+            old_name="text",
+            new_name="text_en",
         ),
     ]
