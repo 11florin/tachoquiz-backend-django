@@ -920,6 +920,32 @@ user can only access their own quiz history.
 
 **---**
 
+### Deployed Revision-Note CRUD and Ownership Testing
+
+The revision-note functionality was tested on the deployed Heroku
+application using two separate user accounts.
+
+| Test | Expected result | Actual result |
+|---|---|---|
+| User 1 creates a revision note | The note is saved successfully | PASS – the note was created |
+| User 1 opens the notes list | The new note appears in the user's list | PASS – the note appeared |
+| User 1 opens the note details | The note content is displayed | PASS – the details were displayed |
+| User 1 edits the note | The changes are saved | PASS – the changes persisted after refreshing |
+| User 1 opens the delete page | A confirmation page is displayed | PASS – the confirmation page was displayed |
+| User 1 confirms deletion | The note is deleted | PASS – the note was removed from the list |
+| User 2 accesses the note URL directly | Access is refused | PASS – User 2 was redirected and received an error message |
+| User 2 accesses the edit URL directly | Editing is blocked | PASS – User 2 could not edit the note |
+| User 2 accesses the delete URL directly | Deletion is blocked | PASS – User 2 could not delete the note |
+
+These tests confirmed that revision notes are private to their owner
+and that direct URL access does not bypass the ownership checks.
+
+Supporting screenshots are stored in
+`quiz/static/quiz/images/testing-img/revision-notes/`.
+
+
+---
+
 ## US12 --- Integrate Existing Frontend With Django
 
 ### Description
