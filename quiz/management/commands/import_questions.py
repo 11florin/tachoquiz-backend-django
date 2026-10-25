@@ -177,4 +177,3 @@ class Command(BaseCommand):
                         f"Row {row_number} imported: {question_en}"
                     )
                 )
-
