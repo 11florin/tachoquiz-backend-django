@@ -323,7 +323,6 @@ class QuizFunctionalityTest(TestCase):
             1
         )
 
-
     def test_completing_all_questions_redirects_to_score(self):
         quiz_url = reverse(
             "category-quiz",

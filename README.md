@@ -1974,7 +1974,7 @@ Deployment section.
    delivery. Never commit `.env`.
 2. Install the pinned dependencies with `pip install -r requirements.txt`.
 3. Apply the schema with `./venv/bin/python manage.py migrate`.
-4. Import quiz content with `./venv/bin/python manage.py import_questions --file quiz/data/questions.csv`.
+4. Import quiz content with `python manage.py import_questions quiz/data/questions.csv`.
 5. Collect production static files with `./venv/bin/python manage.py collectstatic --noinput`.
 6. Run checks with `./venv/bin/python manage.py test`.
 7. Deploy with the included `Procfile`: `web: gunicorn tachoquiz.wsgi`.

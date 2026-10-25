@@ -67,7 +67,6 @@ class UserJourneyTest(TestCase):
             is_correct=False,
         )
 
-
     def test_complete_quiz_user_journey(self):
         # 1. User logs in
         login_response = self.client.post(
