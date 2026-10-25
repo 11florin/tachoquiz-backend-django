@@ -947,6 +947,19 @@ a.action-btn {
   color: var(--color-text);
 }
 
+.history-main h2 a,
+.history-score .small-link {
+  color: var(--color-text);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.history-main h2 a:hover,
+.history-score .small-link:hover {
+  color: var(--color-primary);
+}
+
 .history-date {
   margin: 0;
   font-size: 13px;
