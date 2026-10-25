@@ -134,7 +134,6 @@ class AnswerModelTest(TestCase):
             )
 
 
-
 class QuizResultModelTest(TestCase):
 
     def setUp(self):

@@ -5,7 +5,6 @@ from django.urls import reverse
 
 
 class AuthenticationTest(TestCase):
-
     def setUp(self):
         self.user = get_user_model().objects.create_user(
             username="testuser",
@@ -17,7 +16,6 @@ class AuthenticationTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "quiz/login.html")
-
 
     def test_user_can_login_with_valid_credentials(self):
         response = self.client.post(
@@ -53,7 +51,6 @@ class AuthenticationTest(TestCase):
         self.assertFalse(
             "_auth_user_id" in self.client.session
         )
-
 
     def test_user_can_logout(self):
         self.client.login(
@@ -168,14 +165,14 @@ class AuthenticationTest(TestCase):
         self.assertRedirects(response, reverse("home"))
 
     def test_logout_rejects_get_request(self):
-            self.client.login(
-                username="testuser",
-                password="testpassword123",
-            )
-        
-            response = self.client.get(reverse("logout"))
-        
-            self.assertEqual(
-                response.status_code,
-                405,
-            )
+        self.client.login(
+            username="testuser",
+            password="testpassword123",
+        )
+
+        response = self.client.get(reverse("logout"))
+
+        self.assertEqual(
+            response.status_code,
+            405,
+        )
