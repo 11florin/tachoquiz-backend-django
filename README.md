@@ -1705,7 +1705,7 @@ recompiled using:
 The page was then revalidated successfully with no errors or warnings.
 
 ![HTML Validator](quiz/static/quiz/images/testing-img/html-validator.png)
-![HTML Validator](quiz/static/quiz/images/testing-img/register.html.png)
+![Register Validator](quiz/static/quiz/images/testing-img/register.html.png)
 
 **---**
 
